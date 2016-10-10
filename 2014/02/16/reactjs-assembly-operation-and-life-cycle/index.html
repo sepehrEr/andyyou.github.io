@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>React 元件運作與生命週期 | DEVLOG of andyyou</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="與瀏覽器之間的運作React 針對瀏覽器提供了十分強大的抽象化概念，讓你在大部份的情況下不必再直接操作 DOM ，不過有些時候或許還是需要單純的存取底層的 API(DOM API)，可能是使用第三方函式庫或者事已經寫好的程式碼。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 元件運作與生命週期">
+<meta property="og:url" content="http://andyyou.github.io/2014/02/16/reactjs-assembly-operation-and-life-cycle/index.html">
+<meta property="og:site_name" content="DEVLOG of andyyou">
+<meta property="og:description" content="與瀏覽器之間的運作React 針對瀏覽器提供了十分強大的抽象化概念，讓你在大部份的情況下不必再直接操作 DOM ，不過有些時候或許還是需要單純的存取底層的 API(DOM API)，可能是使用第三方函式庫或者事已經寫好的程式碼。">
+<meta property="og:updated_time" content="2016-10-10T12:15:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React 元件運作與生命週期">
+<meta name="twitter:description" content="與瀏覽器之間的運作React 針對瀏覽器提供了十分強大的抽象化概念，讓你在大部份的情況下不必再直接操作 DOM ，不過有些時候或許還是需要單純的存取底層的 API(DOM API)，可能是使用第三方函式庫或者事已經寫好的程式碼。">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-39208536-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">DEVLOG of andyyou</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="https://avatars2.githubusercontent.com/u/665690?v=3&amp;s=466" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: 'Pages',
+            CATEGORIES: '分類',
+            TAGS: '標籤',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜尋" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="https://avatars2.githubusercontent.com/u/665690?v=3&amp;s=466" />
+            <h2 id="name">andyyou</h2>
+            <h3 id="title">Web Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Taipei, Taiwan</span>
+            <a id="follow" target="_blank" href="https://github.com/andyyou">關注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                129
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                56
+                <span>標籤</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/andyyou" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.linkedin.com/pub/zongyan-you/2a/493/16" target="_blank" title="linkedin" class=tooltip>
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-reactjs-assembly-operation-and-life-cycle" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            React 元件運作與生命週期
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2014/02/16/reactjs-assembly-operation-and-life-cycle/">
+            <time datetime="2014-02-16T15:15:00.000Z" itemprop="datePublished">2014-02-16</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/reactjs/">reactjs</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h1 id="與瀏覽器之間的運作"><a href="#與瀏覽器之間的運作" class="headerlink" title="與瀏覽器之間的運作"></a>與瀏覽器之間的運作</h1><p>React 針對瀏覽器提供了十分強大的抽象化概念，讓你在大部份的情況下不必再直接操作 DOM ，不過有些時候或許還是需要單純的存取底層的 API(DOM API)，可能是使用第三方函式庫或者事已經寫好的程式碼。</p>
+<a id="more"></a>
+<h1 id="關於虛擬-DOM"><a href="#關於虛擬-DOM" class="headerlink" title="關於虛擬 DOM"></a>關於虛擬 DOM</h1><p>React 快速的原因是因為它從來不直接影響 DOM。React 會負責在記憶體中持續維護一份 DOM 的表現結構。<code>render()</code> 方法負責回傳關於 DOM 的描速，React 就能得知其和記憶體中結構的差異，接著他會計算出最快的更新方式然後交給瀏覽器去影響 DOM。<br>此外，React 完整實作了對應的事件系統，所有物件的事件保證符合 W3C 的規範，且關於事件氣泡傳遞(bubbles)的行為在任何瀏覽器也都一致。甚至可以在 IE8 使用 HTML5 的事件。大多數的時候你的程式操作應該都會 React 所建構的”仿瀏覽器”的世界裡，因為它俱有高效能和相對容易使用。不過有些情況下，你可能會需要存取使用底層基本的 API，例如使用 jQuery 第三方套件，React 提供了一個後門允許你可以直接操作底層的 API。</p>
+<h1 id="Refs-和-getDOMNode"><a href="#Refs-和-getDOMNode" class="headerlink" title="Refs 和 getDOMNode()"></a>Refs 和 getDOMNode()</h1><p>為了與瀏覽器互動，你需要使用指向 DOM 節點的參考物件。每一個 <code>Mounted</code> 的 React 元件都會有 <code>getDOMNode()</code> 的功能 ，你可以透過呼叫它取得該 DOM 的參考物件。</p>
+<p>注意：<code>getDOMNode()</code> 只能在元件已經掛載完畢時使用(換句話說這表示該物件已經被渲染放置到 DOM 裡了)。如果你嘗試在元件尚未掛載完畢前呼叫這個 API 將會發生例外。</p>
+<p>為了取得 React 元件的參考，你可以使用 <code>this</code> 取得目前元件或者使用 <code>refs</code>，使用 <code>refs</code> 則需要設定一個名稱，如下範例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx React.DOM */</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> MyComponent = React.createClass(&#123;</div><div class="line">  <span class="attr">handleClick</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 透過原生 API 明確的指示 input 為 focus 狀態。</span></div><div class="line">    <span class="keyword">this</span>.refs.myTextInput.getDOMNode().focus();</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// ref 屬性替元件增加一個參考然後你就可以在元件掛載完畢後使用 `this.refs`</span></div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;div&gt;</div><div class="line">        &lt;input type="text" ref="myTextInput" /&gt;</div><div class="line">        &lt;input</div><div class="line">          type="button"</div><div class="line">          value="Focus the text input"</div><div class="line">          onClick=&#123;this.handleClick&#125;</div><div class="line">        /&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">React.renderComponent(</div><div class="line">  &lt;MyComponent /&gt;,</div><div class="line">  document.getElementById('example')</div><div class="line">);</div></pre></td></tr></table></figure>
+<h1 id="更多關於-Refs"><a href="#更多關於-Refs" class="headerlink" title="更多關於 Refs"></a>更多關於 Refs</h1><p>想要了解更多關於 <code>refs</code> 及如何有效的使用可以參考 <a href="http://facebook.github.io/react/docs/more-about-refs.html" target="_blank" rel="external">refs 文件</a></p>
+<h1 id="元件的生命週期"><a href="#元件的生命週期" class="headerlink" title="元件的生命週期"></a>元件的生命週期</h1><p>元件的生命週期有三個主要的部分：</p>
+<ul>
+<li><code>Mounting</code>：元件正準備要被寫入 DOM</li>
+<li><code>Updating</code>：元件偵測到狀態的改變準備重新渲染。</li>
+<li><code>Unmounting</code>：元件正要被從 DOM 中移除。</li>
+</ul>
+<p>React 根據生命週期提供了對應的方法(事件)讓你可以在對應的階段做一些處理。<code>Will</code> 的方法用在某些狀況準備發生之前，<code>Did</code> 的方法則表示該狀況已經發生後。</p>
+<h1 id="Mounting-掛載流程"><a href="#Mounting-掛載流程" class="headerlink" title="Mounting 掛載流程"></a>Mounting 掛載流程</h1><ul>
+<li><code>getInitialState()</code>：當物件被調用時此方法會在寫入 DOM 之前被觸發，通常用來管理狀態的元件可以用這個方法初始化一些資料。</li>
+<li><code>componentWillMount</code>：當元件內部的結構處理完畢準備寫入 DOM 之前觸發。</li>
+<li><code>componentDidMount(DOMElement rootNode)</code>：當元件被寫入 DOM 之後觸發。當初始化需要操作 DOM 元素就可以用這個方法。</li>
+</ul>
+<h1 id="Updating-更新流程"><a href="#Updating-更新流程" class="headerlink" title="Updating 更新流程"></a>Updating 更新流程</h1><ul>
+<li><code>componentWillReceiveProps(nextProps)</code>：已掛載的元件收到新的 <code>props</code> 時被觸發。在這個方法裡你通常會去比較 <code>this.props</code> 和 <code>nextProps</code> 然後再用 <code>this.setState</code> 去改變狀態。</li>
+<li><code>shouldComponentUpdate(nextProps, nextState)</code>：這個函式需要回傳一個布林值，當元件判斷是否需要更新 DOM 時會被觸發。你可以在這個方法裡面去比較 <code>this.props</code>，<code>this.state</code>，<code>nextProps</code>，<code>nextState</code> 來決定是否需要更新，回傳 false 則會跳過此次觸發不更新，如果你什麼都不回傳預設會當做 <code>false</code> 。</li>
+<li><code>componentWillUpdate</code>：例如在上面 <code>shouldComponentUpdate</code> 你回傳了 <code>true</code> ，元件確定要更新了，在準備更新前這個方法會被觸發。</li>
+<li><code>componentDidupdate(prevProps, prevState, rootNode)</code>：更新後觸發。</li>
+</ul>
+<h1 id="Unmounting-卸載流程"><a href="#Unmounting-卸載流程" class="headerlink" title="Unmounting 卸載流程"></a>Unmounting 卸載流程</h1><ul>
+<li><code>componentWillUnmount()</code>：當元件準備要被移除或破壞時觸發。</li>
+</ul>
+<h1 id="掛載後才能使用的方法"><a href="#掛載後才能使用的方法" class="headerlink" title="掛載後才能使用的方法"></a>掛載後才能使用的方法</h1><ul>
+<li><code>getDOMNode()</code>：使用此方法會傳回一個 DOM 元素物件，透過這個方法你可以取得一個參考物件直接操作 DOM 節點。</li>
+<li><code>forceUpdate()</code>：任何已掛載的元件，當你知道元件內部有些狀態已經改變但他不是透過 <code>this.setState()</code> 去修改值的時候可以呼叫這個方法強迫更新。</li>
+</ul>
+<p>注意：<code>componentDidMount()</code> 和 <code>componentDidUpdate()</code> 的 <code>rootNode</code> 參數只是提供你一個比較方便的方式存取 DOM ，這和使用 <code>this.getDOMNode()</code> 是一樣的。<br>補上一段實作各種方法的範例您可以試著把註解的地方取消看看變化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx React.DOM */</span></div><div class="line"><span class="keyword">var</span> Test = React.createClass(&#123;</div><div class="line">  <span class="attr">getInitialState</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; getInitialState()"</span>);</div><div class="line">    <span class="keyword">return</span> &#123;<span class="attr">user</span>: <span class="string">'AndyYou'</span>&#125;;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentWillMount</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; componentWillMount()"</span>);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentDidMount</span>: <span class="function"><span class="keyword">function</span> (<span class="params">node</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; componentDidMount(node)"</span>);</div><div class="line">    <span class="built_in">console</span>.log(node.className);</div><div class="line">    <span class="built_in">console</span>.log(node.value);</div><div class="line">    <span class="built_in">console</span>.log(node.id);</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.getDOMNode().className);</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.getDOMNode().value);</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.getDOMNode().id);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentWillReceiveProps</span>: <span class="function"><span class="keyword">function</span> (<span class="params">nextProps</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; componentWillReceiveProps(nextProps)"</span>);</div><div class="line">    <span class="built_in">console</span>.log(nextProps);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">handleChange</span>: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(e.target.value);</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">user</span>: e.target.value&#125;);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">shouldComponentUpdate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">nextProps, nextState</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; shouldComponentUpdate(nextProps, nextState)"</span>);</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"nextProps: "</span>);</div><div class="line">    <span class="built_in">console</span>.log(nextProps);</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"nextState: "</span>);</div><div class="line">    <span class="built_in">console</span>.log(nextState);</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">/* need return true/false */</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentWillUpdate</span>: <span class="function"><span class="keyword">function</span> (<span class="params">nextProps, nextState</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; componentWillUpdate(nextProps, nextState)"</span>);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentWillUnmount</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"&gt; componentWillUnmount()"</span>);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;input type='text' id='foobar' value=&#123;this.state.user&#125; className='nav' onChange=&#123;this.handleChange&#125; /&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line">var test = React.renderComponent(&lt;Test title='Untitled' /&gt;, document.getElementById('example'));</div><div class="line">// test.setProps(&#123;title: 'No'&#125;);</div><div class="line">// React.unmountComponentAtNode(document.getElementById('example'));</div><div class="line">// test.setState(&#123;user:'Calvert'&#125;);</div></pre></td></tr></table></figure>
+<h1 id="支援的瀏覽器和兼容"><a href="#支援的瀏覽器和兼容" class="headerlink" title="支援的瀏覽器和兼容"></a>支援的瀏覽器和兼容</h1><p>在 Facebook 我們支援了包含 IE8 在內的舊瀏覽器，我們已經落實瀏覽器兼容很長一段時間了，這讓我們可以實作出有實用且遠見的 Javascript。這表示我們並沒有太多 Hack 特定瀏覽器產生鬆散的分支代碼，根據這些經驗我們可以確信我們的程式碼在任何瀏覽器都是可以正常運作的。舉個例子常見 <code>+new Date()</code> 這種寫法我們會改用 <code>Date.now()</code>。<br>React Open Source 專案和 Facebook 內部使用的的是一樣的，我們已經證實並正在使用。<br>此外我們並不試圖讓實作兼容功能變成函式庫的一部份，如果每個函式庫都重新實作這些功能，為了支援老舊瀏覽器，你會反覆載入相同功能的程式碼。如果你需要支援舊的瀏覽器，可能你已經在使用 <code>es5-shim</code>。</p>
+<h1 id="兼容"><a href="#兼容" class="headerlink" title="兼容"></a>兼容</h1><p><code>es5-shim.js</code> 可以從 <a href="https://github.com/kriskowal/es5-shim" target="_blank" rel="external">kriskowal’s es5-shim </a> 取得。下面是 React 支援老舊瀏覽器需要的東西</p>
+<ul>
+<li>Array.isArray</li>
+<li>Array.prototype.forEach</li>
+<li>Array.prototype.indexOf</li>
+<li>Array.prototype.some</li>
+<li>Date.now</li>
+<li>Function.prototype.bind</li>
+</ul>
+<p><code>es5-sham.js</code> 也可以從 <a href="https://github.com/kriskowal/es5-shim" target="_blank" rel="external">kriskowal’s es5-shim</a> 取得，React 需要：</p>
+<ul>
+<li>Object.create</li>
+</ul>
+<p>React 的非最小化建置則需要 <a href="https://github.com/paulmillr/console-polyfill" target="_blank" rel="external">paulmillr’s console-polyfill</a></p>
+<ul>
+<li>console.l*</li>
+</ul>
+<h1 id="跨瀏覽器的議題"><a href="#跨瀏覽器的議題" class="headerlink" title="跨瀏覽器的議題"></a>跨瀏覽器的議題</h1><p>雖然 React 對於瀏覽器的抽象化過程處理的非常不錯，但是有些瀏覽器的限制或怪異的行為我們還是找不到解法</p>
+<h2 id="IE8-的-onScroll-事件"><a href="#IE8-的-onScroll-事件" class="headerlink" title="IE8 的 onScroll 事件"></a>IE8 的 onScroll 事件</h2><p>IE8 的 onScroll 事件不會造成事件的氣泡傳遞而且 IE8 也沒有定義對應的處理事件。目前關於在 IE8 的這個事件已經被忽略了。</p>
+<blockquote>
+<h1 id="Polyfills"><a href="#Polyfills" class="headerlink" title="Polyfills"></a>Polyfills</h1><p>Polyfilling 是由 RemySharp 所提出的術語，它是用來描速關於複製缺少的 API 和 API 功能的行為。你可以使用它撰寫應用程式的程式碼而不用擔心其他瀏覽器是不是支援。事實上，polyfills 並不是新技術也不是和 HTML5 捆绑到一起的。</p>
+<h1 id="Polyfills-是什麼？"><a href="#Polyfills-是什麼？" class="headerlink" title="Polyfills 是什麼？"></a>Polyfills 是什麼？</h1><p>讓我們直接來看實務 Polyfills 指的是什麼。例如使用 <code>json2.js</code> 就是一種 Polyfills。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">JSON</span>.parse !==<span class="string">'function'</span>) &#123;</div><div class="line">  <span class="comment">// Crockford’s JavaScript implementation of JSON.parse</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>上面這段程式碼表示; 如果瀏覽器本身可以執行 <code>JSON.parse</code>，那麼 <code>json2.js</code> 就不會重新定義或者干擾 <code>JSON</code> 物件。如果沒有原生的 API 可用，<code>json2.js</code> 就會執行一段 JavaScript 來實現這個功能，它和原生的 JSON API 是完全兼容的。最終的結果就是你可以在網頁上使用 json2.js 而不用考慮瀏覽器執行的是哪種程式碼。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://andyyou.github.io/2014/02/16/reactjs-assembly-operation-and-life-cycle/" data-id="ciu3x8iii001sj3cwtz1luddl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2014/02/19/reactjs-regarding-the-refs/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    React 關於 Refs 
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2014/02/15/react-on-a-form/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">React 關於表單</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分類</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fun/">Fun</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mobile/">Mobile</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program/">Program</a><span class="category-list-count">91</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/System/">System</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">14</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">歸檔</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-mvc/">.net mvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/azure/">azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/azure-selenium/">azure, selenium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bot-facebook-javascript/">bot, facebook, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache-mechanism/">cache, mechanism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome-javascript/">chrome, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity-framework/">entity framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6-javascript/">es6, javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/framework-javascript/">framework, javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt-javascript/">grunt, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt-javascript-package-manager/">grunt, javascript, package manager</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp-task-runner-javascript/">gulp, task runner, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-RoR/">javascript, RoR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-grunt-package-manager/">javascript, grunt, package manager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-gulp-task-runner/">javascript, gulp, task runner</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-jwt-api-nodejs/">javascript, jwt, api, nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-nodejs/">javascript, nodejs</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-nodejs-package-manager/">javascript, nodejs, package manager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-package-manager/">javascript, package manager</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-reactjs-react-native/">javascript, reactjs, react native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-reactjs-redux/">javascript, reactjs, redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-task-runner-gulp/">javascript, task runner, gulp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jspm-javascript-bundler-package-manager-nodejs/">jspm, javascript, bundler, package manager, nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oocss-css/">oocss, css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/osx/">osx</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-osx/">php, osx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/">postgresql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi-javascript-nodejs/">raspberry-pi, javascript, nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/">reactjs</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs-flux/">reactjs, flux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs-javascript/">reactjs, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby-RoR/">ruby, RoR</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby-RoR-carrier-wave/">ruby, RoR, carrier wave</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby-RoR-centos/">ruby, RoR, centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby-RoR-devise/">ruby, RoR, devise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby-RoR-heroku/">ruby, RoR, heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass-compass/">sass, compass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs-javascript/">vuejs, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs-slim-javascript-RoR/">vuejs, slim, javascript, RoR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs-webpack-javascript/">vuejs, webpack, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-javascript/">webpack, javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-javascript-bundler/">webpack, javascript, bundler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows-iisexpress/">windows, iisexpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">標籤雲</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/net-mvc/" style="font-size: 10px;">.net mvc</a> <a href="/tags/aws/" style="font-size: 10px;">aws</a> <a href="/tags/azure/" style="font-size: 10px;">azure</a> <a href="/tags/azure-selenium/" style="font-size: 10px;">azure, selenium</a> <a href="/tags/bot-facebook-javascript/" style="font-size: 10px;">bot, facebook, javascript</a> <a href="/tags/cache-mechanism/" style="font-size: 10px;">cache, mechanism</a> <a href="/tags/chrome-javascript/" style="font-size: 10px;">chrome, javascript</a> <a href="/tags/css/" style="font-size: 18.33px;">css</a> <a href="/tags/docker/" style="font-size: 11.67px;">docker</a> <a href="/tags/entity-framework/" style="font-size: 10px;">entity framework</a> <a href="/tags/es6-javascript/" style="font-size: 13.33px;">es6, javascript</a> <a href="/tags/framework-javascript/" style="font-size: 11.67px;">framework, javascript</a> <a href="/tags/grunt-javascript/" style="font-size: 10px;">grunt, javascript</a> <a href="/tags/grunt-javascript-package-manager/" style="font-size: 11.67px;">grunt, javascript, package manager</a> <a href="/tags/gulp-task-runner-javascript/" style="font-size: 10px;">gulp, task runner, javascript</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/ios/" style="font-size: 13.33px;">ios</a> <a href="/tags/javascript/" style="font-size: 16.67px;">javascript</a> <a href="/tags/javascript-RoR/" style="font-size: 10px;">javascript, RoR</a> <a href="/tags/javascript-grunt-package-manager/" style="font-size: 10px;">javascript, grunt, package manager</a> <a href="/tags/javascript-gulp-task-runner/" style="font-size: 10px;">javascript, gulp, task runner</a> <a href="/tags/javascript-jwt-api-nodejs/" style="font-size: 10px;">javascript, jwt, api, nodejs</a> <a href="/tags/javascript-nodejs/" style="font-size: 11.67px;">javascript, nodejs</a> <a href="/tags/javascript-nodejs-package-manager/" style="font-size: 10px;">javascript, nodejs, package manager</a> <a href="/tags/javascript-package-manager/" style="font-size: 10px;">javascript, package manager</a> <a href="/tags/javascript-reactjs-react-native/" style="font-size: 10px;">javascript, reactjs, react native</a> <a href="/tags/javascript-reactjs-redux/" style="font-size: 10px;">javascript, reactjs, redux</a> <a href="/tags/javascript-task-runner-gulp/" style="font-size: 10px;">javascript, task runner, gulp</a> <a href="/tags/jekyll/" style="font-size: 11.67px;">jekyll</a> <a href="/tags/jspm-javascript-bundler-package-manager-nodejs/" style="font-size: 10px;">jspm, javascript, bundler, package manager, nodejs</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mongodb/" style="font-size: 11.67px;">mongodb</a> <a href="/tags/oocss-css/" style="font-size: 10px;">oocss, css</a> <a href="/tags/osx/" style="font-size: 13.33px;">osx</a> <a href="/tags/php-osx/" style="font-size: 11.67px;">php, osx</a> <a href="/tags/postgresql/" style="font-size: 10px;">postgresql</a> <a href="/tags/raspberry-pi-javascript-nodejs/" style="font-size: 10px;">raspberry-pi, javascript, nodejs</a> <a href="/tags/reactjs/" style="font-size: 20px;">reactjs</a> <a href="/tags/reactjs-flux/" style="font-size: 10px;">reactjs, flux</a> <a href="/tags/reactjs-javascript/" style="font-size: 10px;">reactjs, javascript</a> <a href="/tags/ruby/" style="font-size: 11.67px;">ruby</a> <a href="/tags/ruby-RoR/" style="font-size: 15px;">ruby, RoR</a> <a href="/tags/ruby-RoR-carrier-wave/" style="font-size: 11.67px;">ruby, RoR, carrier wave</a> <a href="/tags/ruby-RoR-centos/" style="font-size: 10px;">ruby, RoR, centos</a> <a href="/tags/ruby-RoR-devise/" style="font-size: 10px;">ruby, RoR, devise</a> <a href="/tags/ruby-RoR-heroku/" style="font-size: 10px;">ruby, RoR, heroku</a> <a href="/tags/sass/" style="font-size: 10px;">sass</a> <a href="/tags/sass-compass/" style="font-size: 10px;">sass, compass</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/vuejs-javascript/" style="font-size: 10px;">vuejs, javascript</a> <a href="/tags/vuejs-slim-javascript-RoR/" style="font-size: 10px;">vuejs, slim, javascript, RoR</a> <a href="/tags/vuejs-webpack-javascript/" style="font-size: 10px;">vuejs, webpack, javascript</a> <a href="/tags/webpack-javascript/" style="font-size: 10px;">webpack, javascript</a> <a href="/tags/webpack-javascript-bundler/" style="font-size: 10px;">webpack, javascript, bundler</a> <a href="/tags/windows-iisexpress/" style="font-size: 10px;">windows, iisexpress</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 andyyou(You,ZongYan)
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
