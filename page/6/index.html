@@ -251,7 +251,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/18/what-is-the-execution-context-in-javascript/" data-id="ciu3x8imm004lj3cw9gejx68z" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/18/what-is-the-execution-context-in-javascript/" data-id="ciu42o3it006u37cw5cg34syt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -382,7 +382,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/09/a-primer-to-image/" data-id="ciu3x8imj004jj3cwx4lpm7fm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/09/a-primer-to-image/" data-id="ciu42o3ir006q37cwjcmjttq7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -513,7 +513,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/07/get-an-element-s-position-by-js/" data-id="ciu3x8ime004bj3cwrh66tmlo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/07/get-an-element-s-position-by-js/" data-id="ciu42o3ik006k37cwja9idjqy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -644,7 +644,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/07/how-to-transfer-ownership-to-another/" data-id="ciu3x8imc0048j3cwo53in2cq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/07/how-to-transfer-ownership-to-another/" data-id="ciu42o3in006n37cwqfzo5eg4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -776,7 +776,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/06/psql-notes/" data-id="ciu3x8imh004fj3cw5xhagpam" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/06/psql-notes/" data-id="ciu42o3ig006937cw5b9aevk0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -906,7 +906,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/06/rake-t/" data-id="ciu3x8imi004gj3cwb0mtnkss" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/06/rake-t/" data-id="ciu42o3ij006g37cwou2cfs6a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1037,7 +1037,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/fix-jekyll-psych-issue/" data-id="ciu3x8ilo003wj3cwlydvg7ht" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/fix-jekyll-psych-issue/" data-id="ciu42o3id006237cw0xn4tmp6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1174,138 +1174,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/devise/" data-id="ciu3x8im60041j3cwn3kp1kc5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-login" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/04/04/login/">Rails 簡易的實作登入</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/04/04/login/">
-            <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/ruby-RoR/">ruby, RoR</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><h2 id="簡易的實作登入"><a href="#簡易的實作登入" class="headerlink" title="簡易的實作登入"></a>簡易的實作登入</h2><h4 id="1-Create-a-User-model"><a href="#1-Create-a-User-model" class="headerlink" title="1. Create a User model"></a>1. Create a User model</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ rails g model User name:string password:digest</div><div class="line">$ rake db:migrate</div></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2015/04/04/login/#more">繼續閱讀</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://andyyou.github.io/2015/04/04/login/" data-id="ciu3x8ima0046j3cwq0eaa706" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/devise/" data-id="ciu42o3i9005v37cw16hi8dz5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1436,7 +1305,143 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/welcome-to-jekyll/" data-id="ciu3x8im80044j3cw2evvktxr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/welcome-to-jekyll/" data-id="ciu42o3ie006637cwx9o713ap" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-ruby-notes" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/04/04/ruby-notes/">Ruby 快速筆記</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/04/04/ruby-notes/">
+            <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/ruby/">ruby</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h2 id="Ruby-快速筆記"><a href="#Ruby-快速筆記" class="headerlink" title="Ruby 快速筆記"></a>Ruby 快速筆記</h2><ul>
+<li>Ruby 中的字串需要包在 <code>&quot;</code> 或者 <code>&#39;</code> 中不過兩者有一點微妙的差別，在雙引號中可以使用逸出字元(\n \r \) 等等，不過單引號會原封不動的輸出除了 <code>\\</code> 例外</li>
+<li>在呼叫方法的時候 Ruby 可以省略 ()</li>
+<li>puts 和 print 的差別是 puts 會在行末加上 \n，如果是用 , 分開不同的參數輸出則每個參數後面都會有 \n</li>
+<li>第三個輸出的 method 是 p ，puts 和 print 不管輸出的是數字或字串都只會顯示內容</li>
+</ul></p>
+            <p class="article-more-link">
+                <a href="/2015/04/04/ruby-notes/#more">繼續閱讀</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://andyyou.github.io/2015/04/04/ruby-notes/" data-id="ciu42o3ih006d37cw8v8lhb4d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
