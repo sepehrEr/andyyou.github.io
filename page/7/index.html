@@ -251,138 +251,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/login/" data-id="ciu6poq2i005vw4cw6h9758v2" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-active-record" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/04/04/active-record/">ActiveRecord 雜記</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/04/04/active-record/">
-            <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/RoR/">RoR</a>, <a class="tag-link" href="/tags/ruby/">ruby</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><h2 id="優化-Model-count"><a href="#優化-Model-count" class="headerlink" title="優化 Model count"></a>優化 Model count</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Like</span> &lt; ActiveRecord::Base</span></div><div class="line">  belongs_to <span class="symbol">:guestbook_entry</span>, <span class="symbol">counter_cache:</span> <span class="literal">true</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2015/04/04/active-record/#more">繼續閱讀</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://andyyou.github.io/2015/04/04/active-record/" data-id="ciu6poq250051w4cwj41iiic8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/login/" data-id="ciu7ucrrc005xascwmavc328d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -603,7 +472,138 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/commands/" data-id="ciu6poq2b005ew4cw3beyejiw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/commands/" data-id="ciu7ucrr1005fascw3et9b4o9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-active-record" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/04/04/active-record/">ActiveRecord 雜記</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/04/04/active-record/">
+            <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/RoR/">RoR</a>, <a class="tag-link" href="/tags/ruby/">ruby</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h2 id="優化-Model-count"><a href="#優化-Model-count" class="headerlink" title="優化 Model count"></a>優化 Model count</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Like</span> &lt; ActiveRecord::Base</span></div><div class="line">  belongs_to <span class="symbol">:guestbook_entry</span>, <span class="symbol">counter_cache:</span> <span class="literal">true</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2015/04/04/active-record/#more">繼續閱讀</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://andyyou.github.io/2015/04/04/active-record/" data-id="ciu7ucrqv0055ascwmn1tle64" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -734,7 +734,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/action-pack-note/" data-id="ciu6poq280057w4cwim7pfgte" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/action-pack-note/" data-id="ciu7ucrqx0058ascw6kej5l0o" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -865,7 +865,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/carrier-wave/" data-id="ciu6poq2a005bw4cwfv8egfx6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/carrier-wave/" data-id="ciu7ucrqz005cascw6qnl2jza" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -996,7 +996,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/welcome-to-jekyll/" data-id="ciu6poq2k0062w4cwubs8pvqu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/welcome-to-jekyll/" data-id="ciu7ucrrf0063ascwpd55x0dl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1127,7 +1127,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/deploy/" data-id="ciu6poq2d005iw4cw0emu9g4t" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/deploy/" data-id="ciu7ucrr4005jascwdox3r7b0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1262,7 +1262,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/compass/" data-id="ciu6poq2e005lw4cwiqh7zgt9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/compass/" data-id="ciu7ucrr6005mascwz9urfnq6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1393,7 +1393,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2014/12/23/use-selenium-to-match-cloud-based-stress-test/" data-id="ciu6poq270054w4cwn3hpry89" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2014/12/23/use-selenium-to-match-cloud-based-stress-test/" data-id="ciu7ucrqs004zascwljcnhopq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1524,7 +1524,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2014/11/15/fools-learn-flux/" data-id="ciu6poq22004ww4cwpks5vggn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2014/11/15/fools-learn-flux/" data-id="ciu7ucrqu0052ascwgc1rp66d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
