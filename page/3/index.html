@@ -161,7 +161,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                129
+                130
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -258,7 +258,138 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/03/08/cache-notes/" data-id="ciu438cuc0098b5cw2nv7xpuu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/03/08/cache-notes/" data-id="ciu6poq44009kw4cwifdn3k90" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-raspberrypi-with-node" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/03/08/raspberrypi-with-node/">RaspberryPi with node 安裝筆記</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/03/08/raspberrypi-with-node/">
+            <time datetime="2016-03-08T11:00:00.000Z" itemprop="datePublished">2016-03-08</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/System/">System</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/nodejs/">nodejs</a>, <a class="tag-link" href="/tags/raspberry-pi/">raspberry-pi</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>安裝完 NOOBS 之後…</p></p>
+            <p class="article-more-link">
+                <a href="/2016/03/08/raspberrypi-with-node/#more">繼續閱讀</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://andyyou.github.io/2016/03/08/raspberrypi-with-node/" data-id="ciu6poq43009gw4cwz9fda0s7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -389,7 +520,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/03/06/expressions-vs-statements-in-js/" data-id="ciu438cu5008ub5cwitlp8y1e" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/03/06/expressions-vs-statements-in-js/" data-id="ciu6poq47009rw4cwx15okj2s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -520,7 +651,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/03/03/z-index/" data-id="ciu438cu90091b5cwc4v9doy8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/03/03/z-index/" data-id="ciu6poq42009dw4cwyqz5gwe6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -651,7 +782,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/03/01/variables-differents/" data-id="ciu438cua0094b5cwv85q6l4a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/03/01/variables-differents/" data-id="ciu6poq400099w4cwdlo66wal" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -791,7 +922,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/02/25/variable-delete-operate/" data-id="ciu438cu7008xb5cwq5o0e1gh" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/02/25/variable-delete-operate/" data-id="ciu6poq3z0096w4cwht6z7h71" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -934,7 +1065,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/02/25/vue-in-slim-delims-problem/" data-id="ciu438cu3008qb5cwouef2jyf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/02/25/vue-in-slim-delims-problem/" data-id="ciu6poq3y0092w4cwtwqu82xf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1100,7 +1231,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/02/23/master-closure/" data-id="ciu438cu0008nb5cw065fut69" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/02/23/master-closure/" data-id="ciu6poq3x008zw4cwmp02ch91" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1233,7 +1364,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/02/23/carrierwave-recreate-version/" data-id="ciu438ctu008gb5cwlh11x1hd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/02/23/carrierwave-recreate-version/" data-id="ciu6poq3t008sw4cwyc5bfj3u" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1423,154 +1554,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2016/02/18/future-of-loading-css/" data-id="ciu438ctw008jb5cwb94e9slk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-javascript-array-methods" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/02/16/javascript-array-methods/">Javascript Array 筆記</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/02/16/javascript-array-methods/">
-            <time datetime="2016-02-16T08:30:00.000Z" itemprop="datePublished">2016-02-16</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>方法範例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// push</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> result = arr.push(<span class="number">4</span>); <span class="comment">// result: 4, arr: [1, 2, 3, 4]</span></div><div class="line"></div><div class="line"><span class="comment">// pop</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> result = arr.pop(); <span class="comment">// result: 3, arr: [1, 2]</span></div><div class="line"></div><div class="line"><span class="comment">// length</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>];</div><div class="line">arr.length; <span class="comment">// 2</span></div><div class="line"></div><div class="line"><span class="comment">// unshift</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> result = arr.unshift(<span class="number">0</span>); <span class="comment">// result: 4, arr: [0, 1, 2, 3]</span></div><div class="line"></div><div class="line"><span class="comment">// shift</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> result = arr.shift(); <span class="comment">// result: 1, arr: [2, 3]</span></div><div class="line"></div><div class="line"><span class="comment">// splice 拼接</span></div><div class="line"><span class="comment">// Array.splice(start_index, remove_num, element01, element02...)</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.splice(<span class="number">2</span>, <span class="number">1</span>, <span class="number">6</span>); <span class="comment">// result01: [3], arr: [1, 2, 6, 4, 5]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result02 = arr.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="number">6</span>); <span class="comment">// result02: [], arr: [1, 2, 6, 3, 5, 6]</span></div><div class="line"><span class="comment">// 沒移除元素會放在該 index 元素會被往後推</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result03 = arr.splice(<span class="number">2</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>) <span class="comment">// result03: [], arr: [1, 2, 6, 7, 8, 3, 4, 5]</span></div><div class="line"></div><div class="line"><span class="comment">// slice 切片</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.slice(<span class="number">1</span>, <span class="number">3</span>); <span class="comment">// result01: [2, 3], arr: [1, 2, 3, 4, 5]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result02 = arr.slice(<span class="number">-2</span>); <span class="comment">// result02: [4, 5], arr: [1, 2, 3, 4, 5]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result03 = arr.slice(<span class="number">-2</span>, <span class="number">0</span>); <span class="comment">// result03: [], arr: [1, 2, 3, 4, 5]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result04 = arr.slice(<span class="number">0</span>); <span class="comment">// result04: [1, 2, 3, 4, 5], arr: [1, 2, 3, 4, 5]</span></div><div class="line"></div><div class="line"><span class="comment">// indexOf</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.indexOf(<span class="number">3</span>); <span class="comment">// result01: 2</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>, <span class="string">'ab'</span>, <span class="string">'abc'</span>, <span class="string">'abcd'</span>];</div><div class="line"><span class="keyword">var</span> result02 = arr.indexOf(<span class="string">'a'</span>); <span class="comment">// result02: 0</span></div><div class="line"><span class="keyword">var</span> result03 = arr.indexOf(<span class="string">'b'</span>); <span class="comment">// result03: -1</span></div><div class="line"><span class="keyword">var</span> result04 = arr.indexOf(<span class="string">'ab'</span>); <span class="comment">// result04: 1</span></div><div class="line"></div><div class="line"><span class="comment">// lastIndexOf</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.lastIndexOf(<span class="number">1</span>); <span class="comment">// result01: 4</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>, <span class="string">'ab'</span>, <span class="string">'abc'</span>, <span class="string">'ab'</span>, <span class="string">'a'</span>];</div><div class="line"><span class="keyword">var</span> result02 = arr.lastIndexOf(<span class="string">'a'</span>); <span class="comment">// result02: 4</span></div><div class="line"><span class="keyword">var</span> result03 = arr.lastIndexOf(<span class="string">'b'</span>); <span class="comment">// result03: -1</span></div><div class="line"><span class="keyword">var</span> result04 = arr.lastIndexOf(<span class="string">'ab'</span>); <span class="comment">// result04: 3</span></div><div class="line"></div><div class="line"><span class="comment">// some 陣列是否有元素符合測試</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.some(<span class="function"><span class="keyword">function</span> (<span class="params">element, index, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> element &gt; <span class="number">3</span></div><div class="line">&#125;);  <span class="comment">// result01: true</span></div><div class="line"><span class="keyword">var</span> result02 = arr.some(<span class="function"><span class="params">element</span> =&gt;</span> element &gt; <span class="number">5</span>); <span class="comment">// result02: false</span></div><div class="line"></div><div class="line"><span class="comment">// every 陣列中是否所有元素都符合測試</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.every(<span class="function"><span class="keyword">function</span> (<span class="params">element, index, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> element &gt; <span class="number">3</span></div><div class="line">&#125;); <span class="comment">// result01: false</span></div><div class="line"><span class="keyword">var</span> result02 = arr.every(<span class="function"><span class="params">element</span> =&gt;</span> element &lt; <span class="number">6</span>); <span class="comment">// result02: true</span></div><div class="line"></div><div class="line"><span class="comment">// join 串聯成字串</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result = arr.join(<span class="string">','</span>); <span class="comment">// result: "1,2,3,4,5"</span></div><div class="line"></div><div class="line"><span class="comment">// sort 由小排到大</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>];</div><div class="line"><span class="keyword">var</span> result = arr.sort(); <span class="comment">// result: [1, 2, 3, 4, 5], arr: [1, 2, 3, 4, 5]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="string">'c'</span>, <span class="string">'b'</span>, <span class="string">'a'</span>, <span class="number">0</span>];</div><div class="line"><span class="keyword">var</span> result = arr.sort(); <span class="comment">// result: [0, 'a', 'b', 'c'], arr: [0, 'a', 'b', 'c']</span></div><div class="line"></div><div class="line"><span class="comment">// reverse 由大排到小</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result = arr.reverse(); <span class="comment">// result: [5, 4, 3, 2, 1], arr: [5, 4, 3, 2, 1]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</div><div class="line"><span class="keyword">var</span> result = arr.reverse(); <span class="comment">// result: ['c', 'b', 'a', 0], arr: ['c', 'b', 'a', 0]</span></div><div class="line"></div><div class="line"><span class="comment">// concat 組合並回傳一個新的陣列(flat element)</span></div><div class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>];</div><div class="line"><span class="keyword">var</span> b = [<span class="number">3</span>, <span class="number">4</span>];</div><div class="line"><span class="keyword">var</span> c = a.concat(b); <span class="comment">// a: [1, 2], b: [3, 4], c: [1, 2, 3, 4]</span></div><div class="line"><span class="keyword">var</span> d = [...a, ...b]; <span class="comment">// a: [1, 2], b: [3, 4], d: [1, 2, 3, 4]</span></div><div class="line"><span class="keyword">var</span> e = a.concat(<span class="number">0</span>, [<span class="number">3</span>, <span class="number">4</span>]); <span class="comment">// e: [1, 2, 0, 3, 4]</span></div><div class="line"></div><div class="line"><span class="comment">// forEach</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line">arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">element, index, array</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(element, index, array);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 1, 0, [1, 2, 3, 4, 5]</span></div><div class="line"><span class="comment">// 2, 1, [1, 2, 3, 4, 5]</span></div><div class="line"><span class="comment">// 3, 2, [1, 2, 3, 4, 5]</span></div><div class="line"><span class="comment">// 4, 3, [1, 2, 3, 4, 5]</span></div><div class="line"><span class="comment">// 5, 4, [1, 2, 3, 4, 5]</span></div><div class="line"><span class="comment">// 注意: 例外無法阻止 forEach 停止</span></div><div class="line"></div><div class="line"><span class="comment">// map 遍歷所有元素至參數 callback 然後回傳一個新的陣列</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result01 = arr.map(<span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> element + <span class="number">10</span>;</div><div class="line">&#125;); <span class="comment">//  arr: [1, 2, 3, 4, 5], result01: [ 11, 12, 13, 14, 15 ]</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>];</div><div class="line"><span class="keyword">var</span> result02 = arr.map(<span class="built_in">Math</span>.sqrt); <span class="comment">// arr: [1, 4, 6], result02: [1, 2 ,3]</span></div><div class="line"></div><div class="line"><span class="comment">// filter 過濾元素，產生新陣列</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"><span class="keyword">var</span> result = arr.filter(<span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> element &gt; <span class="number">2</span>;</div><div class="line">&#125;); <span class="comment">// arr: [1, 2, 3], result: [3]</span></div><div class="line"></div><div class="line"><span class="comment">// reduce 從左至右當作累加器把陣列變成單值</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"><span class="keyword">var</span> result = arr.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">previous, current, currentIndex, array</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> previous + current;</div><div class="line">&#125;, <span class="number">100</span>); <span class="comment">// result: 115</span></div><div class="line"></div><div class="line"><span class="comment">// reduceRight</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="string">'ab'</span>, <span class="string">'bc'</span>, <span class="string">'de'</span>];</div><div class="line"><span class="keyword">var</span> result = arr.reduceRight(<span class="function"><span class="keyword">function</span> (<span class="params">pre, cur, index, arr</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> pre + cur;</div><div class="line">&#125;, <span class="string">'I am initial:'</span>); <span class="comment">// result: "I am initial:debcab"</span></div><div class="line"></div><div class="line"><span class="comment">// 其他補充</span></div><div class="line"><span class="keyword">var</span> a; <span class="comment">// a: undefined</span></div><div class="line"><span class="keyword">var</span> b = a += <span class="number">2</span>; <span class="comment">// a: NaN, b: NaN =&gt; undefined += 2 =&gt; NaN</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="literal">null</span>;</div><div class="line"><span class="keyword">var</span> b = a += <span class="number">2</span>; <span class="comment">// a:2, b: 2</span></div></pre></td></tr></table></figure>
-<h1 id="Array-forEach-額外補充"><a href="#Array-forEach-額外補充" class="headerlink" title="Array.forEach 額外補充"></a>Array.forEach 額外補充</h1><p>根據 MDN 的定義 <code>arr.forEach(callback[, thisArg])</code> 當我們要在 forEach 的匿名函數中使用 <code>this</code> 我們可以透過 <code>thisArg</code> 來設定。<br>如果不設定(undefined, null)或者不用 <code>var self = this;</code> 的方式保留 context，那麼預設會是指向 <code>global</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sum = <span class="number">100</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.sum = <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Counter.prototype.add = <span class="function"><span class="keyword">function</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">  arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">el, i, arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.sum += el;</div><div class="line">  &#125;)</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> Counter();</div><div class="line">o.add([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</div><div class="line"><span class="built_in">console</span>.log(o.sum); <span class="comment">// 0</span></div><div class="line"><span class="built_in">console</span>.log(sum); <span class="comment">// 106</span></div></pre></td></tr></table></figure>
-<p>在 Chrome 或者 Firefox console 底下執行的確會執向 global，但是在 nodejs v5.6.0 底下結果卻是</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(o.sum); <span class="comment">// 0</span></div><div class="line"><span class="built_in">console</span>.log(sum); <span class="comment">// 100</span></div></pre></td></tr></table></figure>
-<p>要注意。</p>
-<p>正確的範例如下</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.sum = <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Counter.prototype.add = <span class="function"><span class="keyword">function</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">  arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">el, i, arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.sum += el;</div><div class="line">  &#125;, <span class="keyword">this</span>); <span class="comment">// &lt;-- here this "thisArg"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> Counter();</div><div class="line">o.add([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</div><div class="line"><span class="built_in">console</span>.log(o.sum); <span class="comment">// 6</span></div><div class="line"><span class="built_in">console</span>.log(sum); <span class="comment">// undefined</span></div></pre></td></tr></table></figure>
-<h1 id="callback-methods"><a href="#callback-methods" class="headerlink" title="callback methods"></a>callback methods</h1><ul>
-<li>filter (has thisArg)</li>
-<li>some (has thisArg)</li>
-<li>every (has thisArg)</li>
-<li>forEach (has thisArg)</li>
-<li>map (has thisArg)</li>
-<li>reduce</li>
-<li>reduceRight</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://andyyou.github.io/2016/02/16/javascript-array-methods/" data-id="ciu438ctt008db5cwhaxtxx9w" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2016/02/18/future-of-loading-css/" data-id="ciu6poq3v008vw4cwbrmd3vx7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1666,7 +1650,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">歸檔</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 

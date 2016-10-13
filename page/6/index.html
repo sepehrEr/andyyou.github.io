@@ -161,7 +161,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                129
+                130
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -196,6 +196,137 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-understand-closures-and-scope-chain" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2015/04/20/understand-closures-and-scope-chain/">參透Javascript閉包與Scope Chain</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2015/04/20/understand-closures-and-scope-chain/">
+            <time datetime="2015-04-20T06:00:00.000Z" itemprop="datePublished">2015-04-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>從<a href="http://andyyou.github.io/javascript/2015/04/18/what-is-the-execution-context-in-javascript.html">上一篇</a>文章中我們知道了每一個 function 有一個對應的<code>執行環境</code> 其中包含著一個由在該範圍內所有的變數，function 參考，參數定義所組成的 <code>variable object</code>(變數物件 VO)。<br></p>
+            <p class="article-more-link">
+                <a href="/2015/04/20/understand-closures-and-scope-chain/#more">繼續閱讀</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://andyyou.github.io/2015/04/20/understand-closures-and-scope-chain/" data-id="ciu6poq2u006nw4cwmzcgzlfn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-what-is-the-execution-context-in-javascript" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -251,7 +382,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/18/what-is-the-execution-context-in-javascript/" data-id="ciu438csv006ib5cwymf9rqeb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/18/what-is-the-execution-context-in-javascript/" data-id="ciu6poq2x006uw4cw5wocumff" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -382,7 +513,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/09/a-primer-to-image/" data-id="ciu438csr0068b5cw7rj2s6g1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/09/a-primer-to-image/" data-id="ciu6poq2s006kw4cwjnz02b47" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -513,7 +644,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/07/get-an-element-s-position-by-js/" data-id="ciu438csn005vb5cwh6s9kxw5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/07/get-an-element-s-position-by-js/" data-id="ciu6poq2q006gw4cw8jk3zjrn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -644,7 +775,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/07/how-to-transfer-ownership-to-another/" data-id="ciu438cso005xb5cwiw9pshy1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/07/how-to-transfer-ownership-to-another/" data-id="ciu6poq2p006dw4cwlufaziiw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -776,7 +907,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/06/psql-notes/" data-id="ciu438csq0064b5cwcw2ge51y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/06/psql-notes/" data-id="ciu6poq2n0066w4cw481x8285" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -906,7 +1037,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/06/rake-t/" data-id="ciu438css006bb5cwb0e8j88f" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/06/rake-t/" data-id="ciu6poq2o0069w4cwr5mq3mk6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1037,7 +1168,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/fix-jekyll-psych-issue/" data-id="ciu438csh005lb5cwzmnp0fbc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/fix-jekyll-psych-issue/" data-id="ciu6poq2h005sw4cwsnoqz66u" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1174,7 +1305,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/devise/" data-id="ciu438csg005jb5cwawpa0fwj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/devise/" data-id="ciu6poq2f005ow4cwy01p73pl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1250,7 +1381,7 @@ ga('send', 'pageview');
 
 
 
-    <article id="post-action-pack-note" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ruby-notes" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1258,7 +1389,7 @@ ga('send', 'pageview');
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2015/04/04/action-pack-note/">ActionPack 雜記</a>
+            <a class="article-title" href="/2015/04/04/ruby-notes/">Ruby 快速筆記</a>
         </h1>
     
 
@@ -1267,7 +1398,7 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/04/04/action-pack-note/">
+        <a href="/2015/04/04/ruby-notes/">
             <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
         </a>
     </div>
@@ -1282,7 +1413,7 @@ ga('send', 'pageview');
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/RoR/">RoR</a>, <a class="tag-link" href="/tags/ruby/">ruby</a>
+        <a class="tag-link" href="/tags/ruby/">ruby</a>
     </div>
 
                     </div>
@@ -1292,9 +1423,14 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h1 id="Action-Pack"><a href="#Action-Pack" class="headerlink" title="Action Pack"></a>Action Pack</h1><p>Action Pack 是整個 Rails 的核心部份，由 ActionDispatch, ActionController, ActionView 組成<br>ActionDispatch 處理接收到的請求(Requests)，即網址的部分，ActionController 負責把請求對應轉換成回應(Responses)<br>接著 ActionController 調用 ActionView 來處理回應的格式(html, js, json, xml) 等<br></p>
+            <p><h2 id="Ruby-快速筆記"><a href="#Ruby-快速筆記" class="headerlink" title="Ruby 快速筆記"></a>Ruby 快速筆記</h2><ul>
+<li>Ruby 中的字串需要包在 <code>&quot;</code> 或者 <code>&#39;</code> 中不過兩者有一點微妙的差別，在雙引號中可以使用逸出字元(\n \r \) 等等，不過單引號會原封不動的輸出除了 <code>\\</code> 例外</li>
+<li>在呼叫方法的時候 Ruby 可以省略 ()</li>
+<li>puts 和 print 的差別是 puts 會在行末加上 \n，如果是用 , 分開不同的參數輸出則每個參數後面都會有 \n</li>
+<li>第三個輸出的 method 是 p ，puts 和 print 不管輸出的是數字或字串都只會顯示內容</li>
+</ul></p>
             <p class="article-more-link">
-                <a href="/2015/04/04/action-pack-note/#more">繼續閱讀</a>
+                <a href="/2015/04/04/ruby-notes/#more">繼續閱讀</a>
             </p>
         
         </div>
@@ -1305,138 +1441,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="http://andyyou.github.io/2015/04/04/action-pack-note/" data-id="ciu438cs2004xb5cwynv28g3s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-welcome-to-jekyll" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2015/04/04/welcome-to-jekyll/">歡迎使用 Jekyll</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2015/04/04/welcome-to-jekyll/">
-            <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/jekyll/">jekyll</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>哈囉 <code>jekyll</code> ！這是一篇展示的文章。使用 <code>Markdown</code> 格式所撰寫</p></p>
-            <p class="article-more-link">
-                <a href="/2015/04/04/welcome-to-jekyll/#more">繼續閱讀</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://andyyou.github.io/2015/04/04/welcome-to-jekyll/" data-id="ciu438csj005pb5cwp05hsjth" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://andyyou.github.io/2015/04/04/ruby-notes/" data-id="ciu6poq2j005zw4cwux3tgmyo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1532,7 +1537,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">歸檔</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
