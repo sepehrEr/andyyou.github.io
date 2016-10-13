@@ -7,22 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="本文轉譯並補充自 - Yarn: A new package manager for JavaScript。
 
-在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子，不用重新打造函式庫，框架，元件等。而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。其中在 Javascript 裡，最熱門的就屬">
+在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子的時間，不用重新打造函式庫，框架，元件等。而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。其中在 Javascript 裡，最熱門的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[譯] Yarn - Javascript 新一代套件管理">
 <meta property="og:url" content="http://andyyou.github.io/2016/10/12/new-package-manager-javascript-yarn/index.html">
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="本文轉譯並補充自 - Yarn: A new package manager for JavaScript。
 
-在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子，不用重新打造函式庫，框架，元件等。而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。其中在 Javascript 裡，最熱門的就屬">
+在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子的時間，不用重新打造函式庫，框架，元件等。而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。其中在 Javascript 裡，最熱門的">
 <meta property="og:image" content="http://imgur.com/Dpf7pVy.png">
 <meta property="og:image" content="https://scontent-tpe1-1.xx.fbcdn.net/t39.2365-6/14658612_347000295637068_647258520764284928_n.gif">
-<meta property="og:updated_time" content="2016-10-13T04:24:07.000Z">
+<meta property="og:updated_time" content="2016-10-13T05:24:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[譯] Yarn - Javascript 新一代套件管理">
 <meta name="twitter:description" content="本文轉譯並補充自 - Yarn: A new package manager for JavaScript。
 
-在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子，不用重新打造函式庫，框架，元件等。而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。其中在 Javascript 裡，最熱門的就屬">
+在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子的時間，不用重新打造函式庫，框架，元件等。而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。其中在 Javascript 裡，最熱門的">
 <meta name="twitter:image" content="http://imgur.com/Dpf7pVy.png">
     
 
@@ -241,11 +241,11 @@ ga('send', 'pageview');
             <blockquote>
 <p>本文轉譯並補充自 - <a href="https://code.facebook.com/posts/1840075619545360" target="_blank" rel="external">Yarn: A new package manager for JavaScript</a>。</p>
 </blockquote>
-<p>在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子，不用重新打造函式庫，框架，元件等。<br>而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。<br>其中在 Javascript 裡，最熱門的就屬 <code>npm</code> ，在上面有 5 百萬個開發者提供了超過 300,000 模組，更驚人的是每個月有超過 5 億次的下載量。</p>
+<p>在 Javascript 社群中，開發者們分享成千上萬的原始碼讓我們可以省去重造輪子的時間，不用重新打造函式庫，框架，元件等。<br>而每段原始碼都有可能相依於其他原始碼片段，這些相依的程式碼通常會透過套件管理（package manager）來管理。<br>其中在 Javascript 裡，最熱門的就屬 <code>npm</code> ，在上面有 5 百萬個開發者，套件庫提供了超過 300,000 模組，更驚人的是每個月有超過 5 億次的下載量。</p>
 <a id="more"></a>
 <p>Facebook 的團隊使用 npm 客戶端工具已經好幾年了，隨著原始碼大幅的成長，我們開始遭遇到一些問題包含了一致性，安全性，效能方面。<br>在嘗試解決遇到的每一個問題之後，我們開始創造一套新的、更可靠的解決方案來協助我們管理相依性的問題。</p>
 <p>這東西叫做 <code>Yarn</code> - 一個快速，可靠，更安全取代 npm 客戶端的工具。</p>
-<p>我們很開心的發佈釋出 Yarn 為開放原始碼專案，並和 Exponent, Google, Tilde 協作。使用 Yarn ，開發者仍然存取 npm 套件庫 （npm registry），但可以更快速的安裝和管理套件，保持套件的一致性，確保離線環境的安全性。<br>Yarn 讓開發者在使用這些分享的開源碼時可以自信的更新，替換，因此開發者們可以專注在他們的任務 - 開發產品和功能。</p>
+<p>我們很開心的發佈釋出 Yarn 為開放原始碼專案，並和 Exponent, Google, Tilde 協作。使用 Yarn ，開發者仍然存取 npm 套件庫 （npm registry），但可以更快速的安裝和管理套件，保持套件的一致性，可靠的離線環境<del>的安全性</del>。<br>Yarn 讓開發者在使用這些分享的開源碼時可以自信的更新，替換，因此開發者們可以專注在他們的任務 - 開發產品和功能。</p>
 <blockquote>
 <p>npm registry 收錄開發者提供模組的檔案庫與其對應資訊列表，翻譯為註冊表，但譯者認為套件庫較能表達其意義。</p>
 </blockquote>
@@ -282,7 +282,7 @@ ga('send', 'pageview');
 <ul>
 <li>與 npm 和 bower 相容，同時也支援不同的套件庫（registry）</li>
 <li>嚴格限制安裝套件的 Licenses 和輸出相關訊息</li>
-<li>提供 API 協助建置工具取得輸出一些工具（譯者註：此部分<a href="https://github.com/yarnpkg/yarn/issues/906" target="_blank" rel="external">尚未完成，更多資訊參考此 Issue</a>）</li>
+<li>提供 API 協助建置工具取得輸出<del>一些工具</del>的資訊（譯者註：此部分<a href="https://github.com/yarnpkg/yarn/issues/906" target="_blank" rel="external">尚未完成，更多資訊參考此 Issue</a>）</li>
 <li>精簡有意義且美觀的指令輸出資訊</li>
 </ul>
 <h1 id="使用-Yarn-於正式環境"><a href="#使用-Yarn-於正式環境" class="headerlink" title="使用 Yarn 於正式環境"></a>使用 Yarn 於正式環境</h1><p>在 Facebook 我們已經在正式產品中使用 Yarn，同時其運作非常良好。使得許多專案在管理相依套件上更加方便。<br>我們讓工程師即便在每次的移動中都能夠快速的離線建置，加速整個工作流程。</p>
