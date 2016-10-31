@@ -161,11 +161,11 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                133
+                132
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                55
+                54
                 <span>標籤</span>
             </div>
         </div>
@@ -238,59 +238,10 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p><code>Procfile</code> 是一種定義指令是否可以在 Heroku dynos（一種輕量化的容器，可以執行特定用戶設定的指令）上執行的機制。<br>它遵循著 Unix 的程序模型（process model）。這裡為了簡化概念，我們可以說 dyno 就是執行指令的一個個體。舉例來說一個 web dyno 就意味著執行一個 web server 的程式。希望這樣的說明可以理解這些特殊的名詞概念。</p>
-<p>您可以使用 Procfile 來宣告多種程序的類型（執行的程式種類），更簡單的來說一個執行中的程式就稱為一個程序（process）。例如一個標準的 Rails 程式至少需要兩種程序類型一個是 rack 相容的網站服務程序（Webrick, Unicorn）和 worker 程序（Delayed Job, Resque）。套用上面白話的說法就是一個執行中的伺服器服務程式，和一個排程的執行程式。</p>
-<h1 id="Profile-命名與配置"><a href="#Profile-命名與配置" class="headerlink" title="Profile 命名與配置"></a>Profile 命名與配置</h1><p>一個 Procfile 檔案名稱就是 <code>Procfile</code>，不應該是其他名稱也不需要副檔名。舉例來說 <code>Procfile.txt</code> 就是錯誤的，如果是 txt 檔案就應該只是一個文字檔。</p>
-<p>再者這個檔案應該被存放在專案的根目錄底下，如果放到其他目錄則不產生任何作用。</p>
-<h1 id="程序類型（process-types）"><a href="#程序類型（process-types）" class="headerlink" title="程序類型（process types）"></a>程序類型（process types）</h1><p>一個 Procfile 可包含多個程序（process）的宣告，且每一行可以定義一個 process type 和指令。我們稱為程序類型（process type）其實就是一指定某一種 dyno 個體，隨後當這個 dyno 啟動後就會執行後面的指令。</p>
-<p>好難懂！沒關係，舉例來說假設我們宣告了一個 web process type，意思就是靠設定後面的指令啟動該 dyno。這表示我們透過指令啟動一個 web server。直接看一下程式碼您比較清楚：</p>
-<p>一個 Rails 的 process type 在 Procfile 中會如下設定</p>
-<figure class="highlight rb"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">web:</span> bundle exec rails server -p $PORT</div></pre></td></tr></table></figure>
-<p>而一個 Clojure 程式的 web process type 大概會長得像下面這個：</p>
-<figure class="highlight rb"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">web:</span> lein run -m demo.web $PORT</div></pre></td></tr></table></figure>
-<p>使用 Maven 產生的批次檔執行 Tomcat Java 的應用程式伺服器：</p>
-<figure class="highlight rb"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">web:</span> sh target/bin/webapp</div></pre></td></tr></table></figure>
-<p>對於許多應用程式來說，這些預設的設定就足夠了。不過某些複雜並且帶有的特定執行環境需求的程式，您也許會需要自己設定相關的 process type。舉例來說，Rails 應用程式也提供額外的 process type</p>
-<figure class="highlight rb"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">worker:</span> bundle exec rake <span class="symbol">jobs:</span>work</div></pre></td></tr></table></figure>
-<h1 id="定義程序類型（process-type）"><a href="#定義程序類型（process-type）" class="headerlink" title="定義程序類型（process type）"></a>定義程序類型（process type）</h1><p>程序類型是透過 Procfile 這個檔案來定義的，並且此檔需要放在專案的跟目錄下，而其中每一行定義一個 process type。其格式如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;process type&gt;: &lt;command&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li>process type - 英數字串，定義該程序類型例如：web, worker, urgentworker, clock 等。</li>
-<li>command - 用來啟動該程序的指令，例如：<code>rake jobs:work</code></li>
-</ul>
-<blockquote>
-<p>其中 <code>web</code> process type 較為特殊，只有這種類型可以接收 Heroku 路由送來的 HTTP 傳輸資訊，其他類型可以隨意命名。</p>
-<p>另外最一開始提到 dyno 與 process type 其實這兩者之間的關係： process type 是原型類似於 class 的概念，而 dyno 則是實際初始化後的執行個體。</p>
-</blockquote>
-<h1 id="本地端開發（Heroku-Local）"><a href="#本地端開發（Heroku-Local）" class="headerlink" title="本地端開發（Heroku Local）"></a>本地端開發（Heroku Local）</h1><p>當我們在本地端開發和除錯的時候讓開發環境盡可能的與遠端環境相同是很重要的，這可以協助我們在部署之前找到問題。這時我們可以使用 Heroku Local 指令，在本地端模擬支援 Procfile 的機制。</p>
-<p>這個時候只要先配置 Procfile 和 <code>.env</code> 環境並數的檔案並執行 <code>heroku local</code> 並可在開啟本地端模式。</p>
-<p>Heroku Local 是一系列指令工具協助我們執行支援 Procfile 的應用程式。預設就會跟著 Heroku CLI 一起被安裝。同時它會從 <code>.env</code> 檔案讀取環境變數，該指令集使用 node-foreman 來完成這個任務。</p>
-<h3 id="啟動"><a href="#啟動" class="headerlink" title="啟動"></a>啟動</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ heroku <span class="built_in">local</span></div><div class="line">$ heroku <span class="built_in">local</span>:start <span class="comment"># 上面是縮寫</span></div><div class="line">$ heroku <span class="built_in">local</span> web <span class="comment"># 啟動指定特定 process type，Ctrl + C 關閉</span></div><div class="line">$ heroku <span class="built_in">local</span> <span class="_">-f</span> Procfile.test <span class="comment"># 指定其他 Procfile</span></div><div class="line">$ heroku <span class="built_in">local</span> <span class="_">-e</span> .env.test <span class="comment"># 指定其他環境變數檔案</span></div><div class="line">$ heroku <span class="built_in">local</span> -p 7000 <span class="comment"># 指定 port，預設使用 5000 port</span></div><div class="line">$ heroku <span class="built_in">local</span> -r <span class="comment"># 當程序死掉時自動重啟</span></div></pre></td></tr></table></figure>
-<p>.env 的設定格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">S3_KEY=mykey</div><div class="line">S3_SECRET=mysecret</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意 .env 應該要加到 .gitignore</p>
-</blockquote>
-<h3 id="複製-Heroku-config-環境變數到-env"><a href="#複製-Heroku-config-環境變數到-env" class="headerlink" title="複製 Heroku config 環境變數到 .env"></a>複製 Heroku config 環境變數到 .env</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ heroku config:get CONFIG-VAR-NAME <span class="_">-s</span> &gt;&gt; .env</div></pre></td></tr></table></figure>
-<h1 id="部署到-Heroku"><a href="#部署到-Heroku" class="headerlink" title="部署到 Heroku"></a>部署到 Heroku</h1><p>Procfile 並不是部署應用程式必須的東西，Heroku 會自動偵測使用的程式語言然後替它們建立對應的 web 程序類型。當然這邊推薦替您的程式建立一個明確的 Procfile。</p>
-<p>另外，使用 <code>heroku ps</code> 可以提供我們明確正在執行的 dyno 數量與其狀態資訊。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">heroku ps</div><div class="line">=== web (Free): bin/rails server -p <span class="variable">$PORT</span> <span class="_">-e</span> <span class="variable">$RAILS_ENV</span> (1)</div><div class="line">web.1: idle 2016/10/31 12:32:49 +0800 (~ 4h ago)</div></pre></td></tr></table></figure>
-<p><code>heroku logs</code> 可以彙整顯示關於所有 dyno 的 log。</p>
-<h1 id="操作（擴展）-process-type"><a href="#操作（擴展）-process-type" class="headerlink" title="操作（擴展） process type"></a>操作（擴展） process type</h1><p>Heroku 正常情況下會自動執行<em>一個</em> <code>web</code> dyno ，並且其他的 process type 預設並不會自動執行。<br>例如我們要啟動一個 worker 我們就需要自己執行（注意：Procfile 沒有註明的情況下）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ heroku ps:scale worker=1</div></pre></td></tr></table></figure>
-<p>當然在隨著服務成長我們可能會需要增加 dyno 的規格</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ heroku ps:resize worker=standard-2x</div><div class="line"></div><div class="line"><span class="comment"># web=2 意味著水平擴展增加為 2 個叢集節點，standard-2x 為垂直擴展增加單節點的效能</span></div><div class="line">$ heroku ps:scale web=2:standard-2x</div><div class="line"></div><div class="line"><span class="comment"># 單純水平擴展</span></div><div class="line">$ heroku ps:scale web=4 worker=2</div></pre></td></tr></table></figure>
-<img src="/2016/10/31/process-types-and-profile/2016-10-31-17-27-18.png" alt="2016-10-31-17-27-18.png" title="">
-<p>使用 <code>ps</code> 可以確認看看 process type 是否運行。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">heroku ps</div><div class="line">=== web: `bundle <span class="built_in">exec</span> rails server -p <span class="variable">$PORT</span>`</div><div class="line">web.1: up <span class="keyword">for</span> 2m</div><div class="line"></div><div class="line">=== worker: `env QUEUE=* bundle <span class="built_in">exec</span> rake resque:work`</div><div class="line">worker.1: up <span class="keyword">for</span> 5s</div></pre></td></tr></table></figure>
-<p>由於預設 <code>heroku logs</code> 會把所有 process type 的日誌訊息都混在一起，有時候我們僅需要針對某一類型查看資訊</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ heroku logs --ps worker</div></pre></td></tr></table></figure>
-<h1 id="Heroku-指令彙整"><a href="#Heroku-指令彙整" class="headerlink" title="Heroku 指令彙整"></a>Heroku 指令彙整</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">$ heroku login <span class="comment"># 登入</span></div><div class="line">$ heroku version <span class="comment"># 查看版本</span></div><div class="line">$ heroku keys:add <span class="comment"># 上傳金鑰</span></div><div class="line">$ heroku create --app [app_name] <span class="comment"># 建立 app</span></div><div class="line">$ heroku open <span class="comment"># 開啟網址</span></div><div class="line">$ heroku rename <span class="comment"># 重新命名 app 與對應網址</span></div><div class="line">$ heroku ps:scale worker=2 <span class="comment"># 啟動 worker dyno</span></div><div class="line">$ heroku ps:stop worker <span class="comment"># 停止所有 worker dynos</span></div><div class="line">$ heroku ps:stop worker.2 <span class="comment"># 停止指定的 worker dyno</span></div><div class="line">$ heroku ps:restart <span class="comment"># 重啟所有 dynos</span></div><div class="line">$ heroku dyno:<span class="built_in">type</span> web=3 <span class="comment"># 設定指定 dyno 規格</span></div><div class="line">$ heroku dyno:<span class="built_in">type</span> standard-1x <span class="comment"># 全部服務都設定為 standard-1x</span></div><div class="line">$ heroku ps <span class="comment"># 查看運行狀態</span></div><div class="line">$ heroku logs --ps worker <span class="comment"># 針對特定 dyno 列出 log</span></div><div class="line">$ heroku pg:reset DATABASE <span class="comment"># 清空資料庫</span></div><div class="line"></div><div class="line"><span class="comment"># Rails v5.x</span></div><div class="line">$ heroku run rails console <span class="comment"># 運行在遠端主機的 rails console</span></div><div class="line">$ heroku run rails db:migrate</div><div class="line">$ heroku run rails assets:precompile</div></pre></td></tr></table></figure>
-<h1 id="資源"><a href="#資源" class="headerlink" title="資源"></a>資源</h1><ul>
-<li><a href="https://devcenter.heroku.com/articles/dynos" target="_blank" rel="external">官方 dynos 管理教學文件</a></li>
-</ul>
-
+            <p><p><code>Procfile</code> 是一種定義指令是否可以在 Heroku dynos（一種輕量化的容器，可以執行特定用戶設定的指令）上執行的機制。<br>它遵循著 Unix 的程序模型（process model）。這裡為了簡化概念，我們可以說 dyno 就是執行指令的一個個體。舉例來說一個 web dyno 就意味著執行一個 web server 的程式。希望這樣的說明可以理解這些特殊的名詞概念。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/10/31/process-types-and-profile/#more">繼續閱讀</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -301,152 +252,6 @@ ga('send', 'pageview');
 </div>
 
     <a data-url="http://andyyou.github.io/2016/10/31/process-types-and-profile/" data-id="ciuxx7vin00czgecw74bexq3c" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-create-aws-iam" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/10/14/create-aws-iam/">AWS IAM 筆記</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/10/14/create-aws-iam/">
-            <time datetime="2016-10-14T03:42:15.000Z" itemprop="datePublished">2016-10-14</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Cloud/">Cloud</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/aws/">aws</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="IAM-是什麼？"><a href="#IAM-是什麼？" class="headerlink" title="IAM 是什麼？"></a>IAM 是什麼？</h3><p>AWS Identity and Access Management (IAM) 屬於一個網路服務協助您的使用者安全的控制存取 AWS 資源權限。<br>您可以透過 IAM 控制誰能夠使用您的資源，透過什麼方式使用。</p>
-<p>IAM 資源/組成</p>
-<ul>
-<li>User</li>
-<li>Role</li>
-<li>Group</li>
-<li>Identity Provider</li>
-<li>Policy</li>
-</ul>
-<p>IAM 賦予我們下列的功能：</p>
-<h5 id="委派帳號存取權限給其他使用者"><a href="#委派帳號存取權限給其他使用者" class="headerlink" title="委派帳號存取權限給其他使用者"></a>委派帳號存取權限給其他使用者</h5><p>您可以授權給其他人管理您 AWS 帳號的資源而不需要把帳密或存取金鑰交給對方。</p>
-<h5 id="細分權限-存取部分功能"><a href="#細分權限-存取部分功能" class="headerlink" title="細分權限 - 存取部分功能"></a>細分權限 - 存取部分功能</h5><p>您可以授予不同的權限與資源給不同的使用者。舉例來說您也許會允許某些使用者可以完整存取 Amazon Elatic Compute Cloud（Amazon EC2），Amazon Simple Storage Service（Amazon S3），Amazon DynamoDB，Amazon Redshift，和其他 AWS 服務。另外其他人您可以讓他們只有讀取 S3 buckets 的權限、只有管理 EC2 執行個體的權限，又或者只能讀取帳單資訊。</p>
-<h5 id="賦予-Amazon-EC2-中的應用程式權限"><a href="#賦予-Amazon-EC2-中的應用程式權限" class="headerlink" title="賦予 Amazon EC2 中的應用程式權限"></a>賦予 Amazon EC2 中的應用程式權限</h5><p>您可以使用 IAM 的功能安全的給予在執行個體上運行的應用程式權限，讓它們可以存取其他資源像是 S3，RDS 或 DynamoDB。</p>
-<h5 id="成員認證"><a href="#成員認證" class="headerlink" title="成員認證"></a>成員認證</h5><p>您可以授權在其他地方已經有密碼的使用者 - 舉例來說您的企業網路或內部網域整合識別服務取得暫時的權限以存取您的 AWS 帳號。</p>
-<h5 id="確認身份資訊"><a href="#確認身份資訊" class="headerlink" title="確認身份資訊"></a>確認身份資訊</h5><p>如果您使用 <a href="https://aws.amazon.com/tw/cloudtrail/" target="_blank" rel="external">AWS CloudTrail</a>，您會收到日誌訊息，其資訊包含誰請求您帳號的服務資源，這些資訊都會根據 IAM 身份取得。</p>
-<h5 id="支援-PCI-DSS（支付卡產業資料安全標準）"><a href="#支援-PCI-DSS（支付卡產業資料安全標準）" class="headerlink" title="支援 PCI DSS（支付卡產業資料安全標準）"></a>支援 PCI DSS（支付卡產業資料安全標準）</h5><p>IAM 支援商家，服務提供者處理，儲存，傳送信用卡資訊並且整個流程通過 PCI DSS 的驗證。更多關於 PCI DSS 的資訊請參閱<a href="http://aws.amazon.com/compliance/pci-dss-level-1-faqs/" target="_blank" rel="external">PCI DSS Level 1</a></p>
-<h5 id="和其他-AWS-服務整合"><a href="#和其他-AWS-服務整合" class="headerlink" title="和其他 AWS 服務整合"></a>和其他 AWS 服務整合</h5><p>關於 AWS 服務列表與 IAM 整合的相關資訊，請查閱 <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html" target="_blank" rel="external">AWS Services That Work with IAM</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://andyyou.github.io/2016/10/14/create-aws-iam/" data-id="ciuxx7vim00cwgecwpw4e4413" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -546,17 +351,7 @@ ga('send', 'pageview');
 
 
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Cloud/">Cloud</a>
-    </div>
-
                         
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/aws-RoR/">aws, RoR</a>
-    </div>
-
                     </div>
                 
             </header>
@@ -1669,6 +1464,137 @@ ga('send', 'pageview');
 
 
 
+    <article id="post-build-app-with-vue" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/06/18/build-app-with-vue/">Vue 實作簡易驗證機制 App</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/06/18/build-app-with-vue/">
+            <time datetime="2016-06-18T04:00:00.000Z" itemprop="datePublished">2016-06-18</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/vuejs/">vuejs</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>為了顯示出 Vue.js 強大的能力 ，本文將會逐步指導建置一個簡單的前端應用程式。搭配 Node 所建置的後端程式範例。前後端兩個程式是完全分離的，後端使用 RESTful API 的方式負責取得資料與驗證。本文旨在說明如何替 Vue.js 程式加上驗證機制，過程中我們會使用 <code>vue-router</code>, <code>vue-resource</code> 實作 <code>Login</code> 與 <code>Signup</code> 元件展示如何檢索和儲存使用者的 <code>jwt token</code>，最後執行驗證機制取得那些需要授權的資料。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/06/18/build-app-with-vue/#more">繼續閱讀</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://andyyou.github.io/2016/06/18/build-app-with-vue/" data-id="ciuxx7vi500c8gecwat0qexq4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <nav id="page-nav">
         <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">下一頁 &raquo;</a>
     </nav>
@@ -1680,7 +1606,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">分類</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fun/">Fun</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mobile/">Mobile</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program/">Program</a><span class="category-list-count">92</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/System/">System</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">14</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fun/">Fun</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mobile/">Mobile</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program/">Program</a><span class="category-list-count">92</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/System/">System</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">14</span></li></ul>
         </div>
     </div>
 
@@ -1689,7 +1615,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">歸檔</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -1698,7 +1624,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">標籤</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-mvc/">.net mvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RoR/">RoR</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api/">api</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws-RoR/">aws, RoR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/azure/">azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bot/">bot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bundler/">bundler</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/carrier-wave/">carrier wave</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compass/">compass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devise/">devise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity-framework/">entity framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/facebook/">facebook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flux/">flux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/framework/">framework</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iisexpress/">iisexpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">43</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jspm/">jspm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mechanism/">mechanism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oocss/">oocss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/osx/">osx</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package-manager/">package manager</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/">postgresql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rack-server/">rack server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/">raspberry-pi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/">reactjs</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/">redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/selenium/">selenium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slim/">slim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task-runner/">task runner</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs/">vuejs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-mvc/">.net mvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RoR/">RoR</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api/">api</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/azure/">azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bot/">bot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bundler/">bundler</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/carrier-wave/">carrier wave</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compass/">compass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devise/">devise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity-framework/">entity framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/facebook/">facebook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flux/">flux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/framework/">framework</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iisexpress/">iisexpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">43</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jspm/">jspm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mechanism/">mechanism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oocss/">oocss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/osx/">osx</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package-manager/">package manager</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/">postgresql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rack-server/">rack server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/">raspberry-pi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/">reactjs</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/">redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/selenium/">selenium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slim/">slim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task-runner/">task runner</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs/">vuejs</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1707,7 +1633,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">標籤雲</h3>
         <div class="widget tagcloud">
-            <a href="/tags/net-mvc/" style="font-size: 10px;">.net mvc</a> <a href="/tags/RoR/" style="font-size: 17px;">RoR</a> <a href="/tags/api/" style="font-size: 10px;">api</a> <a href="/tags/aws/" style="font-size: 11px;">aws</a> <a href="/tags/aws-RoR/" style="font-size: 10px;">aws, RoR</a> <a href="/tags/azure/" style="font-size: 11px;">azure</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/bundler/" style="font-size: 11px;">bundler</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/carrier-wave/" style="font-size: 11px;">carrier wave</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/compass/" style="font-size: 10px;">compass</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/devise/" style="font-size: 10px;">devise</a> <a href="/tags/docker/" style="font-size: 11px;">docker</a> <a href="/tags/entity-framework/" style="font-size: 10px;">entity framework</a> <a href="/tags/es6/" style="font-size: 12px;">es6</a> <a href="/tags/facebook/" style="font-size: 10px;">facebook</a> <a href="/tags/flux/" style="font-size: 10px;">flux</a> <a href="/tags/framework/" style="font-size: 11px;">framework</a> <a href="/tags/grunt/" style="font-size: 13px;">grunt</a> <a href="/tags/gulp/" style="font-size: 12px;">gulp</a> <a href="/tags/heroku/" style="font-size: 11px;">heroku</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/iisexpress/" style="font-size: 10px;">iisexpress</a> <a href="/tags/ios/" style="font-size: 12px;">ios</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jekyll/" style="font-size: 11px;">jekyll</a> <a href="/tags/jspm/" style="font-size: 10px;">jspm</a> <a href="/tags/jwt/" style="font-size: 10px;">jwt</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mechanism/" style="font-size: 10px;">mechanism</a> <a href="/tags/mongodb/" style="font-size: 11px;">mongodb</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/oocss/" style="font-size: 10px;">oocss</a> <a href="/tags/osx/" style="font-size: 14px;">osx</a> <a href="/tags/package-manager/" style="font-size: 15px;">package manager</a> <a href="/tags/php/" style="font-size: 11px;">php</a> <a href="/tags/postgresql/" style="font-size: 10px;">postgresql</a> <a href="/tags/rack-server/" style="font-size: 10px;">rack server</a> <a href="/tags/raspberry-pi/" style="font-size: 10px;">raspberry-pi</a> <a href="/tags/react-native/" style="font-size: 10px;">react native</a> <a href="/tags/reactjs/" style="font-size: 19px;">reactjs</a> <a href="/tags/redux/" style="font-size: 10px;">redux</a> <a href="/tags/ruby/" style="font-size: 16px;">ruby</a> <a href="/tags/sass/" style="font-size: 11px;">sass</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/slim/" style="font-size: 10px;">slim</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/task-runner/" style="font-size: 12px;">task runner</a> <a href="/tags/vuejs/" style="font-size: 12px;">vuejs</a> <a href="/tags/webpack/" style="font-size: 12px;">webpack</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
+            <a href="/tags/net-mvc/" style="font-size: 10px;">.net mvc</a> <a href="/tags/RoR/" style="font-size: 17px;">RoR</a> <a href="/tags/api/" style="font-size: 10px;">api</a> <a href="/tags/aws/" style="font-size: 10px;">aws</a> <a href="/tags/azure/" style="font-size: 11px;">azure</a> <a href="/tags/bot/" style="font-size: 10px;">bot</a> <a href="/tags/bundler/" style="font-size: 11px;">bundler</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/carrier-wave/" style="font-size: 11px;">carrier wave</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/compass/" style="font-size: 10px;">compass</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/devise/" style="font-size: 10px;">devise</a> <a href="/tags/docker/" style="font-size: 11px;">docker</a> <a href="/tags/entity-framework/" style="font-size: 10px;">entity framework</a> <a href="/tags/es6/" style="font-size: 12px;">es6</a> <a href="/tags/facebook/" style="font-size: 10px;">facebook</a> <a href="/tags/flux/" style="font-size: 10px;">flux</a> <a href="/tags/framework/" style="font-size: 11px;">framework</a> <a href="/tags/grunt/" style="font-size: 13px;">grunt</a> <a href="/tags/gulp/" style="font-size: 12px;">gulp</a> <a href="/tags/heroku/" style="font-size: 11px;">heroku</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/iisexpress/" style="font-size: 10px;">iisexpress</a> <a href="/tags/ios/" style="font-size: 12px;">ios</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jekyll/" style="font-size: 11px;">jekyll</a> <a href="/tags/jspm/" style="font-size: 10px;">jspm</a> <a href="/tags/jwt/" style="font-size: 10px;">jwt</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/mechanism/" style="font-size: 10px;">mechanism</a> <a href="/tags/mongodb/" style="font-size: 11px;">mongodb</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/oocss/" style="font-size: 10px;">oocss</a> <a href="/tags/osx/" style="font-size: 14px;">osx</a> <a href="/tags/package-manager/" style="font-size: 15px;">package manager</a> <a href="/tags/php/" style="font-size: 11px;">php</a> <a href="/tags/postgresql/" style="font-size: 10px;">postgresql</a> <a href="/tags/rack-server/" style="font-size: 10px;">rack server</a> <a href="/tags/raspberry-pi/" style="font-size: 10px;">raspberry-pi</a> <a href="/tags/react-native/" style="font-size: 10px;">react native</a> <a href="/tags/reactjs/" style="font-size: 19px;">reactjs</a> <a href="/tags/redux/" style="font-size: 10px;">redux</a> <a href="/tags/ruby/" style="font-size: 16px;">ruby</a> <a href="/tags/sass/" style="font-size: 11px;">sass</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/slim/" style="font-size: 10px;">slim</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/task-runner/" style="font-size: 12px;">task runner</a> <a href="/tags/vuejs/" style="font-size: 12px;">vuejs</a> <a href="/tags/webpack/" style="font-size: 12px;">webpack</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/xml/" style="font-size: 10px;">xml</a>
         </div>
     </div>
 
