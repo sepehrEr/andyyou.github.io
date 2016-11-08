@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="前言如果您曾經閱讀過小弟的vue + webpack 起手式一文，裡面我曾提到關於容易與傳統 MVC 框架(Rails, ASP.NET MVC)等結合。這篇文章主要就是用來介紹其作法與為什麼我會這麼說。
 我先承認吧！我不總是需要使用 SPA 的架構  雖然它很好，但對於很多小型專案，或者我們應該說 UI/UX 設計本身非常單純的專案 - 殺雞焉用牛刀。所以這邊文章的作法針對的是那些專案不是使用">
-<meta property="og:updated_time" content="2016-11-07T10:41:37.000Z">
+<meta property="og:updated_time" content="2016-11-08T01:16:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="穠纖合度的整合 Rails、Webpack、Vuejs">
 <meta name="twitter:description" content="前言如果您曾經閱讀過小弟的vue + webpack 起手式一文，裡面我曾提到關於容易與傳統 MVC 框架(Rails, ASP.NET MVC)等結合。這篇文章主要就是用來介紹其作法與為什麼我會這麼說。
@@ -359,7 +359,7 @@ ga('send', 'pageview');
 <h3 id="使用指令"><a href="#使用指令" class="headerlink" title="使用指令"></a>使用指令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 平常開發模式</span></div><div class="line">$ foreman s <span class="_">-f</span> Procfile.dev</div><div class="line"></div><div class="line"><span class="comment"># 支援 Hot Reload</span></div><div class="line">$ HRM=<span class="literal">true</span> foreman start <span class="_">-f</span> Procfile.devserver</div><div class="line"></div><div class="line"><span class="comment"># Ctrl + C 中止</span></div></pre></td></tr></table></figure>
 <h1 id="漸進式的-Vue-js-是-MVC-框架的好朋友"><a href="#漸進式的-Vue-js-是-MVC-框架的好朋友" class="headerlink" title="漸進式的 Vue.js 是 MVC 框架的好朋友"></a>漸進式的 Vue.js 是 MVC 框架的好朋友</h1><p>在 Javascript 當道的今天我想您很容易找到很多關於 SPA 的主流作法。但這篇文章要說明的是把 JS 當作配角的作法。</p>
 <p>首先我們需要更新設定檔，使其支援主角 Vue.js v2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm i -g vue-loader vue-hot-reload-api -D</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm i vue-loader vue-hot-reload-api -D</div></pre></td></tr></table></figure>
 <p>webpack 所有的 config loader 的部分補上：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>,</div><div class="line">  <span class="attr">loader</span>: <span class="string">'vue'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>另外 resolve 的部分，因為我們需要 standalone 版本的功能所以需要下面設定：</p>
