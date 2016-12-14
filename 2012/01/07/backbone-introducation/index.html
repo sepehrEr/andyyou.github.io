@@ -5,20 +5,17 @@
     
     <title>backbone-introducation | DEVLOG of andyyou</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。這篇文章只是大略用範例來做些基本的說明。
-What is BackboneJS ?Backbone 是一個為前端設計的JavaScript框架。 不同於jQuery專注於簡化DOM的操作和事件繫結。Back">
+    <meta name="description" content="前言這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。這篇文章只是大略用範例來做些基本的說明。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="backbone-introducation">
 <meta property="og:url" content="//andyyou.github.io/2012/01/07/backbone-introducation/index.html">
 <meta property="og:site_name" content="DEVLOG of andyyou">
-<meta property="og:description" content="前言這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。這篇文章只是大略用範例來做些基本的說明。
-What is BackboneJS ?Backbone 是一個為前端設計的JavaScript框架。 不同於jQuery專注於簡化DOM的操作和事件繫結。Back">
+<meta property="og:description" content="前言這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。這篇文章只是大略用範例來做些基本的說明。">
 <meta property="og:image" content="http://backbonejs.org/docs/images/backbone.png">
-<meta property="og:updated_time" content="2016-12-14T00:46:05.000Z">
+<meta property="og:updated_time" content="2016-12-14T00:47:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="backbone-introducation">
-<meta name="twitter:description" content="前言這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。這篇文章只是大略用範例來做些基本的說明。
-What is BackboneJS ?Backbone 是一個為前端設計的JavaScript框架。 不同於jQuery專注於簡化DOM的操作和事件繫結。Back">
+<meta name="twitter:description" content="前言這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。這篇文章只是大略用範例來做些基本的說明。">
 <meta name="twitter:image" content="http://backbonejs.org/docs/images/backbone.png">
     
 
@@ -236,6 +233,7 @@ ga('send', 'pageview');
             
             <p><img src="http://backbonejs.org/docs/images/backbone.png" alt="Alt text"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這篇文章不是要深入探討關於BackboneJS的使用，純粹是因為最近Javascript MVC Framework<br>一直推陳出新。但像小弟資質愚鈍其實剛知道這東西的時候完全不知道她在干嘛。<br>這篇文章只是大略用範例來做些基本的說明。</p>
+<a id="more"></a>
 <h2 id="What-is-BackboneJS"><a href="#What-is-BackboneJS" class="headerlink" title="What is BackboneJS ?"></a>What is BackboneJS ?</h2><p><a href="http://backbonejs.org/" target="_blank" rel="external">Backbone</a> 是一個為前端設計的JavaScript框架。 不同於jQuery專注於簡化DOM的操作和事件繫結。<br>Backbone 提供結構化來達到分離資料模型和DOM。就像是MVC框架分離View，Model，Controller。<br>它讓複雜的JavaScript應用程式更簡單的開發和維護。</p>
 <h2 id="為什麼使用Backbone"><a href="#為什麼使用Backbone" class="headerlink" title="為什麼使用Backbone?"></a>為什麼使用Backbone?</h2><p>在jQuery裡，我們可能會使用一連串的事件來指派資料到DOM像以下範例:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//宣告一個資料物件</span></div><div class="line"><span class="keyword">var</span> article = &#123;</div><div class="line">  <span class="attr">author</span>:<span class="string">"Joe"</span>,</div><div class="line">  <span class="attr">content</span>: <span class="string">"testing"</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">//透過jQuery Selector選到ID為article的DOM然後繫結事件放入資料等操作</span></div><div class="line">$(<span class="string">'#article'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  $(<span class="keyword">this</span>).find(<span class="string">'.content'</span>).text(article.content);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
