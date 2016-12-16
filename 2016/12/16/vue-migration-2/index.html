@@ -3,26 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>React 大解密 | DEVLOG of andyyou</title>
+    <title>Vue.js 由 1 到 2 的旅程 - (2) | DEVLOG of andyyou</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="React 揭秘關於這篇文章將會試著解釋關於 React 核心的概念。">
+    <meta name="description" content="第二集，我們要聊的是一個很瑣碎的點也許會造成您困惑，在精神不濟的情況下建議略過本文。如果您跟我一樣閱讀的是英文版的文件加上英文又不是很牛，那麼我想這個點可能會造成您的困惑。如果您也曾對 string templates 和 non-string templates 兩個詞有疑惑的話就讓我們繼續看下去…">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React 大解密">
-<meta property="og:url" content="//andyyou.github.io/2014/09/20/reactjs-reactjs-decrypt/index.html">
+<meta property="og:title" content="Vue.js 由 1 到 2 的旅程 - (2)">
+<meta property="og:url" content="//andyyou.github.io/2016/12/16/vue-migration-2/index.html">
 <meta property="og:site_name" content="DEVLOG of andyyou">
-<meta property="og:description" content="React 揭秘關於這篇文章將會試著解釋關於 React 核心的概念。">
-<meta property="og:image" content="http://i.imgur.com/qcNTzCE.png">
-<meta property="og:image" content="http://i.imgur.com/Lrzy1e3.png">
-<meta property="og:image" content="http://i.imgur.com/F5KnIW7.png">
-<meta property="og:image" content="http://i.imgur.com/MElJPrk.png">
-<meta property="og:image" content="http://i.imgur.com/w0w7JOe.png">
-<meta property="og:image" content="http://i.imgur.com/w5RMkO2.png">
-<meta property="og:image" content="http://i.imgur.com/qq0uWsY.png">
-<meta property="og:updated_time" content="2016-10-10T13:22:24.000Z">
+<meta property="og:description" content="第二集，我們要聊的是一個很瑣碎的點也許會造成您困惑，在精神不濟的情況下建議略過本文。如果您跟我一樣閱讀的是英文版的文件加上英文又不是很牛，那麼我想這個點可能會造成您的困惑。如果您也曾對 string templates 和 non-string templates 兩個詞有疑惑的話就讓我們繼續看下去…">
+<meta property="og:image" content="http://imgur.com/CuQ3C1h.png">
+<meta property="og:updated_time" content="2016-12-16T09:49:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="React 大解密">
-<meta name="twitter:description" content="React 揭秘關於這篇文章將會試著解釋關於 React 核心的概念。">
-<meta name="twitter:image" content="http://i.imgur.com/qcNTzCE.png">
+<meta name="twitter:title" content="Vue.js 由 1 到 2 的旅程 - (2)">
+<meta name="twitter:description" content="第二集，我們要聊的是一個很瑣碎的點也許會造成您困惑，在精神不濟的情況下建議略過本文。如果您跟我一樣閱讀的是英文版的文件加上英文又不是很牛，那麼我想這個點可能會造成您的困惑。如果您也曾對 string templates 和 non-string templates 兩個詞有疑惑的話就讓我們繼續看下去…">
+<meta name="twitter:image" content="http://imgur.com/CuQ3C1h.png">
     
 
     
@@ -204,7 +198,7 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><article id="post-reactjs-reactjs-decrypt" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-vue-migration-2" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -212,7 +206,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            React 大解密
+            Vue.js 由 1 到 2 的旅程 - (2)
         </h1>
     
 
@@ -221,8 +215,8 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2014/09/20/reactjs-reactjs-decrypt/">
-            <time datetime="2014-09-19T16:43:00.000Z" itemprop="datePublished">2014-09-20</time>
+        <a href="/2016/12/16/vue-migration-2/">
+            <time datetime="2016-12-16T08:00:00.000Z" itemprop="datePublished">2016-12-16</time>
         </a>
     </div>
 
@@ -236,7 +230,7 @@ ga('send', 'pageview');
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/reactjs/">reactjs</a>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/vuejs/">vuejs</a>
     </div>
 
                     </div>
@@ -247,68 +241,64 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="React-揭秘"><a href="#React-揭秘" class="headerlink" title="React 揭秘"></a>React 揭秘</h2><p>關於這篇文章將會試著解釋關於 React 核心的概念。</p>
+            <p>第二集，我們要聊的是一個很瑣碎的點也許會造成您困惑，在精神不濟的情況下建議略過本文。如果您跟我一樣閱讀的是英文版的文件加上英文又不是很牛，那麼我想這個點可能會造成您的困惑。<br>如果您也曾對 <code>string templates</code> 和 <code>non-string templates</code> 兩個詞有疑惑的話就讓我們繼續看下去…</p>
 <a id="more"></a>
-<h2 id="鳥瞰架構"><a href="#鳥瞰架構" class="headerlink" title="鳥瞰架構"></a>鳥瞰架構</h2><p>在傳統的網頁應用程式中，我們如果要增加互動性時勢必廣泛的操作 DOM 元素，一般來說現在最普遍的技術是使用 <code>jQuery</code>:<br><img src="http://i.imgur.com/qcNTzCE.png" alt=""><br>上圖我們故意讓 DOM 示意為紅色這是因為操作更新 DOM 是需要付出昂貴的代價，也意味著這很吃效能。<br>很多時候我們會使用 Model 來記錄關於 APP 狀態，不過通常我們最後目標是必須要將狀態呈現給使用者，所以我們必須自己實作這些細節。<br>這已經是我們很稀鬆平常的開發模式。</p>
-<p>而 React 的主要目標就是提供一種不同且更有效率的方式去執行關於操作更新 DOM 這個部分，最終這個方式會取代我們直接操作 DOM 的方法。<br>React 使用的方式是透過建立一套虛擬 DOM 的機制，React 幫你處理關於操作 DOM 方面的事情。<br><img src="http://i.imgur.com/Lrzy1e3.png" alt=""></p>
-<p>為什麼多引進一層架構會讓效能增加? 如果在其架構之上多引入一層可以提升速度，這不是暗示瀏覽器並沒有實作最佳的 DOM 操作方式。<br>這也意味著虛擬 DOM 有著跟實際 DOM 不同的語義和行為。值得關注的是當我們改變虛擬 DOM 時並不能保證立即得到效果。<br>也因為這個機制導致 React 在實際接觸 DOM 之前必須要等待事件回圈結束。在同一時間它會去計算最小差異並盡可能的用最少的步驟去更新 DOM。</p>
-<p>如此一來應用程式便能獨立執行批次更新，套用計算後的差異到實際 DOM 上，任何應用程式如果這麼做那麼都能夠像 React 一樣有效率。<br>但實際上自己編寫程式碼去做這些任務是很繁瑣且容易出錯，React 的精華之處就是幫你處理掉這些問題。</p>
-<h2 id="元件"><a href="#元件" class="headerlink" title="元件"></a>元件</h2><p>就上面所提到的虛擬 DOM 的機制有著跟直接操作實際 DOM 不一樣的語義和行為，所以也會有明顯不同的 API。<br>所謂的元素即在 DOM 結構中的一個節點(node)，不過在虛擬 DOM 機制底下一個節點完全是不一樣的東西，我們稱這個節點為<code>元件</code>。</p>
-<p>使用元件對 React 來說是一件非常重要的事情，因為元件的設計概念是要拿來做計算的，就是計算和實際 DOM 的差異。<br>比起計算整個結構的差異，React 透過虛擬 DOM 將使得實際執行的時間複雜度大幅下降。</p>
-<p>為了理解為什麼? 我們必須深入探討元件的設計，就從 <code>Hello World</code> 範例:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx React.DOM */</span></div><div class="line"><span class="keyword">var</span> HelloMessage = React.createClass(&#123;</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">React.renderComponent(<span class="xml"><span class="tag">&lt;<span class="name">HelloMessage</span> <span class="attr">name</span>=<span class="string">"Andy"</span> /&gt;</span>, mountNode);</span></div></pre></td></tr></table></figure>
-<p>上面這段程式碼出現了一些可怕的東西，且在這個階段無法完全說明清楚。即使是這麼小的一段範例都包含著一個很強大的概念，所以在這邊我們將會花些時間慢慢一點一點說明。</p>
-<p>這個範例建立了一個 React 元件的類別(class): <code>HelloMessage</code>，然後透過 <code>renderComponent()</code> 在虛擬的 DOM 的機制中建立一個元件(<code>&lt;HelloMessage /&gt;</code>, 本質上它就是 HelloMessage 類別實例化的物件，同時也是一個虛擬的 DOM)<br>最後把這個物件裝到真實的 DOM 元素(mountNode)。</p>
-<p>首先是需要注意的事情是 React 的虛擬 DOM 通常來自您在應用程式中客制的元件(在這個例子是 <code>&lt;HelloMessage&gt;</code>)。這是一個意義重大的新嘗試，從內建的 DOM 分離出來。<br>DOM 通常不帶有任何程式邏輯，就只是一個被動的資料結構，且讓我們能夠附加處理事件。換句話說 React 的虛擬 DOM 是透過特定程式中的元件所創造的，且能夠加入程式中的特定 API 及內部邏輯。<br>這樣的方式比起直接修改操作 DOM ，例如: 使用 jQuery 的方式，這種建置 View 的方法是一種全新的抽象化方式與框架。</p>
-<p>值得一提的是: 如果您一直持續關注 HTML 你也許知道關於 HTML 也許很快的也能<a href="http://www.html5rocks.com/en/tutorials/webcomponents/customelements/" target="_blank" rel="external">自訂 DOM</a>。<br>這將會帶給 DOM 類似的功能: 定義特定程式使用的 DOM 元素，不過 React 並不需要等到官方和瀏覽器完全實作這件事，因為虛擬 DOM 並不是真的 DOM。這讓 React 搶先在自訂元素與 <a href="http://www.html5rocks.com/en/tutorials/webcomponents/shadowdom/" target="_blank" rel="external">Shadow DOM</a><br>這些功能實作普及之前您就能先用了。</p>
-<p>回到我們的範例，我們已經建立了一個叫做 <code>&lt;HelloMessage&gt;</code> 的元件並且掛載 <code>mountNode</code> 裡面。<br>讓我們用圖片來說明初始化幾個部分的情形，首先，我們將虛擬 DOM 與實際 DOM 的關係視覺化，假設 <code>mountNode</code> 是網頁中的 <code>&lt;body&gt;</code> 標簽:</p>
+<h1 id="在開始之前"><a href="#在開始之前" class="headerlink" title="在開始之前"></a>在開始之前</h1><p>我們要先介紹的是 <code>Vue 的 templates 提供了兩種實作方式</code>。什麼意思，就是我們可以透過 Vue 的 template 屬性（options）或者 DOM templates 的方式來撰寫樣板。看看下面兩種範例</p>
+<h3 id="No-1-template-屬性"><a href="#No-1-template-屬性" class="headerlink" title="No 1 template 屬性"></a>No 1 template 屬性</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// template 屬性</span></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'...'</span>,</div><div class="line">  <span class="attr">template</span>: <span class="string">`&lt;div&gt;1&lt;/div&gt;`</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="No-2-DOM-templates"><a href="#No-2-DOM-templates" class="headerlink" title="No 2 DOM templates"></a>No 2 DOM templates</h3><p>不同的 HTML 與 Javascript 檔案：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- 標籤結構寫在 HTML 中的 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">  <span class="attr">data</span>: &#123;</div><div class="line">    <span class="attr">message</span>: <span class="string">'Hello, Vue.js'</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>小結一下就是 template 可以寫在 Javascript 又或者寫在 HTML 裡面。</p>
+<h1 id="疑惑的產生"><a href="#疑惑的產生" class="headerlink" title="疑惑的產生"></a>疑惑的產生</h1><p>當我們開始閱讀 Vue 2 官方文件時，會發現在第一版時並沒有 <a href="https://vuejs.org/v2/guide/syntax.html" target="_blank" rel="external">Template Syntax</a> 一章。<br>原因是在該章節的一開始便開宗明義的提到：</p>
 <blockquote>
-<p>關於掛載(mount)一詞就理解為『對應』，把 a 掛載到 b 上 = 可以把 b  視為 a 。</p>
+<p>Under the hood, Vue compiles the templates into Virtual DOM render functions.</p>
 </blockquote>
-<p><img src="http://i.imgur.com/F5KnIW7.png" alt=""></p>
-<p>箭頭表示虛擬元件已經被掛載到原生 DOM 元素中。這段過程非常短，不過也讓我們來看看關於應用程式的視圖部分的邏輯:</p>
-<p><img src="http://i.imgur.com/MElJPrk.png" alt=""></p>
-<p>這張圖片指的是整個網頁的內容是由我們客制的 <code>&lt;HelloMessage/&gt;</code> 來呈現，那麼關於 <code>&lt;HelloMessage/&gt;</code> 看起來到底長怎樣?</p>
-<p>關於元件輸出渲染的部分是透過 <code>render()</code> 去定義欲呈現的元素。React 並沒有確切的說明關於何時或多頻繁的會去執行 <code>render()</code> 。<br>只有告訴我們當它注意到有效合法的改變時本身會去執行足夠次數的 <code>render()</code>，無論你回傳什麼樣的 DOM 結構。</p>
-<p>在我們這個案例，<code>render()</code> 回傳了一個 <code>&lt;div&gt;</code> 裡面包含了一些內容。React 會執行這個 <code>render()</code> 取得 <code>&lt;div&gt;</code> 然後更新實際的 DOM ，使兩者一致。</p>
-<p><img src="http://i.imgur.com/w0w7JOe.png" alt=""></p>
-<p>不僅僅是更新 DOM，還會幫你記住已經更新的東西。這也是我們待會會提到的關於 React 如何快速的判斷其中差異的方法。<br>關於 render() 如何回傳 DOM 節點，這邊我先簡略帶過。它是透過 JSX 去定義結構，這是一個非原生的 Javascript，注意雖然它看起來像是 XML。<br>最後 JSX 會被編譯回 Javascript，看看 JSX 的編譯結果有助我們理解這個架構:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx React.DOM */</span></div><div class="line"><span class="keyword">var</span> HelloMessage = React.createClass(&#123;<span class="attr">displayName</span>: <span class="string">'HelloMessage'</span>,</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> React.DOM.div(<span class="literal">null</span>, <span class="string">"Hello "</span>, <span class="keyword">this</span>.props.name);</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">React.renderComponent(HelloMessage( &#123;<span class="attr">name</span>:<span class="string">"John"</span>&#125; ), mountNode);</div></pre></td></tr></table></figure>
-<p>看到了吧！我們真的不是回傳一個 DOM 元素，而是一個等價于 DOM 元素的 React Shadow DOM。所以我們得知 React 回傳的並不是真的 DOM。<br>您可以理解為標記物件。</p>
-<h2 id="狀態與變化"><a href="#狀態與變化" class="headerlink" title="狀態與變化"></a>狀態與變化</h2><p>到目前為止，我們忽略了故事中很重要的一段，關於元件可以被改變這件事。如果一個元件不允許被調整修改，那 React 跟 <code>static rendering framework</code>(靜態渲染框架) 也沒啥兩樣，功能就類似于 <a href="https://github.com/janl/mustache.js" target="_blank" rel="external">Mustache</a> 或者 <a href="http://handlebarsjs.com/" target="_blank" rel="external">HandlebarsJS</a><br>這些樣板引擎，不過 React 的重點就是有效率的更新，要能夠更新元件勢必要允許我們修改一些狀態之類的東西。</p>
-<p>React 使用元件的 <code>state</code> 屬性來表示其狀態的資料模型。<br>關於這點在官方文件的第二個範例就有舉例說明:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx React.DOM */</span></div><div class="line"><span class="keyword">var</span> Timer = React.createClass(&#123;</div><div class="line">  <span class="attr">getInitialState</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;<span class="attr">secondsElapsed</span>: <span class="number">0</span>&#125;;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">tick</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">secondsElapsed</span>: <span class="keyword">this</span>.state.secondsElapsed + <span class="number">1</span>&#125;);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentDidMount</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.interval = setInterval(<span class="keyword">this</span>.tick, <span class="number">1000</span>);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">componentWillUnmount</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    clearInterval(<span class="keyword">this</span>.interval);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Seconds Elapsed: &#123;this.state.secondsElapsed&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">React.renderComponent(<span class="xml"><span class="tag">&lt;<span class="name">Timer</span> /&gt;</span>, mountNode);</span></div></pre></td></tr></table></figure>
-<p>React 會在適當的時間點執行回呼函式 <code>getinitialState()</code>, <code>componentDidMount()</code> 以及 <code>componentWillUnmount()</code> ，根據到目前為止的解釋您應該可以清楚地理解這些函式名稱的其含義。<br>所以我們推測元件和狀態背地裡的行為:</p>
-<ol>
-<li><code>render()</code> 是 <code>state</code> 和 <code>props</code> 的一個 function，也就是當它們發現異動會執行 render。</li>
-<li><code>state</code> 只能透過 <code>setState()</code> 去改變。</li>
-<li><code>props</code> 不應該持續變動，只有當其父元素用新的屬性重新輸出時才改變。</li>
-</ol>
-<p>(在這之前我們沒有明確地提到 props ，不過他們就是屬性 attributes。當元件要 render 時，它們就來自那些 JSX Tag 中的屬性)</p>
-<p>稍早，我們曾經提到 React 會自己執行<code>足夠次數</code>的 render ，意思是除非有需要不然 React 不會執行 render。<br>那需要什麼？當你發動 setState() 或者父元件重新賦予新的 <code>props</code>，React 就會重新輸出。</p>
-<p>現在我們將所有的事情放在一起，用一張圖來說明當程式更新了虛擬 DOM 的資料流(例如: 回應 AJAX 呼叫):</p>
-<p><img src="http://i.imgur.com/w5RMkO2.png" alt=""></p>
+<p>這個點算是第二版一個極大的變化。所以我們理解 Vue 會將 <code>template 屬性</code> 或者 <code>DOM Templates</code> 即標籤結構寫在 HTML 裡面的作法編譯成 <code>render function</code>。</p>
+<p>接著 <a href="https://vuejs.org/v2/guide/syntax.html#Raw-HTML" target="_blank" rel="external">Template Syntax</a> 一節提到</p>
 <blockquote>
-<ol>
-<li>發動了 AJAX</li>
-<li>React 內部需要呼叫 setState 用以改變內部狀態</li>
-<li>因內部狀態改變進而觸發 render</li>
-<li>render 執行需要依照生命週期呼叫像 <code>componentWillMount</code> 這類的方法</li>
-<li>最後根據計算的最小差異更新 DOM</li>
-</ol>
+<p>Vue is not a string-based templating engine</p>
 </blockquote>
-<h2 id="從-DOM-取得資料"><a href="#從-DOM-取得資料" class="headerlink" title="從 DOM 取得資料"></a>從 DOM 取得資料</h2><p>截至目前為止，我們只有討論到關於收到狀態改變，到如何傳遞到實際 DOM，但實務上我們會需要從 DOM 取得資料，例如從 input 取得使用者輸入的資料。<br>為了觀察如何運作，我們取用了官方第三個範例:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx React.DOM */</span></div><div class="line"><span class="keyword">var</span> TodoList = React.createClass(&#123;</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> createItem = <span class="function"><span class="keyword">function</span>(<span class="params">itemText</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;itemText&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>&#123;this.props.items.map(createItem)&#125;<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> TodoApp = React.createClass(&#123;</div><div class="line">  <span class="attr">getInitialState</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;<span class="attr">items</span>: [], <span class="attr">text</span>: <span class="string">''</span>&#125;;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">onChange</span>: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">text</span>: e.target.value&#125;);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">handleSubmit</span>: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    e.preventDefault();</div><div class="line">    <span class="keyword">var</span> nextItems = <span class="keyword">this</span>.state.items.concat([<span class="keyword">this</span>.state.text]);</div><div class="line">    <span class="keyword">var</span> nextText = <span class="string">''</span>;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">items</span>: nextItems, <span class="attr">text</span>: nextText&#125;);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">render</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;div&gt;</div><div class="line">        &gt;h3&lt;TODO&lt;/h3&gt;</div><div class="line">        &lt;TodoList items=&#123;this.state.items&#125; /&gt;</div><div class="line">        &lt;form onSubmit=&#123;this.handleSubmit&#125;&gt;</div><div class="line">          &lt;input onChange=&#123;this.onChange&#125; value=&#123;this.state.text&#125; /&gt;</div><div class="line">          &lt;button&gt;&#123;'Add #' + (this.state.items.length + 1)&#125;&lt;/button&gt;</div><div class="line">        &lt;/form&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line">React.renderComponent(&lt;TodoApp /&gt;, mountNode);</div></pre></td></tr></table></figure>
-<p>簡單的說，我們把我們要的行為綁定到 DOM 的事件(在這個範例就是 onChange)，接著你在這個事件中呼叫 setState 讓 React 幫您更新介面(實際的 DOM)。<br>如果您的程式有資料模型，您的事件大概就是透過 setState 更新那個資料模型，React 發現狀態異動就會去更新。<br>另外如果您曾經用過其他提供雙向資料繫結的框架，看起來可能會懷疑 React 本身在技術上退化了?</p>
-<p>儘管這個範例看起來 React 並不是真的把事件加到 <code>&lt;input&gt;</code> 的 “onChange” ，取而代之的是加到文檔層級。讓事件透過汽泡傳遞的機制然後分派他們到正確的虛擬 DOM 元素。<br>這麼做的好處是包含提升速度(在 DOM 綁定太多處理事件會讓網站變慢)，跨瀏覽器實現一樣的行為(處理事件的屬性和其派送的行為並沒有統一的標準，意思是在不同瀏覽器可能有些許的差異)。</p>
-<p>所以最後我們可以總結一張完整的圖片來說明關於資料流和事件處理機制:</p>
-<p><img src="http://i.imgur.com/qq0uWsY.png" alt=""></p>
-<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><ul>
-<li>React 是一個處理 View 的函式庫: React 並不強迫您要在 Model 做些什麼設定或改變。一個 React 元件只是一個 View-Level 的概念，而元件的狀態就只是 UI 方面的狀態。您可以繫結任何類型的資料模型或者函式庫到 React(雖然某些資料模型的處理方式會更有效率，例如 Om)</li>
-<li>React 的元件抽象化在更新 DOM 的方面尤其優秀: 元件抽象化是一個原則，使得我們可以編寫組織良好的架構，同時又提供高效率的更新機制。</li>
-<li>React 元件從 DOM 的角度執行更新不太方便: 比起函式庫自動傳遞同步資料模型，撰寫事件處理給 React 帶來一種很低階的感覺。</li>
-<li>React 是<a href="http://zh.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E6%BC%8F%E6%B4%9E%E5%AE%9A%E5%BE%8B" target="_blank" rel="external">抽象漏洞</a>: 意味著 React 有本質上的缺陷，但有提供避免問題發生的方向。大部份的時間你的程式只會和虛擬 DOM 打交道，但有時候你需要直接對 DOM 做些操作。此時您可以查閱手冊的<a href="http://facebook.github.io/react/docs/working-with-the-browser.html" target="_blank" rel="external">這部分</a></li>
+<p>所以 Vue 並不是 string-based 的樣板引擎會編譯成 render function 我們懂了。<br>但是 <a href="https://vuejs.org/v2/guide/components.html#DOM-Template-Parsing-Caveats" target="_blank" rel="external">Components</a> 一章竟然出現</p>
+<blockquote>
+<p>It should be noted that these limitations do not apply if you are using <code>string templates</code> from one of the following sources</p>
+</blockquote>
+<ul>
+<li><code>&lt;script type=&quot;text/x-template&quot;&gt;</code></li>
+<li><code>JavaScript inline template strings</code></li>
+<li><code>.vue components</code></li>
 </ul>
+<p>奇怪？前面不是說 Vue <code>不是</code> string-based template 嗎？現在提出 string templates 還附上三種類型。雖然英文字不一樣不過換成中文來說到底是什麼意思啊？不都是字串類型的樣板嗎？</p>
+<p>加上 <a href="https://vuejs.org/v2/guide/components.html#camelCase-vs-kebab-case" target="_blank" rel="external">Components camelCase-vs-kebab-case</a> 提到關於屬性（attributes）的命名方式在 string templates 與 non-string templates 有所差異。non-string templates 的 props 一定要用 kebab-case 的命名方式，而 string templates 則不受限制。心中出現滿滿的 WHY</p>
+<p>我們想知道 <code>template 屬性</code>、<code>DOM templates</code>、<code>string-based template</code>、<code>string templates</code>、<code>non-string templates</code> 這些詞之間的關係到底是什麼？</p>
+<h1 id="問答"><a href="#問答" class="headerlink" title="問答"></a>問答</h1><p>上面的說明肯定搞的您很混亂，沒關係讓我們先整理出問題。我們要問的是：</p>
+<h3 id="1-string-based-templating-engine-與-string-templates-的意義分別是啥？"><a href="#1-string-based-templating-engine-與-string-templates-的意義分別是啥？" class="headerlink" title="1. string-based templating engine 與 string-templates 的意義分別是啥？"></a>1. string-based templating engine 與 string-templates 的意義分別是啥？</h3><p>Vue 文件一開始提到 Vue 並不是 string-based templating engine 意味著並不是組出字串後完全交給瀏覽器，而是會將這些 template 轉成 render function 的機制。</p>
+<p>而 string templates 指的是在 Javascript 中寫入字串格式的 templates，即上面提到的三種形式：</p>
+<ul>
+<li><code>&lt;script type=&quot;text/x-template&quot;&gt;</code></li>
+<li><code>JavaScript inline template strings</code></li>
+<li><code>.vue components</code></li>
+</ul>
+<p>才屬於 string templates，雖然看起來不太一樣但它們都是屬於 Javascript 的範疇。</p>
+<h3 id="2-文件中的-string-templates-與-non-string-templates-具體是指？"><a href="#2-文件中的-string-templates-與-non-string-templates-具體是指？" class="headerlink" title="2. 文件中的 string templates 與 non-string templates 具體是指？"></a>2. 文件中的 string templates 與 non-string templates 具體是指？</h3><p>所謂的 string templates 概略來說是指在 Javascript 以字串形式出現的 templates。所以其他不在 Javascript 裡面的樣板都是 non-string templates 最一開始提到的 DOM templates 也屬於這個分類，換句話說其他在 HTML 寫的也就是 DOM templates 屬於 non-string templates。我們只要以檔案類型來區分便可。</p>
+<p>造成困惑的地方 - 一開始說 Vue 不是 string-based 但後來又出現 string templates 這兩者指的是不同東西。一個是編好完整字串交給瀏覽器的作法，一個是指在 Javascript 字串形式的 templates。</p>
+<p>驗證 template 屬性屬於 string templates</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Vue.component(<span class="string">'row'</span>, &#123;</div><div class="line">  <span class="attr">props</span>: [</div><div class="line">    <span class="string">'camelProp'</span></div><div class="line">  ],</div><div class="line">  <span class="attr">template</span>: <span class="string">`</span></div><div class="line">    &lt;div class="row"&gt;</div><div class="line">      Row: &#123;&#123; camelProp &#125;&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  `</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">el</span>: <span class="string">'#root'</span>,</div><div class="line">  <span class="attr">template</span>: <span class="string">`</span></div><div class="line">    &lt;row :camelProp="message"&gt;&lt;/row&gt;</div><div class="line">  `,</div><div class="line">  <span class="attr">data</span>: &#123;</div><div class="line">    <span class="attr">message</span>: <span class="string">'Hello, Vue'</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>使用 inline-template 來觀察差異</p>
+<ul>
+<li><a href="https://jsfiddle.net/7vkzLdco/" target="_blank" rel="external">範例1 string templates</a></li>
+<li><a href="https://jsfiddle.net/7vkzLdco/1/" target="_blank" rel="external">範例2 non-string templates</a> tag 的屬性若不是使用 kebab-case 則無法取得屬性</li>
+</ul>
+<h3 id="3-DOM-templates-的方式也會編譯為-render-function-嗎？如果會編譯成-render-function-那為什麼-DOM-templates-就不行？"><a href="#3-DOM-templates-的方式也會編譯為-render-function-嗎？如果會編譯成-render-function-那為什麼-DOM-templates-就不行？" class="headerlink" title="3. DOM templates 的方式也會編譯為 render function 嗎？如果會編譯成 render function 那為什麼 DOM templates 就不行？"></a>3. DOM templates 的方式也會編譯為 render function 嗎？如果會編譯成 render function 那為什麼 DOM templates 就不行？</h3><p>Vue 會將所有 template 都編譯成 render function 所以 DOM templates 也會編譯成 render function。其中差異在於取得的資料的時間點由於</p>
+<blockquote>
+<p>Vue can only retrieve the template content after the browser has parsed and normalized it</p>
+</blockquote>
+<p>在瀏覽器解析之後 camelCase 的屬性會全部轉成小寫而無法分辨與切割屬性名稱（myProp -&gt; myprop）。也就造成和 props 定義的名稱不同。因此 DOM templates 無法支援 camelCase 的屬性名稱。</p>
+<h1 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h1><p>在使用 DOM templates 時需注意：由於瀏覽器限制某些標籤存在的位置例如 <code>&lt;option&gt;</code> 只能在 <code>&lt;select&gt;</code> 裡面，<code>&lt;table&gt;</code> 裡面要放 <code>&lt;tr&gt;</code>, <code>&lt;td&gt;</code> 等等。當不合法的時候這些標籤會被移出該標籤內</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Column<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>h3 會被移出 table 外層導致顯示錯誤，此時可以使用 is 屬性處理，或者就用 string templates 就正常了，為了避免問題產生還是遵循 HTML 規則較為單純。</p>
+<p>沒有使用 is 不合法的元素被移出了 table 示意圖</p>
+<p><img src="http://imgur.com/CuQ3C1h.png" alt=""></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>又來了，如果您一開始就直上 vue-loader 相信這些問題壓根都不會遇到。原因是你全部的 template 都屬於 string templates。相較之下如果您使用了像是小弟之前撰寫的<a href="http://andyyou.github.io/2016/11/07/integrate-rails-webpack-vue/" target="_blank" rel="external">穠纖合度的整合 Rails、Webpack、Vuejs</a>一文，那麼裡面使用的 inline-template 搭配 DOM template（為了取得 Rails View 來的資料）那麼上面提到的一些限制可能就是您會遇到的問題了。</p>
 
         
         </div>
@@ -319,7 +309,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/09/20/reactjs-reactjs-decrypt/" data-id="ciwrm5zsf005zb4cw65pt9dr6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/12/16/vue-migration-2/" data-id="ciwrm5zwq00d8b4cwp5cwwqdf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -394,19 +384,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2014/10/07/reactjs-implemented-a-tabs-component/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    React 實作一個 Tabs 元件
-                
-            </div>
-        </a>
     
-    
-        <a href="/2014/09/18/reactjs-purerendermixin/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2016/12/05/vue-hook/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">React PureRenderMixin</div>
+            <div class="article-nav-title">Vue.js 由 1 到 2 的旅程 - (1)</div>
         </a>
     
 </nav>
