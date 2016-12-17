@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>深入 css z-index 屬性 | DEVLOG of andyyou</title>
+    <title>2017 歲末年終工具大掃除 | DEVLOG of andyyou</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="說來汗顏，一直以來對於 css 常常是不求勝解。直到自己需要打造自己的輪子才發現對 z-index 完全不熟悉。關於 z-index 的問題其實非常少人完全明白它到底是怎麼運作的。事實上這並不複雜，不過如果你不曾花些時間閱讀規範可能你不曾察覺一些重要的觀念。">
+    <meta name="description" content="很快地又到了年末大掃除了時候，今年增加的工具軟體並不多反而捨去了不少工具。剩下的這些便是展望 2017 年與 2016 整年度下來持續使用的工具。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入 css z-index 屬性">
-<meta property="og:url" content="//andyyou.github.io/2016/03/03/z-index/index.html">
+<meta property="og:title" content="2017 歲末年終工具大掃除">
+<meta property="og:url" content="//andyyou.github.io/2016/12/17/2017-osx-tools/index.html">
 <meta property="og:site_name" content="DEVLOG of andyyou">
-<meta property="og:description" content="說來汗顏，一直以來對於 css 常常是不求勝解。直到自己需要打造自己的輪子才發現對 z-index 完全不熟悉。關於 z-index 的問題其實非常少人完全明白它到底是怎麼運作的。事實上這並不複雜，不過如果你不曾花些時間閱讀規範可能你不曾察覺一些重要的觀念。">
-<meta property="og:updated_time" content="2016-10-10T13:22:25.000Z">
+<meta property="og:description" content="很快地又到了年末大掃除了時候，今年增加的工具軟體並不多反而捨去了不少工具。剩下的這些便是展望 2017 年與 2016 整年度下來持續使用的工具。">
+<meta property="og:updated_time" content="2016-12-17T03:40:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入 css z-index 屬性">
-<meta name="twitter:description" content="說來汗顏，一直以來對於 css 常常是不求勝解。直到自己需要打造自己的輪子才發現對 z-index 完全不熟悉。關於 z-index 的問題其實非常少人完全明白它到底是怎麼運作的。事實上這並不複雜，不過如果你不曾花些時間閱讀規範可能你不曾察覺一些重要的觀念。">
+<meta name="twitter:title" content="2017 歲末年終工具大掃除">
+<meta name="twitter:description" content="很快地又到了年末大掃除了時候，今年增加的工具軟體並不多反而捨去了不少工具。剩下的這些便是展望 2017 年與 2016 整年度下來持續使用的工具。">
     
 
     
@@ -196,7 +196,7 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main"><article id="post-z-index" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-2017-osx-tools" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -204,7 +204,7 @@ ga('send', 'pageview');
                 
     
         <h1 class="article-title" itemprop="name">
-            深入 css z-index 屬性
+            2017 歲末年終工具大掃除
         </h1>
     
 
@@ -213,8 +213,8 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/03/03/z-index/">
-            <time datetime="2016-03-02T16:00:00.000Z" itemprop="datePublished">2016-03-03</time>
+        <a href="/2016/12/17/2017-osx-tools/">
+            <time datetime="2016-12-17T03:38:42.000Z" itemprop="datePublished">2016-12-17</time>
         </a>
     </div>
 
@@ -222,15 +222,10 @@ ga('send', 'pageview');
                         
     <div class="article-category">
     	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
+        <a class="article-category-link" href="/categories/Tools/">Tools</a>
     </div>
 
                         
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/css/">css</a>
-    </div>
-
                     </div>
                 
             </header>
@@ -239,72 +234,178 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>說來汗顏，一直以來對於 css 常常是不求勝解。直到自己需要打造自己的<code>輪子</code>才發現對 <code>z-index</code> 完全不熟悉。<br>關於 <code>z-index</code> 的問題其實非常少人完全明白它到底是怎麼運作的。事實上這並不複雜，不過如果你不曾花些時間閱讀規範可能你不曾察覺一些重要的觀念。<br><a id="more"></a></p>
-<h1 id="問題"><a href="#問題" class="headerlink" title="問題"></a>問題</h1><p>在下面的 HTML 中我們有三個 <code>&lt;div&gt;</code> 元素，每一個元素包含著一個 <code>&lt;span&gt;</code>，我們給 <code>&lt;span&gt;</code> 設定背景色 - 分別是綠, 紅, 藍。<br>每個 <code>&lt;span&gt;</code> 同時也設定 <code>absolute</code> 位置設在文件的左上角。約略的重疊在其他 <code>&lt;span&gt;</code> 這樣我們就可以觀察整個堆疊的行為。</p>
-<p>第一個 <code>&lt;span&gt;</code> 的 <code>z-index: 1</code>，其他兩者不設。</p>
-<p>下面是我們的程式碼：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">div</div><div class="line">  span class=&quot;red&quot; RED</div><div class="line">div</div><div class="line">  span class=&quot;green&quot; GREEN</div><div class="line">div</div><div class="line">  span class=&quot;blue&quot; BLUE</div></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.red</span>, <span class="selector-class">.green</span>, <span class="selector-class">.blue</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">color</span>: white;</div><div class="line">  <span class="attribute">line-height</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">text-align</span>: center;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.red</span> &#123;</div><div class="line">  <span class="attribute">z-index</span>: <span class="number">1</span>;</div><div class="line">  <span class="attribute">background</span>: red;</div><div class="line">  <span class="attribute">top</span>: <span class="number">20px</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.green</span> &#123;</div><div class="line">  <span class="attribute">background</span>: green;</div><div class="line">  <span class="attribute">top</span>: <span class="number">40px</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">40px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.blue</span> &#123;</div><div class="line">  <span class="attribute">background</span>: blue;</div><div class="line">  <span class="attribute">top</span>: <span class="number">60px</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">60px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p></p><p data-height="268" data-theme-id="8540" data-slug-hash="ZWGvwV" data-default-tab="result" data-user="andyyou" class="codepen">See the Pen <a href="http://codepen.io/andyyou/pen/ZWGvwV/" target="_blank" rel="external">ZWGvwV</a> by andyyou (<a href="http://codepen.io/andyyou" target="_blank" rel="external">@andyyou</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-
-
-<p>這邊有個小小的挑戰: 試看看能不能把紅色區塊的 <code>&lt;span&gt;</code> 排到藍色和綠色 <code>&lt;span&gt;</code> 的後面，但要遵循下面的規則。</p>
-<ul>
-<li>不能修改 HTML 結構</li>
-<li>不能加入或修改任何元素的 <code>z-index</code></li>
-<li>不能加入或修改任何 <code>position</code> 屬性</li>
+            <p>很快地又到了年末大掃除了時候，今年增加的工具軟體並不多反而捨去了不少工具。剩下的這些便是展望 2017 年與 2016 整年度下來持續使用的工具。</p>
+<a id="more"></a>
+<h1 id="OSX-一般軟體"><a href="#OSX-一般軟體" class="headerlink" title="OSX 一般軟體"></a>OSX 一般軟體</h1><ul>
+<li><a href="https://www.macbartender.com/" target="_blank" rel="external">Bartender 2</a> - OSX Menu bar icon 整合</li>
+<li><a href="https://www.alfredapp.com/" target="_blank" rel="external">Alfred 3</a> - 快速搜尋啟動</li>
+<li><a href="https://freemacsoft.net/appcleaner/" target="_blank" rel="external">AppCleaner</a> - 軟體移除</li>
+<li><a href="http://mizage.com/divvy/" target="_blank" rel="external">Divvy</a> - 視窗佈局快速切換</li>
+<li><a href="https://www.dropbox.com" target="_blank" rel="external">Dropbox</a> - 雲端硬碟</li>
+<li><a href="https://www.google.com/drive/download/" target="_blank" rel="external">Google Drive</a></li>
+<li><a href="https://filezilla-project.org/" target="_blank" rel="external">FileZilla</a></li>
+<li><a href="https://panic.com/transmit/" target="_blank" rel="external">Transmit</a></li>
+<li><a href="https://www.mozilla.org/zh-TW/firefox/new/" target="_blank" rel="external">Firefox</a><ul>
+<li>Awesome Screenshot</li>
+<li>Google translator</li>
+<li>JSONView</li>
+<li>OneTab</li>
+<li>SQLite Manager</li>
+<li>Zoom</li>
 </ul>
-<p>目標要完成下面這樣，先不要偷看解答自己想一想。</p>
-<p></p><p data-height="268" data-theme-id="8540" data-slug-hash="oxXEvx" data-default-tab="result" data-user="andyyou" class="codepen">See the Pen <a href="http://codepen.io/andyyou/pen/oxXEvx/" target="_blank" rel="external">oxXEvx</a> by andyyou (<a href="http://codepen.io/andyyou" target="_blank" rel="external">@andyyou</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-
-<h1 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h1><p>這個解決方案是透過加入一個<code>小於 1</code>的 <code>opacity</code> 到紅色 <code>&lt;span&gt;</code> 的爸爸元素即 <code>&lt;div&gt;</code></p>
-<p>上面是透過加上</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-pseudo">:first-child</span> &#123;</div><div class="line">  <span class="attribute">opacity</span>: .<span class="number">99</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果你現在跟我當初一樣驚訝，不相信為什麼加了 <code>opacity: .99</code> 可以改變元素的順序。希望剩下的文章可以幫助你更清楚這些機制。</p>
-<h1 id="呈現堆疊的順序"><a href="#呈現堆疊的順序" class="headerlink" title="呈現堆疊的順序"></a>呈現堆疊的順序</h1><p><code>z-index</code> 看起來非常簡單，至少在我第一次看到這個屬性的時候，我只知道越大的 <code>z-index</code> 應該要被排在最前面(上面)，對吧？<br>但事實上事情沒那麼單純。看起來很簡單以至於大部分的開發者都沒有花時間去理解它的規則。</p>
-<p>在 HTML 中的任何元素可以被調整到其他元素的前面或後面，這也就是我們所知的堆疊順序(stacking order)。這樣順序的規則被很明確的定義在規範上，但如同我剛剛提到的，大多的開發者沒有認真的完全參透。</p>
-<p>當我們沒有 <code>z-index</code> 和 <code>position</code> 屬性的時候，規則非常簡單，就是按照文件中 <code>tag</code> 撰寫的先後順序。好吧實際上還是有點複雜，請參考<a href="https://www.w3.org/TR/CSS2/zindex.html" target="_blank" rel="external">規範說明</a>。不過呢，只要我們不使用<code>負的 margin</code>來覆蓋 <code>inline</code> 的元素，大致上我們不會遇到這些極端的情況。</p>
-<p>當我們開始加入 <code>position</code>，任何被設定 <code>position</code> 的元素和它們的後代會呈現在其他沒有設定 <code>position</code> 的元素之前，這裡說的設定 <code>position</code> 指的是除了設為 <code>static</code> 以外得值例如: <code>relative</code>, <code>absolute</code>。</p>
-<p>最後當我們也加入 <code>z-index</code> ，事情就變得更複雜了一點。很自然的我們會認為具備較大 <code>z-index</code> 的元素會排在前面，有 <code>z-index</code> 也會蓋在沒有的前面。<br>但是實際上卻沒那麼簡單，首先是 <code>z-index</code> 只對那些有設定 <code>position</code> 的元素有效。如果你試著把 <code>z-index</code> 設在 <code>static</code> 的元素上，那麼什麼事都不會發生。第二點 <code>z-index</code> 會建立一個 <code>stacking context</code> ，此時就是進入重點的地方了。</p>
-<h1 id="Stacking-Context"><a href="#Stacking-Context" class="headerlink" title="Stacking Context"></a>Stacking Context</h1><p>當我們有一個 <code>&lt;div id=&quot;parent&quot;&gt;</code> 包著一群 <code>&lt;div class=&quot;child&quot;&gt;</code> 元素時，它們的堆疊順序通常會一起被移動(從父原則)，這整個群組的順序就是 <code>stacking context</code>，要完全理解 <code>stacking context</code> 我們就必須要參透 <code>z-index</code> 是怎麼排序 <code>stacking order</code>。</p>
-<p>每一個 <code>stacking context</code> 有一個唯一的 HTML 元素當作其根元素，當一個新的 <code>stacking context</code> 或者我們翻作<code>堆疊環境</code>被建立在<code>一個</code>元素上時，這個堆疊環境就會控管它內部的子元素的順序 <code>stacking order</code>，意思是如果其中一個元素在這個堆疊環境中順序被排在最底下，那它就完全沒機會出現在另外一個元素排位較高的<code>堆疊環境</code>前面，就算他的 z-index 設成 9999999。</p>
-<p>從另外一個角度來說，每一個被設定 <code>position</code> 的元素除了自己的 <code>stacking order</code> 另外如果內部還有子元素，就會有一個 <code>stacking context</code> 來管制底下的元素。</p>
-<p>要建立一個<code>堆疊環境 stacking context</code>有下面三者方式，只要使用其一即可：</p>
-<ul>
-<li>當元素是網頁文件的根元素通常就是 <code>&lt;html&gt;</code></li>
-<li>當元素被設定 <code>position</code> 除了 <code>static</code> 以外的值，然後 <code>z-index</code> 設定為除了 <code>auto</code> 以外的值</li>
-<li>當元素設定了 <code>opacity</code> 且值<code>小於 1</code></li>
+</li>
+<li><a href="https://www.google.com.tw/intl/zh-TW/chrome/browser/desktop/" target="_blank" rel="external">Chrome</a><ul>
+<li>Bitly</li>
+<li>feedly</li>
+<li>Google Translate</li>
+<li>Momentum</li>
+<li>OneTab</li>
+<li>Pocket</li>
+<li>Postman</li>
+<li>Rails Panel</li>
+<li>Open SEO Stats</li>
+<li>Wappalyzer</li>
+<li>Vue.js Devtools</li>
 </ul>
-<p>上面提到的三種方式中，前兩者大部分的開發者都知道，即使他們不懂原理但還是會使用。第三種方式除了 w3c 規範，大多開發者都不曾提到。</p>
-<p>此外除了 <code>opacity</code> 另外一些新的屬性像是 <code>transforms</code>, <code>filters</code>, <code>css-regions</code>, <code>paged media</code> 等等都會產生 stacking context。<br>還有當 css 屬性需要在超出螢幕的地方渲染，他也會產生一個 stacking context。</p>
-<h1 id="如何決定元素在堆疊環境中的位置"><a href="#如何決定元素在堆疊環境中的位置" class="headerlink" title="如何決定元素在堆疊環境中的位置"></a>如何決定元素在堆疊環境中的位置</h1><p>實際上在 global stacking 決定整個頁面元素的排序包含 borders, background, 文字是極度複雜的而且已經超出這篇文章的範圍。<br>不過針對大多數的應用，對於排序有些基本的認識有助於往後的開發工作，所以讓我們來一步步拆解說明</p>
-<h3 id="在單一堆疊環境-Stacking-Context-中的順序"><a href="#在單一堆疊環境-Stacking-Context-中的順序" class="headerlink" title="在單一堆疊環境 Stacking Context 中的順序"></a>在單一堆疊環境 Stacking Context 中的順序</h3><p>在單一的堆疊環境從最下面(後)到上面(前)規則如下</p>
-<ol>
-<li>執行堆疊的根元素。</li>
-<li>有設定 <code>position</code> 且 <code>z-index</code> 為<code>負數</code>的元素和它們的子元素，<code>-1 在 -2 前面</code>。</li>
-<li>沒有設定 <code>position</code> 的元素，一般元素。</li>
-<li>有設定 <code>position</code> 且 <code>z-index</code> 為 <code>auto</code>，設定 <code>opacity</code> 小於 1 和其他 <code>transforms</code> 等屬性也在此列。</li>
-<li>有設定 <code>position</code> 且 <code>z-index</code> 為<code>正數</code>。</li>
+</li>
+<li><a href="http://growl.info/about" target="_blank" rel="external">Growl</a> - 通知管理</li>
+<li><a href="https://itunes.apple.com/tw/app/kindle/id405399194?mt=12" target="_blank" rel="external">Kindle</a> - 下載特定免費書籍</li>
+<li><a href="https://products.office.com/zh-tw/mac/microsoft-office-for-mac" target="_blank" rel="external">Microsoft Office</a></li>
+<li><a href="https://www.vmware.com/tw/products/fusion" target="_blank" rel="external">VMWare Fusion</a> - 虛擬作業系統</li>
+<li><a href="https://fiplab.com/apps/memory-clean-for-mac" target="_blank" rel="external">Memory Cleaner 2</a></li>
+<li><a href="https://quip.com/" target="_blank" rel="external">Quip</a></li>
+<li><a href="https://sparkmailapp.com/" target="_blank" rel="external">Spark</a> - Email 工具</li>
+<li><a href="https://www.spotify.com/tw/" target="_blank" rel="external">Spotify</a> - 串流音樂</li>
+<li><a href="http://www.utorrent.com/intl/zh_tw/" target="_blank" rel="external">uTorrent</a> - BT</li>
+<li><a href="http://mplayerx.org/" target="_blank" rel="external">MPlayerX</a></li>
+<li><a href="https://www.monosnap.com/welcome" target="_blank" rel="external">Monosnap</a> - 截圖簡易編輯</li>
+<li><a href="http://realmacsoftware.com/ember/" target="_blank" rel="external">ember</a> - 擷取畫面與管理</li>
+<li><a href="https://itunes.apple.com/tw/app/the-unarchiver/id425424353?l=zh" target="_blank" rel="external">The Unarchiver</a> - 壓縮</li>
+<li><a href="http://www.telestream.net/screenflow/overview.htm" target="_blank" rel="external">ScreenFlow</a> - 錄螢幕</li>
+<li><a href="https://www.getcloudapp.com/" target="_blank" rel="external">CloudApp</a> - 拖拉上傳空間</li>
+</ul>
+<h1 id="管理-服務"><a href="#管理-服務" class="headerlink" title="管理/服務"></a>管理/服務</h1><ul>
+<li><a href="https://itunes.apple.com/us/app/be-focused-focus-timer-goal/id973130201?mt=8" target="_blank" rel="external">Be Focused</a> - 蕃茄鐘</li>
+<li><a href="https://www.wunderlist.com" target="_blank" rel="external">Wunderlist</a> - 待辦清單</li>
+<li><a href="https://app.asana.com" target="_blank" rel="external">asana</a> - 團隊任務管理</li>
+<li><a href="https://trello.com/" target="_blank" rel="external">Trello</a> - 看板</li>
+<li><a href="https://desktime.com/" target="_blank" rel="external">Desktime</a> - 追蹤工作時間</li>
+</ul>
+<h1 id="開發工具"><a href="#開發工具" class="headerlink" title="開發工具"></a>開發工具</h1><ul>
+<li><a href="https://github.com/tonsky/FiraCode" target="_blank" rel="external">Fira Code Light</a> - 開發慣用字體</li>
+<li><a href="https://www.iterm2.com/" target="_blank" rel="external">iTerm2</a> - 終端機軟體</li>
+<li><a href="https://kapeli.com/dash" target="_blank" rel="external">Dash</a> - 開發 API 文件快速查閱</li>
+<li><a href="https://atom.io/" target="_blank" rel="external">Atom</a> - 開發編輯器<ul>
+<li>UI Theme One Dark</li>
+<li>Syntax Theme Solarized Dark</li>
+<li>Plugins<ul>
+<li>atom-beautify</li>
+<li>atom-ternjs</li>
+<li>color-picker</li>
+<li>emmet</li>
+<li>file-icons</li>
+<li>git-log</li>
+<li>vim-mode</li>
+<li>vim-surround</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CLI<ul>
+<li>homebrew</li>
+<li>homebrew-services</li>
+<li>git</li>
+<li>nvm + node</li>
+<li>rvm + ruby</li>
+<li>tree</li>
+<li>elasticsearch</li>
+<li>mongodb</li>
+<li>mysql</li>
+<li>postgresql</li>
+</ul>
+</li>
+<li><a href="https://docs.docker.com/" target="_blank" rel="external">Docker</a></li>
+<li><a href="https://github.com/powerline/fonts" target="_blank" rel="external">Powerline Fonts</a></li>
+<li><a href="https://github.com/macvim-dev" target="_blank" rel="external">MacVim</a></li>
+<li><a href="https://ngrok.com/" target="_blank" rel="external">ngrok</a> - ssh tunneling</li>
+<li><a href="https://eggerapps.at/postico/" target="_blank" rel="external">Postico</a> - PostgreSQL Client 軟體</li>
+<li><a href="https://robomongo.org/" target="_blank" rel="external">Robomongo</a> - MongoDB Client 軟體</li>
+<li><a href="https://www.sequelpro.com/" target="_blank" rel="external">Sequel Pro</a>  - MySQL Client 軟體</li>
+<li><a href="http://devdocs.io/" target="_blank" rel="external">devdocs</a> - API 文件會整</li>
+<li><a href="https://website.grader.com/" target="_blank" rel="external">Website Grader</a> - 網頁測試分析工具</li>
+<li><a href="http://www.norse-corp.com/" target="_blank" rel="external">norse</a> - DDOS 地圖</li>
+<li><a href="https://fabric.io/kits" target="_blank" rel="external">fabric kit</a> - 追蹤 Crash 等工具</li>
+<li><a href="http://regexr.com/" target="_blank" rel="external">regexr</a> - Regex 測試</li>
+<li><a href="http://caniuse.com/" target="_blank" rel="external">caniuse</a> - 瀏覽器支援測試</li>
+<li><a href="https://paw.cloud/" target="_blank" rel="external">Paw</a> - API Tool Client 軟體</li>
+</ul>
+<h1 id="設計軟體"><a href="#設計軟體" class="headerlink" title="設計軟體"></a>設計軟體</h1><ul>
+<li><a href="http://pencil.evolus.vn/" target="_blank" rel="external">Pencil</a> - 單機 wireframe</li>
+<li><a href="https://www.sketchapp.com/" target="_blank" rel="external">Sketch</a> - 繪圖設計工具</li>
+<li><a href="http://actsmind.com/blog/software/xmind3download" target="_blank" rel="external">XMind</a></li>
+<li><a href="http://www.adobe.com/tw/products" target="_blank" rel="external">Adobe Photoshop</a> - 繪圖設計工具</li>
+<li><a href="http://www.adobe.com/tw/products" target="_blank" rel="external">Adobe Illustrator</a>  - 向量圖工具</li>
+<li><a href="http://www.0to255.com/" target="_blank" rel="external">0to255</a> - 色票</li>
+<li><a href="https://itunes.apple.com/tw/app/sip/id507257563?mt=12" target="_blank" rel="external">Sip</a> - Color Picker</li>
+<li><a href="http://www.siteinspire.com/" target="_blank" rel="external">siteinspire</a> - 靈感</li>
+<li><a href="http://www.deviantart.com/" target="_blank" rel="external">deviantart</a> - 靈感</li>
+<li><a href="https://dribbble.com/" target="_blank" rel="external">dribbble</a> - 設計靈感</li>
+<li><a href="http://brandcolors.net/" target="_blank" rel="external">brandcolors</a> - 各大品牌 color palettes</li>
+<li><a href="https://itunes.apple.com/tw/app/rulers/id415310758?mt=12" target="_blank" rel="external">Rulers</a> - 測量 px</li>
+<li><a href="https://itunes.apple.com/us/app/photobulk-watermark-resize/id537211143?mt=12" target="_blank" rel="external">PhotoBulk</a></li>
+</ul>
+<h1 id="社群"><a href="#社群" class="headerlink" title="社群"></a>社群</h1><ul>
+<li><a href="https://gitter.im/" target="_blank" rel="external">Gitter</a></li>
+<li><a href="http://line.me/zh-hant/" target="_blank" rel="external">Line</a></li>
+<li><a href="http://www.kakao.com/main" target="_blank" rel="external">KakaoTalk</a></li>
+<li><a href="https://hangouts.google.com/?hl=zh-TW" target="_blank" rel="external">Hangout</a></li>
+<li><a href="https://zoom.us/" target="_blank" rel="external">Zoom.us</a></li>
+<li><a href="https://www.skype.com" target="_blank" rel="external">Skype</a></li>
+<li><a href="https://support.office.com/en-us/article/Join-a-Skype-Meeting-with-Skype-for-Business-Web-App-4828ad18-ed21-422a-a870-94d676d4b72a" target="_blank" rel="external">Skype Meetings App</a></li>
+<li><a href="http://www.wechat.com/zh_TW/" target="_blank" rel="external">WeChat</a></li>
+</ul>
+<h1 id="網路服務"><a href="#網路服務" class="headerlink" title="網路服務"></a>網路服務</h1><ul>
+<li><a href="https://www.intercom.io/" target="_blank" rel="external">intercom</a> - User feedback</li>
+<li><a href="https://gitlab.com/" target="_blank" rel="external">gitlab</a></li>
+<li><a href="https://gogs.io/" target="_blank" rel="external">gogs</a></li>
+<li><a href="http://imgur.com/" target="_blank" rel="external">imgur</a> - 圖片分享</li>
+<li><a href="http://gs.statcounter.com/" target="_blank" rel="external">statcounter</a> - 趨勢分析</li>
+<li><a href="https://ifttt.com/" target="_blank" rel="external">ifttt</a> - 服務串連工具</li>
+<li><a href="http://codepen.io/" target="_blank" rel="external">codepen</a> - 線上 HTML, CSS, JS</li>
+<li><a href="https://www.tailorbrands.com/" target="_blank" rel="external">tailorbrands</a> - 快速 logo 產生</li>
+<li><a href="http://www.mailgun.com/" target="_blank" rel="external">mailgun</a> - 寄信服務</li>
+<li><a href="http://www.urbandictionary.com/" target="_blank" rel="external">urban</a> - 新世代英文單字查詢</li>
+<li><a href="https://calendly.com/pages/features" target="_blank" rel="external">calendly</a> - 協同日曆</li>
+<li><a href="https://quizlet.com" target="_blank" rel="external">quizlet</a> - 語言學習, 背單字</li>
+<li><a href="https://bmfiddle.com/f/#/" target="_blank" rel="external">Bussiness Canvas</a></li>
+<li><a href="https://github.com/" target="_blank" rel="external">Github</a></li>
+<li><a href="http://www.dictionary.com" target="_blank" rel="external">dictionary</a></li>
+<li><a href="http://engoo.com/dailynews/" target="_blank" rel="external">engoo</a></li>
+<li><a href="https://www.heroku.com/" target="_blank" rel="external">Heroku</a></li>
+<li><a href="https://aws.amazon.com/" target="_blank" rel="external">AWS</a></li>
+</ul>
+<h1 id="2017-開發-Framework-amp-Standard"><a href="#2017-開發-Framework-amp-Standard" class="headerlink" title="2017 開發 Framework &amp; Standard"></a>2017 開發 Framework &amp; Standard</h1><ul>
+<li><a href="http://vuejs.org/" target="_blank" rel="external">Vue.js</a></li>
+<li><a href="https://alibaba.github.io/weex/" target="_blank" rel="external">Weex</a></li>
+<li><a href="http://rubyonrails.org/" target="_blank" rel="external">Ruby on Rails 5.x</a></li>
+<li><a href="https://ant.design/docs/spec/introduce" target="_blank" rel="external">設計原則 Ant Design</a></li>
+</ul>
+<h1 id="Atom-偏好設定"><a href="#Atom-偏好設定" class="headerlink" title="Atom 偏好設定"></a>Atom 偏好設定</h1><h2 id="Use-Preview-Tabs"><a href="#Use-Preview-Tabs" class="headerlink" title="Use Preview Tabs"></a>Use Preview Tabs</h2><h4 id="說明"><a href="#說明" class="headerlink" title="說明"></a>說明</h4><p>點擊檔案一下為預覽檔案，兩下才開啟分頁</p>
+<h4 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h4><ol>
+<li>開啟 Preferences</li>
+<li>選取 Packages</li>
+<li>搜尋 <code>tabs</code></li>
+<li>點 <code>Settings</code></li>
+<li>勾選 <code>Use Preview Tabs</code></li>
 </ol>
-<p>都一樣的時候就比文件中程式碼出現的先後順序，後出現的蓋在上面。</p>
-<p>注意：2 號情況在一個 stacking context 會被排在最下面(後面)，意思是他會躲在其他元素後面。也因此這讓元素藏在其父元素後面變成了可能。<br>你可能會疑惑上面那句話，試想如下面這樣的結構</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div[z-index: 1, position: relative]  /&lt;- 這邊建立了 stacking context</div><div class="line">  div[class: &apos;parent&apos;]</div><div class="line">    div[z-index: -2, position: absolute] /&lt;- 這個元素跟 parent 在同一層 stacking context 所以就躲起來了</div></pre></td></tr></table></figure>
-<h3 id="全域的堆疊排序-Global-Stacking-Order"><a href="#全域的堆疊排序-Global-Stacking-Order" class="headerlink" title="全域的堆疊排序 Global Stacking Order"></a>全域的堆疊排序 Global Stacking Order</h3><p>清楚的了解一個堆疊環境 stacking contetxt 是如何形成的以及掌握如何排序的原則後，我們不難理解一個元素在全域的堆疊環境下會如何呈現排序，就是把 <code>&lt;html&gt;</code> 作為我們最上層的 stacking context。接著原則就一樣。</p>
-<p>避免搞死自己的關鍵點就是每當我們建立了一個新的堆疊環境我們要很清楚這是為了什麼。當你把 <code>z-index</code> 設得很大但卻沒有產生變化，往上層元素看看，可能就會發現已經有人具備了 <code>stacking context</code> 的條件了。</p>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>回到我們一開始的問題，這次我們就直接透過 html 結構來指出這些順序吧</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- 1 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"red"</span>&gt;</span><span class="comment">&lt;!-- 6 --&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- 2 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"green"</span>&gt;</span><span class="comment">&lt;!-- 4 --&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- 3 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"blue"</span>&gt;</span><span class="comment">&lt;!-- 5 --&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>當我們在第一個 div 加上 <code>opacity</code> 後，由下至上的排序應該是</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- 3 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"red"</span>&gt;</span><span class="comment">&lt;!-- 3.1 --&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- 1 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"green"</span>&gt;</span><span class="comment">&lt;!-- 4 --&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- 2 --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"blue"</span>&gt;</span><span class="comment">&lt;!-- 5 --&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>本來是 6 的 span 因為上層的 div 也具備 <code>stacking context</code> 但是順序比下面 4, 5 的 span 小。自己又因為<code>從父原則</code>導致順序被往前推了。<br>希望這篇文章能讓你對於 <code>z-index</code> 有能更加清楚。</p>
-<h1 id="資源"><a href="#資源" class="headerlink" title="資源"></a>資源</h1><ul>
-<li><a href="https://www.w3.org/TR/CSS2/zindex.html" target="_blank" rel="external">w3c 規範</a></li>
-<li><a href="http://www.neoease.com/css-z-index-property-and-layering-tree/" target="_blank" rel="external">詳細說明 - 中文</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context" target="_blank" rel="external">MDN stacking context</a></li>
-<li><a href="https://www.smashingmagazine.com/2009/09/the-z-index-css-property-a-comprehensive-look/" target="_blank" rel="external">概覽 z-index</a></li>
-<li><a href="http://philipwalton.com/articles/what-no-one-told-you-about-z-index/" target="_blank" rel="external">No one told you about z-index</a></li>
-</ul>
+<h2 id="關閉自動補齊加入-Buffers"><a href="#關閉自動補齊加入-Buffers" class="headerlink" title="關閉自動補齊加入 Buffers"></a>關閉自動補齊加入 Buffers</h2><h4 id="說明-1"><a href="#說明-1" class="headerlink" title="說明"></a>說明</h4><p>自動補齊會把之前打過的字加入，很惱人。</p>
+<h4 id="設定-1"><a href="#設定-1" class="headerlink" title="設定"></a>設定</h4><ol>
+<li>開啟 Preferences</li>
+<li>選取 Packages</li>
+<li>搜尋 <code>autocomplete-plus</code></li>
+<li>點 <code>Settings</code></li>
+<li>關閉 <code>Include Completions From All Buffers</code></li>
+</ol>
 
         
         </div>
@@ -315,7 +416,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/03/03/z-index/" data-id="ciwsoem7400a3lzcw9mqeoclg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/12/17/2017-osx-tools/" data-id="ciwsoem8l00cjlzcwm7vhfqfu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -390,19 +491,10 @@ ga('send', 'pageview');
         
 <nav id="article-nav">
     
-        <a href="/2016/03/06/expressions-vs-statements-in-js/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    重讀 Axel 的 Javascript 中的 Expression vs Statement 一文
-                
-            </div>
-        </a>
     
-    
-        <a href="/2016/03/01/variables-differents/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2016/12/16/vue-migration-2/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Javascript 三種宣告的差異</div>
+            <div class="article-nav-title">Vue.js 由 1 到 2 的旅程 - (2)</div>
         </a>
     
 </nav>
