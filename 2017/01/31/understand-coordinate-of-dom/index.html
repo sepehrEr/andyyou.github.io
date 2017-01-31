@@ -21,7 +21,7 @@
 3. 滑鼠座標 - 通常透過事件取得。
 當頁面還沒捲動時 window 和 document 的原點 (0, 0) 與其他座標是相同的。
 開始捲動後，docum">
-<meta property="og:updated_time" content="2017-01-31T11:43:15.000Z">
+<meta property="og:updated_time" content="2017-01-31T11:57:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解 DOM 座標">
 <meta name="twitter:description" content="座標系統在瀏覽器中有兩種座標系統 &amp;amp; 滑鼠座標：
@@ -260,6 +260,7 @@ ga('send', 'pageview');
 3. 滑鼠座標 - 通常透過事件取得。
 </code></pre><p>當頁面還沒捲動時 window 和 document 的原點 (0, 0) 與其他座標是相同的。</p>
 <p>開始捲動後，document 的座標等於 window（viewport） 的座標加上 scroll 的位置，大部分的情況下我們會使用 document 座標系統，因為它即便 scroll 了，還是會保持一致。</p>
+<a id="more"></a>
 <h2 id="元素座標與-offsetParent"><a href="#元素座標與-offsetParent" class="headerlink" title="元素座標與 offsetParent"></a>元素座標與 offsetParent</h2><p>一個元素的座標位於該元素的左上角，不幸的是沒有屬性可以直接取得元素對應 document 的座標。不過可以透過計算 offsetTop/offsetLeft 和 offsetParent 來取得。</p>
 <p>offsetParent 為元素的一個唯讀屬性，其值為上層最接近的有設定 position 的容器元素。更精確的說是 position 不為 static 的元素。當沒有任何 positioned 的元素時最接近的 table cell 或根元素為 offsetParent。HTML 兼容模式 body 為 offsetParent。<code>display: none</code> 時 offsetParent 為 null。</p>
 <p>一個簡單的計算方式就是遍歷所有 offsetParent 計算 offsetTop/offsetLeft。簡單說就是不斷累加自己在父元素（positioned）的座標/距離，最終到達 document 則完成計算。</p>

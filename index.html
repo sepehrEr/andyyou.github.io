@@ -238,81 +238,15 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h2 id="座標系統"><a href="#座標系統" class="headerlink" title="座標系統"></a>座標系統</h2><p>在瀏覽器中有兩種座標系統 &amp; 滑鼠座標：</p>
+            <p><h2 id="座標系統"><a href="#座標系統" class="headerlink" title="座標系統"></a>座標系統</h2><p>在瀏覽器中有兩種座標系統 &amp; 滑鼠座標：</p>
 <pre><code>1. 相對於 `document` - 座標 (0, 0) 在整個頁面的最左上角。
 2. 相對於 `window` - 座標 (0, 0) 在可視區 Viewport 的最左上角。
 3. 滑鼠座標 - 通常透過事件取得。
 </code></pre><p>當頁面還沒捲動時 window 和 document 的原點 (0, 0) 與其他座標是相同的。</p>
-<p>開始捲動後，document 的座標等於 window（viewport） 的座標加上 scroll 的位置，大部分的情況下我們會使用 document 座標系統，因為它即便 scroll 了，還是會保持一致。</p>
-<h2 id="元素座標與-offsetParent"><a href="#元素座標與-offsetParent" class="headerlink" title="元素座標與 offsetParent"></a>元素座標與 offsetParent</h2><p>一個元素的座標位於該元素的左上角，不幸的是沒有屬性可以直接取得元素對應 document 的座標。不過可以透過計算 offsetTop/offsetLeft 和 offsetParent 來取得。</p>
-<p>offsetParent 為元素的一個唯讀屬性，其值為上層最接近的有設定 position 的容器元素。更精確的說是 position 不為 static 的元素。當沒有任何 positioned 的元素時最接近的 table cell 或根元素為 offsetParent。HTML 兼容模式 body 為 offsetParent。<code>display: none</code> 時 offsetParent 為 null。</p>
-<p>一個簡單的計算方式就是遍歷所有 offsetParent 計算 offsetTop/offsetLeft。簡單說就是不斷累加自己在父元素（positioned）的座標/距離，最終到達 document 則完成計算。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOffset</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> top = <span class="number">0</span>, left = <span class="number">0</span></div><div class="line">  <span class="keyword">while</span> (el) &#123;</div><div class="line">    top += parentInt(el.offsetTop)</div><div class="line">    left += parentInt(el.offsetLeft)</div><div class="line">    el = el.offsetParent</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">top</span>: top,</div><div class="line">    <span class="attr">left</span>: left</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>這種方式有 2 個缺點：</p>
-<ol>
-<li>不同瀏覽器行為可能不同。因為 border 和 scroll 是否加入計算造成差異。</li>
-<li>慢！因為要遍歷所有 offsetParent。</li>
-</ol>
-<h2 id="正確的方式-el-getBoundingClientRect"><a href="#正確的方式-el-getBoundingClientRect" class="headerlink" title="正確的方式 el.getBoundingClientRect()"></a>正確的方式 el.getBoundingClientRect()</h2><p>這個方法時 w3c 標準，並且幾乎所有新版的瀏覽器都支援。它會回傳封閉該元素的一個矩形(CSS border-boxes)，而這個矩形會透過物件的形式包含 top, left, right, bottom 等資料傳回。</p>
-<p>再次強調 - 不幸的是沒有屬性可以直接取得元素對應 document 的座標。這個 getBoundingClientRect() 取得的資訊是相對於 window 不是 document。</p>
-<p>根據 CSS 規範，任何內容都會被放置在 CSS Box 中。像是 div 這類的 Box 又稱 block box，這類的 Box 原本就是一個矩形。如果元素是 inline 的話會牽扯到 inline box，line box，containing box，contain area。就會有多個的矩形來組織。又稱 <a href="https://www.w3.org/TR/CSS21/visuren.html#anonymous-block-level" target="_blank" rel="external">anonymous block box</a></p>
-<p>/line-box.jpg</p>
-<p>使用 getBoundingClientRect()</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getOffset</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">  <span class="comment">// (1)</span></div><div class="line">  <span class="keyword">var</span> box = el.getBoundingClientRect()</div><div class="line">  <span class="keyword">var</span> body = <span class="built_in">document</span>.body</div><div class="line">  <span class="keyword">var</span> docEl = <span class="built_in">document</span>.documentElement</div><div class="line"></div><div class="line">  <span class="comment">// (2)</span></div><div class="line">  <span class="keyword">var</span> scrollTop = <span class="built_in">window</span>.pageYOffset || docEl.scrollTop || body.scrollTop</div><div class="line">  <span class="keyword">var</span> scrollLeft = <span class="built_in">window</span>.pageXOffset || docEl.scrollLeft || body.scrollLeft</div><div class="line"></div><div class="line">  <span class="comment">// (3)</span></div><div class="line">  <span class="keyword">var</span> clientTop = docEl.clientTop || body.clientTop || <span class="number">0</span></div><div class="line">  <span class="keyword">var</span> clientLeft = docEl.clientLeft || body.clientLeft || <span class="number">0</span></div><div class="line"></div><div class="line">  <span class="comment">// (4)</span></div><div class="line">  <span class="keyword">var</span> top = box.top + scrollTop - clientTop</div><div class="line">  <span class="keyword">var</span> left = box.top + scrollLeft - clientLeft</div><div class="line"></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">top</span>: <span class="built_in">Math</span>.round(top),</div><div class="line">    <span class="attr">left</span>: <span class="built_in">Math</span>.round(left)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li>取得矩形與元素等相關座標資訊</li>
-<li>計算 page scroll。所有瀏覽器器除了 IE &lt; 9 外都支援 <code>pageXOffset/pageYOffset</code>。在 IE 當宣告了 DTD i.e DOCYPTE 則 scroll 位置可以透過 documentElement（<html>）取得，否則就從 body 取。</html></li>
-<li>在 IE &lt; 8 document 或 body 會具有特殊的偏移，所以我們需要取得偏移並扣掉。但要注意的是  clientTop/clientLeft 同時也表示 border 寬，一般來說我們不會替 document 或 body 設定 border，在這種情況下 IE 的document.documentElement.clientTop 不是 0 而是 <code>2px</code>。因此我們要減掉。</li>
-<li>加入捲動的距離，然後扣掉位移即是該元素相對於 document 的座標。</li>
-</ol>
-<p>針對 Firefox 我們需要而外使用四捨五入 Math.round()</p>
-<h2 id="scrollTop"><a href="#scrollTop" class="headerlink" title="scrollTop"></a>scrollTop</h2><p>取得已經捲動多少距離</p>
-<ul>
-<li>document.body.scrollTop（Undefined DTD，兼容所有瀏覽器）</li>
-<li>document.documentElement.scrollTop（DTD， Chrome, Safari 為 0）</li>
-<li>window.pageYOffset（FF，Chrome，IE9+，Opera）</li>
-<li>window.scrollY（不推薦使用）</li>
-</ul>
-<h2 id="DTD"><a href="#DTD" class="headerlink" title="DTD"></a>DTD</h2><p>DTD（Document Type Definition）文件類型定義，定義 XML 的元素，結構，屬性。<br>使用 DTD 可以讓不同的使用者在交換資料時明白其資料格式的標準，而程式可以使用 DTD 來驗證 XML 是否正確。</p>
-<p>在 HTML 中 <code>document.compatMode</code> 可以得知是否宣告了 DTD，值為 <code>BackCompat</code> 為未宣告，<code>CSS1Compat</code> 為宣告 DTD。</p>
-<h2 id="MouseEvent-座標"><a href="#MouseEvent-座標" class="headerlink" title="MouseEvent 座標"></a>MouseEvent 座標</h2><ul>
-<li>screenX/Y - 相對於螢幕左上角的座標</li>
-<li>pageX/Y - 相對於頁面左上角的座標（IE9 不支援）包含 scroll</li>
-<li>clientX/Y - 相對於瀏覽器左上角的座標</li>
-<li>layerX/Y - 當元素的 position 不是 static 我們稱為定位元素（positioned）。觸發事件的元素相對於父容器定位元素的座標，從 border 開始計算。</li>
-<li>offsetX/Y - 跟 layerX/Y 不同的是 layerX/Y 是從 border 外邊界開始計算，offsetX/Y 從內邊界計算 i.e padding area，也就是說當點擊在 border 上時會是負值。</li>
-<li>movementX/Y - 上個 mousemove 座標與當前的 mousemove 座標移動距離。currentEvent.screenX - previousEvent.screenX</li>
-</ul>
-<h2 id="window-尺寸"><a href="#window-尺寸" class="headerlink" title="window 尺寸"></a>window 尺寸</h2><ul>
-<li>window.innerWidth</li>
-<li>window.innerHeight</li>
-<li>window.outerWidth</li>
-<li>window.outerHeight</li>
-<li>window.pageYOffset</li>
-<li>window.pageXOffset</li>
-<li>window.scrollX</li>
-<li>window.scrollY</li>
-<li>window.screenX</li>
-<li>window.screenY</li>
-</ul>
-<h2 id="DOM-尺寸"><a href="#DOM-尺寸" class="headerlink" title="DOM 尺寸"></a>DOM 尺寸</h2><ul>
-<li>clientWidth / clientHeight</li>
-<li>scrollWidth / scrollHeight</li>
-<li>offsetWidth / offsetHeight</li>
-<li>scrollTop / scrollLeft</li>
-<li>offsetTop / offsetLeft</li>
-<li>clientTop / clientLeft</li>
-<li>offsetParent</li>
-<li>getBoundingClientRect()</li>
-<li>video.videoWidth</li>
-<li>video.videoHeight</li>
-</ul>
-<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>client 前綴的概略為相對於瀏覽器 viewport 或指內部 padding area。<br>offset 前綴的概略為相對於父定位元素。<br>scroll 前綴的概略為相對於完整頁面。<br>screen 相對於螢幕。</p>
-<h2 id="資源"><a href="#資源" class="headerlink" title="資源"></a>資源</h2><ul>
-<li><a href="https://javascript.info/tutorial/coordinates" target="_blank" rel="external">Javascript coordinates</a></li>
-</ul>
-
+<p>開始捲動後，document 的座標等於 window（viewport） 的座標加上 scroll 的位置，大部分的情況下我們會使用 document 座標系統，因為它即便 scroll 了，還是會保持一致。</p></p>
+            <p class="article-more-link">
+                <a href="/2017/01/31/understand-coordinate-of-dom/#more">繼續閱讀</a>
+            </p>
         
         </div>
         <footer class="article-footer">
