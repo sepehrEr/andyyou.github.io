@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://support.cloudflare.com/hc/en-us/article_attachments/203519687/ssl.png">
 <meta property="og:image" content="https://support.cloudflare.com/hc/en-us/article_attachments/202163627/Page_Rules__martijn_cf___CloudFlare_-_Web_Performance___Security.jpg">
 <meta property="og:image" content="https://support.cloudflare.com/hc/en-us/article_attachments/202234358/Page_Rules__martijn_cf___CloudFlare_-_Web_Performance___Security_2.jpg">
-<meta property="og:updated_time" content="2017-02-14T02:22:57.000Z">
+<meta property="og:updated_time" content="2017-02-14T02:29:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="設定 Heroku 使用 Cloudflare HTTPS">
 <meta name="twitter:description" content="設定 Heroku 使用 Cloudflare HTTPS">
@@ -279,6 +279,10 @@ ga('send', 'pageview');
 <p>再此透過 cURL 來檢查</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ curl -I -L martijn.cf</div><div class="line"></div><div class="line">HTTP/1.1 301 Moved Permanently</div><div class="line">Date: Wed, 24 Jun 2015 04:06:00 GMT</div><div class="line">Connection: keep-alive</div><div class="line">Set-Cookie: __cfduid=d37122464f26484c74e2359938310ac611435118760; expires=Thu, 23-Jun-16 04:06:00 GMT; path=/; domain=.martijn.cf; HttpOnly</div><div class="line">Location: https://martijn.cf/</div><div class="line">Server: cloudflare-nginx</div><div class="line">CF-RAY: 1fb58ebf219111b9-SJC</div><div class="line"></div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: cloudflare-nginx</div><div class="line">Date: Wed, 24 Jun 2015 04:06:01 GMT</div><div class="line">Content-Type: text/html; charset=utf-8</div><div class="line">Connection: keep-alive</div><div class="line">Set-Cookie: __cfduid=dacb13cbfbc6415248b68d3c51e03a8001435118761; expires=Thu, 23-Jun-16 04:06:01 GMT; path=/; domain=.martijn.cf; HttpOnly</div><div class="line">X-Frame-Options: SAMEORIGIN</div><div class="line">Via: 1.1 vegur</div><div class="line">CF-RAY: 1fb58ec130851213-SJC</div></pre></td></tr></table></figure>
 <p>如果 SSL 沒運作那麼我們會看到 525 或 526 的錯誤。</p>
+<h1 id="資源"><a href="#資源" class="headerlink" title="資源"></a>資源</h1><ul>
+<li><a href="https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-CloudFlare-and-Heroku-over-HTTPS" target="_blank" rel="external">Configure Cloudflare and Heroku over HTTPS</a></li>
+<li><a href="https://ze3kr.com/2016/05/rage4-best-dns/" target="_blank" rel="external">Rage4、CloudXNS、Route53 和 CloudFlare 解析</a></li>
+</ul>
 
         
         </div>
