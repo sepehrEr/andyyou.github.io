@@ -251,7 +251,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/10/31/process-types-and-profile/" data-id="ciz9sqb9l00dzugwxoau75mv5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/10/31/process-types-and-profile/" data-id="cj0852rgy00chi2wxd0v24bww" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -375,7 +375,138 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/10/12/new-package-manager-javascript-yarn/" data-id="ciz9sqb9n00e3ugwxskq31ljz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/10/12/new-package-manager-javascript-yarn/" data-id="cj0852rgx00cei2wxpv8xldng" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-node-best-practice" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/04/node-best-practice/">npm 最佳實作的小技巧</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/04/node-best-practice/">
+            <time datetime="2016-10-04T04:00:00.000Z" itemprop="datePublished">2016-10-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/nodejs/">nodejs</a>, <a class="tag-link" href="/tags/package-manager/">package manager</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h1 id="npm-最佳實作"><a href="#npm-最佳實作" class="headerlink" title="npm 最佳實作"></a>npm 最佳實作</h1><p><code>npm install</code> 是我們最常在 npm 中用到的指令，但其實它還提供了更多的功能。在這篇文章中我們將會學到 npm 如何在開發過程中協助我們 - 從建立專案到部署應用程式。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/10/04/node-best-practice/#more">繼續閱讀</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="//andyyou.github.io/2016/10/04/node-best-practice/" data-id="cj0852rgv00cai2wx5ojw1yra" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -507,138 +638,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/10/04/webpack-notes/" data-id="ciz9sqb8r00cxugwx9907qsiq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-node-best-practice" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/10/04/node-best-practice/">npm 最佳實作的小技巧</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/10/04/node-best-practice/">
-            <time datetime="2016-10-04T04:00:00.000Z" itemprop="datePublished">2016-10-04</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/nodejs/">nodejs</a>, <a class="tag-link" href="/tags/package-manager/">package manager</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><h1 id="npm-最佳實作"><a href="#npm-最佳實作" class="headerlink" title="npm 最佳實作"></a>npm 最佳實作</h1><p><code>npm install</code> 是我們最常在 npm 中用到的指令，但其實它還提供了更多的功能。在這篇文章中我們將會學到 npm 如何在開發過程中協助我們 - 從建立專案到部署應用程式。</p></p>
-            <p class="article-more-link">
-                <a href="/2016/10/04/node-best-practice/#more">繼續閱讀</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="//andyyou.github.io/2016/10/04/node-best-practice/" data-id="ciz9sqb9i00dsugwx58km9g9d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/10/04/webpack-notes/" data-id="cj0852rgh00bfi2wxkrpensdr" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -771,7 +771,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/09/22/js-contrstructors-prototypes-new/" data-id="ciz9sqb9g00dpugwxbt70520s" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/09/22/js-contrstructors-prototypes-new/" data-id="cj0852rgv00c7i2wxs0ewtn2q" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -902,7 +902,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/09/19/node-note/" data-id="ciz9sqb9j00dwugwxuju8sid4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/09/19/node-note/" data-id="cj0852rh900cli2wxb5kc0ym4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1040,7 +1040,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/08/26/facebook-bot/" data-id="ciz9sqb9700dlugwxl0hrxege" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/08/26/facebook-bot/" data-id="cj0852rgt00c3i2wx2k7t73ov" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1171,7 +1171,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/06/28/css-clip-path/" data-id="ciz9sqb9500diugwxcs489aa5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/06/28/css-clip-path/" data-id="cj0852rgq00bwi2wxqbnu5fbo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1302,7 +1302,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/06/18/build-app-with-vue/" data-id="ciz9sqb9100dbugwxl9r3gmci" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/06/18/build-app-with-vue/" data-id="cj0852rgm00bpi2wx14xtkmi5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1435,7 +1435,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/06/16/sytling-broken-images/" data-id="ciz9sqb9300deugwxk17x8hhj" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/06/16/sytling-broken-images/" data-id="cj0852rgo00bti2wxwgtas88v" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

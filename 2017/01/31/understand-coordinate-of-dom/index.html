@@ -22,7 +22,7 @@
 當頁面還沒捲動時 window 和 document 的原點 (0, 0) 與其他座標是相同的。
 開始捲動後，docum">
 <meta property="og:image" content="//andyyou.github.io/2017/01/31/understand-coordinate-of-dom/line-box.jpg">
-<meta property="og:updated_time" content="2017-02-01T05:17:25.000Z">
+<meta property="og:updated_time" content="2017-03-13T13:13:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解 DOM 座標">
 <meta name="twitter:description" content="座標系統在瀏覽器中有兩種座標系統 &amp;amp; 滑鼠座標：
@@ -297,9 +297,9 @@ ga('send', 'pageview');
 <h2 id="MouseEvent-座標"><a href="#MouseEvent-座標" class="headerlink" title="MouseEvent 座標"></a>MouseEvent 座標</h2><ul>
 <li>screenX/Y - 相對於螢幕左上角的座標</li>
 <li>pageX/Y - 相對於頁面左上角的座標（IE9 不支援）包含 scroll</li>
-<li>clientX/Y - 相對於瀏覽器左上角的座標</li>
-<li>layerX/Y - 當元素的 position 不是 static 我們稱為定位元素（positioned）。觸發事件的元素相對於父容器定位元素的座標，從 border 開始計算。</li>
-<li>offsetX/Y - 跟 layerX/Y 不同的是 layerX/Y 是從 border 外邊界開始計算，offsetX/Y 從內邊界計算 i.e padding area，也就是說當點擊在 border 上時會是負值。</li>
+<li>clientX/Y - 相對於瀏覽器左上角的座標，不含 scroll</li>
+<li>layerX/Y - 首先當元素的 position 不是 static 我們稱為定位元素（positioned）。觸發事件的元素相對於父容器定位元素或根元素的座標，Chrome 從 border 開始計算，Firefox 則從 padding 邊界，計算過程包含 scroll。</li>
+<li>offsetX/Y - 滑鼠點擊點相對於目標元素 padding 邊界的座標，點擊到 border 區域時會是負值。</li>
 <li>movementX/Y - 上個 mousemove 座標與當前的 mousemove 座標移動距離。currentEvent.screenX - previousEvent.screenX</li>
 </ul>
 <h2 id="window-尺寸"><a href="#window-尺寸" class="headerlink" title="window 尺寸"></a>window 尺寸</h2><ul>
@@ -340,7 +340,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/01/31/understand-coordinate-of-dom/" data-id="ciz9sqb9v00ekugwx9amy18di" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/01/31/understand-coordinate-of-dom/" data-id="cj0852rhg00d6i2wxg47ombmy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
