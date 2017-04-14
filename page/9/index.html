@@ -196,7 +196,7 @@ ga('send', 'pageview');
 
             
             <section id="main">
-    <article id="post-ruby-notes" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-login" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -204,7 +204,7 @@ ga('send', 'pageview');
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2015/04/04/ruby-notes/">Ruby 快速筆記</a>
+            <a class="article-title" href="/2015/04/04/login/">Rails 簡易的實作登入</a>
         </h1>
     
 
@@ -213,7 +213,7 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/04/04/ruby-notes/">
+        <a href="/2015/04/04/login/">
             <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
         </a>
     </div>
@@ -228,7 +228,7 @@ ga('send', 'pageview');
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/ruby/">ruby</a>
+        <a class="tag-link" href="/tags/RoR/">RoR</a>, <a class="tag-link" href="/tags/ruby/">ruby</a>
     </div>
 
                     </div>
@@ -238,14 +238,9 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h2 id="Ruby-快速筆記"><a href="#Ruby-快速筆記" class="headerlink" title="Ruby 快速筆記"></a>Ruby 快速筆記</h2><ul>
-<li>Ruby 中的字串需要包在 <code>&quot;</code> 或者 <code>&#39;</code> 中不過兩者有一點微妙的差別，在雙引號中可以使用逸出字元(\n \r \) 等等，不過單引號會原封不動的輸出除了 <code>\\</code> 例外</li>
-<li>在呼叫方法的時候 Ruby 可以省略 ()</li>
-<li>puts 和 print 的差別是 puts 會在行末加上 \n，如果是用 , 分開不同的參數輸出則每個參數後面都會有 \n</li>
-<li>第三個輸出的 method 是 p ，puts 和 print 不管輸出的是數字或字串都只會顯示內容</li>
-</ul></p>
+            <p><h2 id="簡易的實作登入"><a href="#簡易的實作登入" class="headerlink" title="簡易的實作登入"></a>簡易的實作登入</h2><h4 id="1-Create-a-User-model"><a href="#1-Create-a-User-model" class="headerlink" title="1. Create a User model"></a>1. Create a User model</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ rails g model User name:string password:digest</div><div class="line">$ rake db:migrate</div></pre></td></tr></table></figure></p>
             <p class="article-more-link">
-                <a href="/2015/04/04/ruby-notes/#more">繼續閱讀</a>
+                <a href="/2015/04/04/login/#more">繼續閱讀</a>
             </p>
         
         </div>
@@ -256,7 +251,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2015/04/04/ruby-notes/" data-id="cj1cvfdii006tfvwx4vvaispf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2015/04/04/login/" data-id="cj1h6x6qw006sucwxjbfhk322" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -332,7 +327,7 @@ ga('send', 'pageview');
 
 
 
-    <article id="post-login" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ruby-notes" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -340,7 +335,7 @@ ga('send', 'pageview');
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2015/04/04/login/">Rails 簡易的實作登入</a>
+            <a class="article-title" href="/2015/04/04/ruby-notes/">Ruby 快速筆記</a>
         </h1>
     
 
@@ -349,7 +344,7 @@ ga('send', 'pageview');
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2015/04/04/login/">
+        <a href="/2015/04/04/ruby-notes/">
             <time datetime="2015-04-04T04:00:00.000Z" itemprop="datePublished">2015-04-04</time>
         </a>
     </div>
@@ -364,7 +359,7 @@ ga('send', 'pageview');
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/RoR/">RoR</a>, <a class="tag-link" href="/tags/ruby/">ruby</a>
+        <a class="tag-link" href="/tags/ruby/">ruby</a>
     </div>
 
                     </div>
@@ -374,9 +369,14 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h2 id="簡易的實作登入"><a href="#簡易的實作登入" class="headerlink" title="簡易的實作登入"></a>簡易的實作登入</h2><h4 id="1-Create-a-User-model"><a href="#1-Create-a-User-model" class="headerlink" title="1. Create a User model"></a>1. Create a User model</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ rails g model User name:string password:digest</div><div class="line">$ rake db:migrate</div></pre></td></tr></table></figure></p>
+            <p><h2 id="Ruby-快速筆記"><a href="#Ruby-快速筆記" class="headerlink" title="Ruby 快速筆記"></a>Ruby 快速筆記</h2><ul>
+<li>Ruby 中的字串需要包在 <code>&quot;</code> 或者 <code>&#39;</code> 中不過兩者有一點微妙的差別，在雙引號中可以使用逸出字元(\n \r \) 等等，不過單引號會原封不動的輸出除了 <code>\\</code> 例外</li>
+<li>在呼叫方法的時候 Ruby 可以省略 ()</li>
+<li>puts 和 print 的差別是 puts 會在行末加上 \n，如果是用 , 分開不同的參數輸出則每個參數後面都會有 \n</li>
+<li>第三個輸出的 method 是 p ，puts 和 print 不管輸出的是數字或字串都只會顯示內容</li>
+</ul></p>
             <p class="article-more-link">
-                <a href="/2015/04/04/login/#more">繼續閱讀</a>
+                <a href="/2015/04/04/ruby-notes/#more">繼續閱讀</a>
             </p>
         
         </div>
@@ -387,7 +387,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2015/04/04/login/" data-id="cj1cvfdij006wfvwxl3132lm7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2015/04/04/ruby-notes/" data-id="cj1h6x6qy006wucwx34n6cpqy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -518,7 +518,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2015/04/04/active-record/" data-id="cj1cvfdi90064fvwxaxfypdb8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2015/04/04/active-record/" data-id="cj1h6x6qa0064ucwxqyluin4x" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -649,7 +649,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/12/23/use-selenium-to-match-cloud-based-stress-test/" data-id="cj1cvfdi90061fvwxn87kf3ru" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/12/23/use-selenium-to-match-cloud-based-stress-test/" data-id="cj1h6x6q6005sucwxo93j0i2y" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -780,7 +780,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/11/15/fools-learn-flux/" data-id="cj1cvfdi7005xfvwxfahj8any" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/11/15/fools-learn-flux/" data-id="cj1h6x6q7005vucwxpgyhz0bl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -911,7 +911,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/11/11/flux-notes/" data-id="cj1cvfdi5005rfvwx8bj7b6ee" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/11/11/flux-notes/" data-id="cj1h6x6q8005zucwx9fdxz3ia" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1042,7 +1042,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/10/07/reactjs-implemented-a-tabs-component/" data-id="cj1cvfdi4005ofvwxknwk4jlq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/10/07/reactjs-implemented-a-tabs-component/" data-id="cj1h6x6q3005mucwx41ala8qd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1173,7 +1173,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/09/20/reactjs-reactjs-decrypt/" data-id="cj1cvfdi3005kfvwxanegrrbc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/09/20/reactjs-reactjs-decrypt/" data-id="cj1h6x6q2005iucwxqnztfvs7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1304,7 +1304,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/09/18/reactjs-purerendermixin/" data-id="cj1cvfdi0005dfvwxtsatj6ji" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/09/18/reactjs-purerendermixin/" data-id="cj1h6x6py0059ucwx6g0x44je" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1435,7 +1435,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2014/09/18/reactjs-the-invariance-of-the-auxiliary-function/" data-id="cj1cvfdi1005hfvwx1c9qiar4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2014/09/18/reactjs-the-invariance-of-the-auxiliary-function/" data-id="cj1h6x6q1005fucwxqttf05g5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
