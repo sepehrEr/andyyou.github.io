@@ -161,7 +161,7 @@ ga('send', 'pageview');
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                146
+                147
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -196,6 +196,214 @@ ga('send', 'pageview');
 
             
             <section id="main">
+    <article id="post-better-json-through-stream" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/05/22/better-json-through-stream/">[譯] 使用 stream 的方式處理 JSON 傳輸</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/05/22/better-json-through-stream/">
+            <time datetime="2017-05-22T10:13:53.000Z" itemprop="datePublished">2017-05-22</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Program/">Program</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>網頁應用程式在處理大量資料時一直都不是一件簡單的事。當需要接受大量資料時不只速度會變慢，且容易出錯，逾時等等。因此這是使用者體驗設計上的一個挑戰。<br>傳送大量資料同樣的也不容易，特別是在傳送前處理某些複雜的資料成為我們需要的資料時。</p>
+<p>在這篇文章，我們將要來看看如何面對這些挑戰</p>
+<h1 id="困難點"><a href="#困難點" class="headerlink" title="困難點"></a>困難點</h1><h2 id="緩慢與高度依賴伺服器回應"><a href="#緩慢與高度依賴伺服器回應" class="headerlink" title="緩慢與高度依賴伺服器回應"></a>緩慢與高度依賴伺服器回應</h2><p>當我們需要在伺服器端處理大量的 HTML 來回應使用者的請求時，速度理所當然就會變慢。更糟糕的是所謂的變慢，具體來說是指使用者的感覺。<br>當使用者點擊連結或發出請求後如果不能很即時的看到畫面，他們就會感到不開心。</p>
+<p>提升伺服器回應的速度一直都是提升效能的目的，一旦回應需要執行一個非常慢的操作時，這件事就會變的棘手。如果回應的資料不只很大，還牽扯到需要使用其他第三方服務或 API 可想而知這個回應會需要更多的處理時間。</p>
+<h2 id="AJAX-請求大量資料會很緩慢並容易出錯"><a href="#AJAX-請求大量資料會很緩慢並容易出錯" class="headerlink" title="AJAX 請求大量資料會很緩慢並容易出錯"></a>AJAX 請求大量資料會很緩慢並容易出錯</h2><p>關於伺服器回應緩慢的問題也說明了為什麼 AJAX 在 Web 開發中如此重要，因為我們就不需要等待伺服器幫我們編譯完整的頁面，而是把所需的資料直接傳回即可。一旦取得資料我們就在客戶端渲染，這可以省下不少時間。</p>
+<p>然而將資料操作<code>整個</code>轉移到前端不見得是最快的作法。有可能變慢的原因來自大部分的個人電腦並沒有比伺服器的規格來的高，同時網路品質也比較慢。<br>使用者依然要等待所有資料下載完畢才能開始後續的處理，任何網路的問題都會造成資料不完全導致頁面無法正常呈現。</p>
+<h2 id="複數-AJAX-請求增加程式複雜度"><a href="#複數-AJAX-請求增加程式複雜度" class="headerlink" title="複數 AJAX 請求增加程式複雜度"></a>複數 AJAX 請求增加程式複雜度</h2><p>一個相對不錯的方式；就是我們可以將取回一整包大量資料的 AJAX 請求打散成許多較小的請求，然後各自處理在頁面上對應的部分。<br>這種方式一般來說可以有效改善使用者體驗，因為使用者可以儘快的看到部分資料而不是等待整個頁面一起出現。<br>同時程式在網絡不佳的情況下也可用性也增加許多，已經完成下載的部分就可以運作，部分下載失敗的資料則不影響已經下載好的部分。</p>
+<p>但很多時候處理多個請求也不見得都是那麼簡單，我們客戶端程式的邏輯會因此變的複雜許多。</p>
+<h2 id="模擬問題與實作"><a href="#模擬問題與實作" class="headerlink" title="模擬問題與實作"></a>模擬問題與實作</h2><p>我們將要透過實作一個 Web 應用程式，使用它渲染顯示一張<code>貓在陽光下</code>的 8-bit 圖來示範如何解決這個難題。<br>這張圖片的構成資訊會包含在 JSON 裡。裡面包含多個物件的陣列，每個物件有 x, y, color 屬性。<br>而網頁頁面上將會是一個大的 div （一個 grid）包含許多小 div （row &amp; cell）大概可以將其看成一張方眼紙。<br>我們希望一個格子對應一個點即使用物件中的 x, y, color，來完成這張圖。</p>
+<h3 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h3><p>這裡為了模擬更多造成問題的原因，我們加入了些條件限制：</p>
+<h4 id="多個資料來源"><a href="#多個資料來源" class="headerlink" title="多個資料來源"></a>多個資料來源</h4><p>首先是關於貓的部分，每個點的資料會存放在我們伺服器上的 JSON 檔案。然後關於太陽圖案的部分則是存在 Github 的 JSON 檔案。</p>
+<h4 id="回應大量資料"><a href="#回應大量資料" class="headerlink" title="回應大量資料"></a>回應大量資料</h4><p>我們的 JSON 將會不合理的包含大量資料，這主要是為了凸顯我們要處理的問題。事實上貓圖案部分的 JSON 額外包含 100 個不需要的屬性，讓這個檔案變得較大，大約是 500k。如果這樣您還是覺得很正常，沒關係我們太陽的部分將包含 600 個不需要的屬性，整個檔案大約會來到 1 mb。</p>
+<h4 id="不好的連線品質"><a href="#不好的連線品質" class="headerlink" title="不好的連線品質"></a>不好的連線品質</h4><p>我們同時希望使用者可以在網絡不好的狀況下使用我們的程式。</p>
+<h2 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h2><p>我們的客戶端將會發出一個請求給伺服器。客戶端會有個事件處理程序，它會知道每當收到一個點的資料時該如何處理。<br>接著，我們的伺服器端會使用串流的方式回應 JSON ，如此一來我們就不需要等到所有資料都取得才開始處理。</p>
+<p>最終我們將通過一個串流資料的方式取得所有圖案所需的資料。伺服器端將各自從兩個串流的資料來源取得資料並合併。這麼做是因為我們要模擬許多現實的情況，即資料來源一個較快（從硬碟讀取），另一個較慢（從網絡讀取）。</p>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="Oboe-js-接收並處理串流類型的-JSON"><a href="#Oboe-js-接收並處理串流類型的-JSON" class="headerlink" title="Oboe.js, 接收並處理串流類型的 JSON"></a>Oboe.js, 接收並處理串流類型的 JSON</h2><p><code>oboe</code> 讓我們在 JSON 整個完成傳輸之前便可以開始解析使用。一旦符合 pattern 格式的資料被解析完成就執行對應的動作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="string">'url or readable stream'</span></div><div class="line"><span class="keyword">const</span> pattern = <span class="string">'string representing a node in the tree'</span></div><div class="line"></div><div class="line">oboe(source)</div><div class="line">  .node(pattern, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="comment">// handle data</span></div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<h2 id="Highland-js-處理串流資料的函式庫"><a href="#Highland-js-處理串流資料的函式庫" class="headerlink" title="Highland.js - 處理串流資料的函式庫"></a>Highland.js - 處理串流資料的函式庫</h2><p>一直以來我總是覺得自己實作串流機制的方式非常麻煩，而且容易不知道它們該怎麼和既有的工作流程整合。<code>Highland.js</code> 是一個函式庫，它使得串流資料變得容易被管理和操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> data = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>]</div><div class="line">highland(data)</div><div class="line">  .pipe(anotherStream)</div></pre></td></tr></table></figure>
+<h1 id="接收串流的回應"><a href="#接收串流的回應" class="headerlink" title="接收串流的回應"></a>接收串流的回應</h1><p>我們將從客戶端開始作回來。首先是我們的回應是一個大量資料的 JSON，但我們不想等它們全部載完才開始動作。</p>
+<p>第一步是使用 <code>Oboe</code> 來發起請求，Oboe 會在發出請求後開始解析回應。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">oboe(<span class="string">'http://localhost:3000/data'</span>)</div></pre></td></tr></table></figure>
+<p>接著，我們要註冊兩個事件監聽用來處理回應。第一個會尋找 JSON 中具備 3 個屬性（x, y, color）的物件。在這個範例我們只會搜尋 <code>pixels</code> 陣列，接著我們就可以將資料更新到對應的元素上。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.node('&#123;x y color&#125;', function (point) &#123;</div><div class="line">  let grid = document.querySelector('.grid)</div><div class="line">  let cell = getCell(grid, point.x, point.y)</div><div class="line">  cell.classList.add(point.color)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>第二個監聽事件只會在整個回應都被解析完成時觸發一次</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.done(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> el = <span class="built_in">document</span>.querySelector(<span class="string">'#status'</span>)</div><div class="line">  el.textContent = <span class="string">'All data loaded'</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>看看下面的範例會更有感覺：</p>
+<ul>
+<li><a href="https://jsfiddle.net/andyyu0920/myv0gjj1/" target="_blank" rel="external">範例</a></li>
+</ul>
+<h1 id="傳送串流類型的回應"><a href="#傳送串流類型的回應" class="headerlink" title="傳送串流類型的回應"></a>傳送串流類型的回應</h1><p>能夠處理串流的資料來源之後當然下一步，我們的應用程式將需要一個路由用來提供資料給客戶端。首先我們需要一個回應的樣板，讓我們可以組織 metadata 或其他屬性。<br>重要的是後續當我們取得 <code>pixels</code> 陣列時可以知道該怎麼和這個字串化的物件合併。您可以把這個過程想成我們在使用像 ejs, pug 這類樣板引擎一樣。<br>我們在需要後續填上資料的地方先留下一個佔位符</p>
+<blockquote>
+<p>不懂這邊在說什麼，先耐著性子讀下去…</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">router.get(<span class="string">'/data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> response = &#123;</div><div class="line">    <span class="attr">exif</span>: &#123;</div><div class="line">      <span class="attr">software</span>: <span class="string">''</span>,</div><div class="line">      <span class="attr">dateTime</span>: <span class="string">''</span>,</div><div class="line">      <span class="attr">dataTimeOriginal</span>: <span class="string">''</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">pixif</span>: &#123;</div><div class="line">      <span class="attr">pixels</span>: [<span class="string">"#&#123;pixels&#125;"</span>]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">end</span>: <span class="string">'test'</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><code>res</code> 物件是 express 傳到客戶端一個 WriteableStream，這意味著我們可以接續處理（pipe） ReadableStream 然後送到客戶端。<br>然而它只能夠<code>接收字串</code>所以我們要將物件轉換成字串，這也是上面需要樣板機制來處理的原因。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let json = JSON.stringify(response)</div></pre></td></tr></table></figure>
+<p>在轉換成字串後，我們將要切割 response ，我們就可以將 <code>#{pixles}</code> 前後的部分拆出來。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> parts = json.split(<span class="string">'"#&#123;pixels&#125;"'</span>)</div></pre></td></tr></table></figure>
+<p>現在我們可以將除了 pixels 之外的部分建立一個新的 highland stream。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">highland(&#123;</div><div class="line">  parts[<span class="number">0</span>], <span class="comment">// before placeholder</span></div><div class="line">  parts[<span class="number">1</span>] <span class="comment">// after placeholder</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>接著我麼可以在串流上使用 <code>invoke</code> 來讓串流的每個元素執行 <code>split</code> 並使用參數 <code>&#39;&#39;</code>，這表示我們串流中的內容會被切成一個個字元。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.invoke(<span class="string">'split'</span>, [<span class="string">''</span>])</div></pre></td></tr></table></figure>
+<p>然後我們要告訴 <code>highland</code> 我們想要依序讀取每個元素。如此一來 highland 就會先讀取 <code>before</code> 的部分直到完成才接著讀取 <code>after</code> 的部分。<br>這點非常重要，因為我們需要的是一個符合規範的 JSON 不然的話我們取得的只是一堆亂碼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.sequence()</div></pre></td></tr></table></figure>
+<p>最後我們可以開始傳送串流。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.pipe(res)</div></pre></td></tr></table></figure>
+<p>到這邊我們有了基本的概念，也知道 <code>highland</code> 可以協助我們處理串流的部分，甚至直接幫我們處理 express 回應的部分</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">router.get(<span class="string">'/data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> response = &#123;</div><div class="line">    <span class="attr">exif</span>: &#123;</div><div class="line">      <span class="attr">software</span>: <span class="string">'http://make8bitart.com'</span>,</div><div class="line">      <span class="attr">dateTime</span>: <span class="string">'2015-11-07T15:35:13.415Z'</span>,</div><div class="line">      <span class="attr">dateTimeOriginal</span>: <span class="string">'2015-11-07T00:24:05.776Z'</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">pixif</span>: &#123;</div><div class="line">      <span class="attr">pixels</span>: [<span class="string">"#&#123;pixels&#125;"</span>]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">end</span>: <span class="string">'test'</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> json = <span class="built_in">JSON</span>.stringify(response)</div><div class="line">  <span class="keyword">var</span> parts = json.split(<span class="string">'"#&#123;pixels&#125;"'</span>)</div><div class="line">  highland([</div><div class="line">    parts[<span class="number">0</span>],</div><div class="line">    parts[<span class="number">1</span>]</div><div class="line">  ])</div><div class="line">  .invoke(<span class="string">'split'</span>, [<span class="string">''</span>])</div><div class="line">  .sequence()</div><div class="line">  .pipe(res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h1 id="在回應中加入資料"><a href="#在回應中加入資料" class="headerlink" title="在回應中加入資料"></a>在回應中加入資料</h1><p>這時我們的客戶端已經可以接收串流的回應了，我們可以繼續處理加上其他資料到這個回應中。現階段我們單純加入一些靜態的資料來驗證行為如同我們所想的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> points = [</div><div class="line">  &#123;</div><div class="line">    <span class="attr">x</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">y</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">color</span>: <span class="string">'orange'</span></div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    <span class="attr">x</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">y</span>: <span class="number">2</span>,</div><div class="line">    <span class="attr">color</span>: <span class="string">'orange'</span></div><div class="line">  &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>我們可以為這個陣列建立一個串流</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> pointsStream = highland(points)</div></pre></td></tr></table></figure>
+<p>剛剛提到 express 只能接收字串串流，所以這邊我們也要轉成字串，我們可以使用 <code>map</code> 來完成這個需求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.map(point =&gt; JSON.stringify(point))</div></pre></td></tr></table></figure>
+<p>這個剛建立的陣列串流會被塞進 <code>&quot;#{points}&quot;</code> 佔位符的位置，即放在陣列裡面。由於最終我們需要的是一個符合規範的 JSON 因此在這個串流的每個元素之間我們還缺少一個逗號。要完成這個需求我們可以通過下面的方法告訴串流物件幫我們在每個元素之間加上逗號。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.intersperse(<span class="string">','</span>)</div></pre></td></tr></table></figure>
+<p>現在我們可以將這個陣列的 stream 組進剛剛的 <code>before</code> 和 <code>after</code> 中間完成一個完整的串流</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">highland([</div><div class="line">  parts[<span class="number">0</span>],</div><div class="line">  pointStream,</div><div class="line">  parts[<span class="number">1</span>]</div><div class="line">])</div><div class="line">.invoke(<span class="string">'split'</span>, [<span class="string">''</span>])</div><div class="line">.sequence()</div><div class="line">.pipe(res)</div></pre></td></tr></table></figure>
+<h1 id="從其他模組取得資料"><a href="#從其他模組取得資料" class="headerlink" title="從其他模組取得資料"></a>從其他模組取得資料</h1><p>我們可以透過將資料拆離成模組簡化路由的程式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> points = <span class="built_in">require</span>(<span class="string">'../data/points'</span>)</div><div class="line"><span class="keyword">let</span> pointStream = points.getStream()</div></pre></td></tr></table></figure>
+<p>也就是說不管模組做什麼只要最後傳回一個 stream 給我們就好，其他組合的部分就如同上面說明。</p>
+<h1 id="從檔案取得貓圖案部分的資料"><a href="#從檔案取得貓圖案部分的資料" class="headerlink" title="從檔案取得貓圖案部分的資料"></a>從檔案取得貓圖案部分的資料</h1><p>現在讓我們來使用真的資料而不是我們模擬的假資料。首先我們需要從檔案讀取關於貓圖案的資料，將其一併從模組傳回。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDataStream</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> catPath = path.resolve(__dirname, <span class="string">'./cat-points.json'</span>)</div><div class="line">  <span class="keyword">let</span> catSource = fs.createReadStream(catPath)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>關於檔案的內容將會是字串的串流，而我們最後需要的是物件的串流</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let catStream = getPointStream(catSource)</div></pre></td></tr></table></figure>
+<p>要完成這一步我們需要再次利用 Oboe。這麼做我們將可以在讀取檔案時，每當一個點完成讀取就執行對應的操作而不需要等到整個檔案載人完成。<br>我們也會需要用到 highland 來建立 stream。這次我們使用 highland 並傳入一個 function 。該 function 有一個參數 <code>push</code> 。<br>在 function 內我們會調用 <code>push</code> 傳入錯誤或 null 為第一個參數，第二個參數則是我們的資料。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPointStream</span> (<span class="params">sourceStream</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> highland(<span class="function"><span class="keyword">function</span> (<span class="params">push</span>) </span>&#123;</div><div class="line">    oboe(sourceStream)</div><div class="line">      .node(<span class="string">'&#123;x y color&#125;'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">point</span>) </span>&#123;</div><div class="line">        push(<span class="literal">null</span>, point)</div><div class="line">      &#125;)</div><div class="line">      .done(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        push(<span class="literal">null</span>, highland.nil)</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="從網路讀取太陽圖案的資料"><a href="#從網路讀取太陽圖案的資料" class="headerlink" title="從網路讀取太陽圖案的資料"></a>從網路讀取太陽圖案的資料</h1><p>最後一個難題則是將太陽圖案的點加到我們的回應。幸運的是前面我們已經完成了類似的任務。<br>在 <code>getDataStream</code> 我們將類似處理貓圖案的部分加入其他點，只不過來源不同。這裡我們會使用 <code>request</code> 函式庫來取得在 Github 上面的檔案。<br>這一步會是比較慢的操作。</p>
+<p>幸運的是 <code>request</code> 會回傳一個可讀的 stream 我們可以將其傳入 <code>getPointStream</code>，Oboe 將會將其處理為跟 <code>fs.getReadStream</code> 一樣的結果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDataStream</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> sunUrl = <span class="string">'https://raw.githubusercontent.com/JuanCaicedo/better-json-through-streams/master/data/sun-points.json'</span></div><div class="line">  <span class="keyword">let</span> sunSource = request(sunUrl)</div><div class="line">  <span class="keyword">let</span> sunStream = getPointStream(sunSource)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>現在我們有兩個 stream 了，<code>catStream</code> 和 <code>sunStream</code> 我們想要將它們合併傳回。我們可以使用 <code>highland</code> 來處理這兩個 stream，使用 <code>merge</code> 來合併成一個 stream。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> highland([</div><div class="line">  catStream,</div><div class="line">  sunStream</div><div class="line">]).merge()</div></pre></td></tr></table></figure>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>設計應用程式搭配串流作為主要的資料傳輸手段是非常強大的。它讓我們可以更有彈性的處理資料傳輸的部分。</p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://simeneer.blogspot.tw/2016/10/nodejs-streams.html" target="_blank" rel="external">Node.js Streams</a></li>
+<li><a href="https://github.com/andyyou/stream-json-sample" target="_blank" rel="external">完整範例</a></li>
+<li><a href="http://engineering.curiositymedia.com/blog/better-json-through-streams" target="_blank" rel="external">原文 - Better JSON through streams</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="//andyyou.github.io/2017/05/22/better-json-through-stream/" data-id="cj2zz5r1500e5imwxp9ecarc4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-express-passport" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -247,7 +455,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/04/11/express-passport/" data-id="cj1h6x6u200dzucwx4yvif0sm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/04/11/express-passport/" data-id="cj2zz5r1400e2imwx208iiagk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -386,7 +594,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/04/02/svg-coordinate-3/" data-id="cj1h6x6u100dvucwxpfegdnvk" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/04/02/svg-coordinate-3/" data-id="cj2zz5r1300dyimwxzr1cu3mg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -525,7 +733,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/04/02/svg-coordinate-2/" data-id="cj1h6x6ty00doucwxrlcc74bt" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/04/02/svg-coordinate-2/" data-id="cj2zz5r1200dvimwxokvc5z7m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -664,7 +872,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/03/17/svg-coordinate-1/" data-id="cj1h6x6u000dsucwxvd2h6eym" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/03/17/svg-coordinate-1/" data-id="cj2zz5r1100drimwx173jrhai" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -801,7 +1009,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/02/17/webpack-2-beginner-guide/" data-id="cj1h6x6tx00dlucwxrbeq4eci" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/02/17/webpack-2-beginner-guide/" data-id="cj2zz5r1000doimwxw0o62qiv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -932,7 +1140,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/02/14/cloudflare-heroku-setup/" data-id="cj1h6x6tw00dhucwx4x2d9p8k" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/02/14/cloudflare-heroku-setup/" data-id="cj2zz5r0z00dkimwxg6a36gst" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1064,7 +1272,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/02/11/dom-review/" data-id="cj1h6x6tv00deucwxinfuly76" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/02/11/dom-review/" data-id="cj2zz5r0y00dhimwxpkiisvsu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1200,7 +1408,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2017/01/31/understand-coordinate-of-dom/" data-id="cj1h6x6tu00daucwxjnnm4j2j" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2017/01/31/understand-coordinate-of-dom/" data-id="cj2zz5r0x00ddimwxtkqz0bxc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1332,138 +1540,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="//andyyou.github.io/2016/12/26/javascript-wat/" data-id="cj1h6x6ts00d7ucwxm178w7lc" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-write-efficient-javascript" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/12/19/write-efficient-javascript/">撰寫高效能的 Javascript 小技巧</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/12/19/write-efficient-javascript/">
-            <time datetime="2016-12-19T07:28:45.000Z" itemprop="datePublished">2016-12-19</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Program/">Program</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>這篇文章將會介紹簡單的技巧來優化我們的程式碼讓 Javascript 編譯的過程更具效率，最終我們的程式碼可以執行的更加快速。<br>特別是當您在遊戲類型的專案上發現掉禎或記憶體回收機制(garbage collector)遇到大量資料無法被回收的情況。這些技巧可以協助我們增加程式碼的效能。</p></p>
-            <p class="article-more-link">
-                <a href="/2016/12/19/write-efficient-javascript/#more">繼續閱讀</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="//andyyou.github.io/2016/12/19/write-efficient-javascript/" data-id="cj1h6x6tq00d0ucwx4xg257pu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="//andyyou.github.io/2016/12/26/javascript-wat/" data-id="cj2zz5r0w00daimwxjrcll8hu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1550,7 +1627,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">分類</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fun/">Fun</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mobile/">Mobile</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program/">Program</a><span class="category-list-count">105</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/System/">System</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">15</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fun/">Fun</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mobile/">Mobile</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program/">Program</a><span class="category-list-count">106</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/System/">System</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">15</span></li></ul>
         </div>
     </div>
 
@@ -1559,7 +1636,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">歸檔</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">二月 2014</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">九月 2013</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">八月 2013</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/03/">三月 2013</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">一月 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">十一月 2011</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -1568,7 +1645,7 @@ ga('send', 'pageview');
     <div class="widget-wrap">
         <h3 class="widget-title">標籤</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-mvc/">.net mvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RoR/">RoR</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api/">api</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/azure/">azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bot/">bot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bundler/">bundler</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/carrier-wave/">carrier wave</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cloudflare/">cloudflare</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compass/">compass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devise/">devise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity-framework/">entity framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/facebook/">facebook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flux/">flux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/framework/">framework</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iisexpress/">iisexpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">53</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-express-passport/">javascript express passport</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jspm/">jspm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mechanism/">mechanism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oocss/">oocss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/osx/">osx</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package-manager/">package manager</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/">postgresql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rack-server/">rack server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/">raspberry-pi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/">reactjs</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/">redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/selenium/">selenium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slim/">slim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svg-javascript/">svg javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task-runner/">task runner</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs/">vuejs</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-mvc/">.net mvc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RoR/">RoR</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api/">api</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/aws/">aws</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/azure/">azure</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bot/">bot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bundler/">bundler</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/carrier-wave/">carrier wave</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos/">centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/">chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cloudflare/">cloudflare</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compass/">compass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devise/">devise</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/entity-framework/">entity framework</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/es6/">es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/facebook/">facebook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flux/">flux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/framework/">framework</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iisexpress/">iisexpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ios/">ios</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">54</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript-express-passport/">javascript express passport</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jekyll/">jekyll</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jspm/">jspm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jwt/">jwt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mechanism/">mechanism</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oocss/">oocss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/osx/">osx</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/package-manager/">package manager</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgresql/">postgresql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rack-server/">rack server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/">raspberry-pi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-native/">react native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/">reactjs</a><span class="tag-list-count">31</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redux/">redux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/selenium/">selenium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/slim/">slim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssl/">ssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svg-javascript/">svg javascript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/task-runner/">task runner</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuejs/">vuejs</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/">windows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xml/">xml</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
