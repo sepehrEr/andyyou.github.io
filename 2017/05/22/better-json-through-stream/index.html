@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="網頁應用程式在處理大量資料時一直都不是一件簡單的事。當需要接受大量資料時不只速度會變慢，且容易出錯，逾時等等。因此這是使用者體驗設計上的一個挑戰。傳送大量資料同樣的也不容易，特別是在傳送前處理某些複雜的資料成為我們需要的資料時。
 在這篇文章，我們將要來看看如何面對這些挑戰">
-<meta property="og:updated_time" content="2017-05-22T10:16:13.000Z">
+<meta property="og:updated_time" content="2017-05-22T10:16:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[譯] 使用 stream 的方式處理 JSON 傳輸">
 <meta name="twitter:description" content="網頁應用程式在處理大量資料時一直都不是一件簡單的事。當需要接受大量資料時不只速度會變慢，且容易出錯，逾時等等。因此這是使用者體驗設計上的一個挑戰。傳送大量資料同樣的也不容易，特別是在傳送前處理某些複雜的資料成為我們需要的資料時。
@@ -244,68 +244,21 @@ ga('send', 'pageview');
             
             <p>網頁應用程式在處理大量資料時一直都不是一件簡單的事。當需要接受大量資料時不只速度會變慢，且容易出錯，逾時等等。因此這是使用者體驗設計上的一個挑戰。<br>傳送大量資料同樣的也不容易，特別是在傳送前處理某些複雜的資料成為我們需要的資料時。</p>
 <p>在這篇文章，我們將要來看看如何面對這些挑戰</p>
-<!--more->
-
-# 困難點
-
-## 緩慢與高度依賴伺服器回應
-
-當我們需要在伺服器端處理大量的 HTML 來回應使用者的請求時，速度理所當然就會變慢。更糟糕的是所謂的變慢，具體來說是指使用者的感覺。
-當使用者點擊連結或發出請求後如果不能很即時的看到畫面，他們就會感到不開心。
-
-提升伺服器回應的速度一直都是提升效能的目的，一旦回應需要執行一個非常慢的操作時，這件事就會變的棘手。如果回應的資料不只很大，還牽扯到需要使用其他第三方服務或 API 可想而知這個回應會需要更多的處理時間。
-
-## AJAX 請求大量資料會很緩慢並容易出錯
-
-關於伺服器回應緩慢的問題也說明了為什麼 AJAX 在 Web 開發中如此重要，因為我們就不需要等待伺服器幫我們編譯完整的頁面，而是把所需的資料直接傳回即可。一旦取得資料我們就在客戶端渲染，這可以省下不少時間。
-
-然而將資料操作`整個`轉移到前端不見得是最快的作法。有可能變慢的原因來自大部分的個人電腦並沒有比伺服器的規格來的高，同時網路品質也比較慢。
-使用者依然要等待所有資料下載完畢才能開始後續的處理，任何網路的問題都會造成資料不完全導致頁面無法正常呈現。
-
-## 複數 AJAX 請求增加程式複雜度
-
-一個相對不錯的方式；就是我們可以將取回一整包大量資料的 AJAX 請求打散成許多較小的請求，然後各自處理在頁面上對應的部分。
-這種方式一般來說可以有效改善使用者體驗，因為使用者可以儘快的看到部分資料而不是等待整個頁面一起出現。
-同時程式在網絡不佳的情況下也可用性也增加許多，已經完成下載的部分就可以運作，部分下載失敗的資料則不影響已經下載好的部分。
-
-但很多時候處理多個請求也不見得都是那麼簡單，我們客戶端程式的邏輯會因此變的複雜許多。
-
-## 模擬問題與實作
-
-我們將要透過實作一個 Web 應用程式，使用它渲染顯示一張`貓在陽光下`的 8-bit 圖來示範如何解決這個難題。
-這張圖片的構成資訊會包含在 JSON 裡。裡面包含多個物件的陣列，每個物件有 x, y, color 屬性。
-而網頁頁面上將會是一個大的 div （一個 grid）包含許多小 div （row & cell）大概可以將其看成一張方眼紙。
-我們希望一個格子對應一個點即使用物件中的 x, y, color，來完成這張圖。
-
-### 限制
-
-這裡為了模擬更多造成問題的原因，我們加入了些條件限制：
-
-#### 多個資料來源
-
-首先是關於貓的部分，每個點的資料會存放在我們伺服器上的 JSON 檔案。然後關於太陽圖案的部分則是存在 Github 的 JSON 檔案。
-
-#### 回應大量資料
-
-我們的 JSON 將會不合理的包含大量資料，這主要是為了凸顯我們要處理的問題。事實上貓圖案部分的 JSON 額外包含 100 個不需要的屬性，讓這個檔案變得較大，大約是 500k。如果這樣您還是覺得很正常，沒關係我們太陽的部分將包含 600 個不需要的屬性，整個檔案大約會來到 1 mb。
-
-#### 不好的連線品質
-
-我們同時希望使用者可以在網絡不好的狀況下使用我們的程式。
-
-## 解決方案
-
-我們的客戶端將會發出一個請求給伺服器。客戶端會有個事件處理程序，它會知道每當收到一個點的資料時該如何處理。
-接著，我們的伺服器端會使用串流的方式回應 JSON ，如此一來我們就不需要等到所有資料都取得才開始處理。
-
-最終我們將通過一個串流資料的方式取得所有圖案所需的資料。伺服器端將各自從兩個串流的資料來源取得資料並合併。這麼做是因為我們要模擬許多現實的情況，即資料來源一個較快（從硬碟讀取），另一個較慢（從網絡讀取）。
-
-# 工具
-
-## Oboe.js, 接收並處理串流類型的 JSON
-
-`oboe` 讓我們在 JSON 整個完成傳輸之前便可以開始解析使用。一旦符合 pattern 格式的資料被解析完成就執行對應的動作。
-
+<a id="more"></a>
+<h1 id="困難點"><a href="#困難點" class="headerlink" title="困難點"></a>困難點</h1><h2 id="緩慢與高度依賴伺服器回應"><a href="#緩慢與高度依賴伺服器回應" class="headerlink" title="緩慢與高度依賴伺服器回應"></a>緩慢與高度依賴伺服器回應</h2><p>當我們需要在伺服器端處理大量的 HTML 來回應使用者的請求時，速度理所當然就會變慢。更糟糕的是所謂的變慢，具體來說是指使用者的感覺。<br>當使用者點擊連結或發出請求後如果不能很即時的看到畫面，他們就會感到不開心。</p>
+<p>提升伺服器回應的速度一直都是提升效能的目的，一旦回應需要執行一個非常慢的操作時，這件事就會變的棘手。如果回應的資料不只很大，還牽扯到需要使用其他第三方服務或 API 可想而知這個回應會需要更多的處理時間。</p>
+<h2 id="AJAX-請求大量資料會很緩慢並容易出錯"><a href="#AJAX-請求大量資料會很緩慢並容易出錯" class="headerlink" title="AJAX 請求大量資料會很緩慢並容易出錯"></a>AJAX 請求大量資料會很緩慢並容易出錯</h2><p>關於伺服器回應緩慢的問題也說明了為什麼 AJAX 在 Web 開發中如此重要，因為我們就不需要等待伺服器幫我們編譯完整的頁面，而是把所需的資料直接傳回即可。一旦取得資料我們就在客戶端渲染，這可以省下不少時間。</p>
+<p>然而將資料操作<code>整個</code>轉移到前端不見得是最快的作法。有可能變慢的原因來自大部分的個人電腦並沒有比伺服器的規格來的高，同時網路品質也比較慢。<br>使用者依然要等待所有資料下載完畢才能開始後續的處理，任何網路的問題都會造成資料不完全導致頁面無法正常呈現。</p>
+<h2 id="複數-AJAX-請求增加程式複雜度"><a href="#複數-AJAX-請求增加程式複雜度" class="headerlink" title="複數 AJAX 請求增加程式複雜度"></a>複數 AJAX 請求增加程式複雜度</h2><p>一個相對不錯的方式；就是我們可以將取回一整包大量資料的 AJAX 請求打散成許多較小的請求，然後各自處理在頁面上對應的部分。<br>這種方式一般來說可以有效改善使用者體驗，因為使用者可以儘快的看到部分資料而不是等待整個頁面一起出現。<br>同時程式在網絡不佳的情況下也可用性也增加許多，已經完成下載的部分就可以運作，部分下載失敗的資料則不影響已經下載好的部分。</p>
+<p>但很多時候處理多個請求也不見得都是那麼簡單，我們客戶端程式的邏輯會因此變的複雜許多。</p>
+<h2 id="模擬問題與實作"><a href="#模擬問題與實作" class="headerlink" title="模擬問題與實作"></a>模擬問題與實作</h2><p>我們將要透過實作一個 Web 應用程式，使用它渲染顯示一張<code>貓在陽光下</code>的 8-bit 圖來示範如何解決這個難題。<br>這張圖片的構成資訊會包含在 JSON 裡。裡面包含多個物件的陣列，每個物件有 x, y, color 屬性。<br>而網頁頁面上將會是一個大的 div （一個 grid）包含許多小 div （row &amp; cell）大概可以將其看成一張方眼紙。<br>我們希望一個格子對應一個點即使用物件中的 x, y, color，來完成這張圖。</p>
+<h3 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h3><p>這裡為了模擬更多造成問題的原因，我們加入了些條件限制：</p>
+<h4 id="多個資料來源"><a href="#多個資料來源" class="headerlink" title="多個資料來源"></a>多個資料來源</h4><p>首先是關於貓的部分，每個點的資料會存放在我們伺服器上的 JSON 檔案。然後關於太陽圖案的部分則是存在 Github 的 JSON 檔案。</p>
+<h4 id="回應大量資料"><a href="#回應大量資料" class="headerlink" title="回應大量資料"></a>回應大量資料</h4><p>我們的 JSON 將會不合理的包含大量資料，這主要是為了凸顯我們要處理的問題。事實上貓圖案部分的 JSON 額外包含 100 個不需要的屬性，讓這個檔案變得較大，大約是 500k。如果這樣您還是覺得很正常，沒關係我們太陽的部分將包含 600 個不需要的屬性，整個檔案大約會來到 1 mb。</p>
+<h4 id="不好的連線品質"><a href="#不好的連線品質" class="headerlink" title="不好的連線品質"></a>不好的連線品質</h4><p>我們同時希望使用者可以在網絡不好的狀況下使用我們的程式。</p>
+<h2 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h2><p>我們的客戶端將會發出一個請求給伺服器。客戶端會有個事件處理程序，它會知道每當收到一個點的資料時該如何處理。<br>接著，我們的伺服器端會使用串流的方式回應 JSON ，如此一來我們就不需要等到所有資料都取得才開始處理。</p>
+<p>最終我們將通過一個串流資料的方式取得所有圖案所需的資料。伺服器端將各自從兩個串流的資料來源取得資料並合併。這麼做是因為我們要模擬許多現實的情況，即資料來源一個較快（從硬碟讀取），另一個較慢（從網絡讀取）。</p>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><h2 id="Oboe-js-接收並處理串流類型的-JSON"><a href="#Oboe-js-接收並處理串流類型的-JSON" class="headerlink" title="Oboe.js, 接收並處理串流類型的 JSON"></a>Oboe.js, 接收並處理串流類型的 JSON</h2><p><code>oboe</code> 讓我們在 JSON 整個完成傳輸之前便可以開始解析使用。一旦符合 pattern 格式的資料被解析完成就執行對應的動作。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> source = <span class="string">'url or readable stream'</span></div><div class="line"><span class="keyword">const</span> pattern = <span class="string">'string representing a node in the tree'</span></div><div class="line"></div><div class="line">oboe(source)</div><div class="line">  .node(pattern, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="comment">// handle data</span></div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
 <h2 id="Highland-js-處理串流資料的函式庫"><a href="#Highland-js-處理串流資料的函式庫" class="headerlink" title="Highland.js - 處理串流資料的函式庫"></a>Highland.js - 處理串流資料的函式庫</h2><p>一直以來我總是覺得自己實作串流機制的方式非常麻煩，而且容易不知道它們該怎麼和既有的工作流程整合。<code>Highland.js</code> 是一個函式庫，它使得串流資料變得容易被管理和操作。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> data = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>]</div><div class="line">highland(data)</div><div class="line">  .pipe(anotherStream)</div></pre></td></tr></table></figure>
@@ -318,7 +271,7 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.done(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> el = <span class="built_in">document</span>.querySelector(<span class="string">'#status'</span>)</div><div class="line">  el.textContent = <span class="string">'All data loaded'</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <p>看看下面的範例會更有感覺：</p>
 <ul>
-<li><a href="https://jsfiddle.net/andyyu0920/myv0gjj1/">範例</a></li>
+<li><a href="https://jsfiddle.net/andyyu0920/myv0gjj1/" target="_blank" rel="external">範例</a></li>
 </ul>
 <h1 id="傳送串流類型的回應"><a href="#傳送串流類型的回應" class="headerlink" title="傳送串流類型的回應"></a>傳送串流類型的回應</h1><p>能夠處理串流的資料來源之後當然下一步，我們的應用程式將需要一個路由用來提供資料給客戶端。首先我們需要一個回應的樣板，讓我們可以組織 metadata 或其他屬性。<br>重要的是後續當我們取得 <code>pixels</code> 陣列時可以知道該怎麼和這個字串化的物件合併。您可以把這個過程想成我們在使用像 ejs, pug 這類樣板引擎一樣。<br>我們在需要後續填上資料的地方先留下一個佔位符</p>
 <blockquote>
@@ -365,11 +318,11 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> highland([</div><div class="line">  catStream,</div><div class="line">  sunStream</div><div class="line">]).merge()</div></pre></td></tr></table></figure>
 <h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>設計應用程式搭配串流作為主要的資料傳輸手段是非常強大的。它讓我們可以更有彈性的處理資料傳輸的部分。</p>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="https://simeneer.blogspot.tw/2016/10/nodejs-streams.html">Node.js Streams</a></li>
-<li><a href="https://github.com/andyyou/stream-json-sample">完整範例</a></li>
-<li><a href="http://engineering.curiositymedia.com/blog/better-json-through-streams">原文 - Better JSON through streams</a></li>
+<li><a href="https://simeneer.blogspot.tw/2016/10/nodejs-streams.html" target="_blank" rel="external">Node.js Streams</a></li>
+<li><a href="https://github.com/andyyou/stream-json-sample" target="_blank" rel="external">完整範例</a></li>
+<li><a href="http://engineering.curiositymedia.com/blog/better-json-through-streams" target="_blank" rel="external">原文 - Better JSON through streams</a></li>
 </ul>
--->
+
         
         </div>
         <footer class="article-footer">
