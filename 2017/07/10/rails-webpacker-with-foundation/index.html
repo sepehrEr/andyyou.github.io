@@ -5,17 +5,17 @@
     
     <title>使用 Rails Webpacker 安裝 Foundation 6 | DEVLOG of andyyou</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="動機由於 foundation-rails 6.4.1 版本有個 Issue 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。 準備開始使用之前需要確保 ruby，node，yarn 已經安裝完成。 安裝流程12345678# 建立專案$ rails new &amp;lt;project_name&amp;gt; --webpack# 安裝 Foundation">
+    <meta name="description" content="動機由於 foundation-rails 6.4.1 版本有個 Issue 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。">
 <meta name="keywords" content="javascript,rails,ruby">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Rails Webpacker 安裝 Foundation 6">
 <meta property="og:url" content="//andyyou.github.io/2017/07/10/rails-webpacker-with-foundation/index.html">
 <meta property="og:site_name" content="DEVLOG of andyyou">
-<meta property="og:description" content="動機由於 foundation-rails 6.4.1 版本有個 Issue 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。 準備開始使用之前需要確保 ruby，node，yarn 已經安裝完成。 安裝流程12345678# 建立專案$ rails new &amp;lt;project_name&amp;gt; --webpack# 安裝 Foundation">
-<meta property="og:updated_time" content="2017-07-10T09:05:35.000Z">
+<meta property="og:description" content="動機由於 foundation-rails 6.4.1 版本有個 Issue 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。">
+<meta property="og:updated_time" content="2017-07-10T09:09:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Rails Webpacker 安裝 Foundation 6">
-<meta name="twitter:description" content="動機由於 foundation-rails 6.4.1 版本有個 Issue 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。 準備開始使用之前需要確保 ruby，node，yarn 已經安裝完成。 安裝流程12345678# 建立專案$ rails new &amp;lt;project_name&amp;gt; --webpack# 安裝 Foundation">
+<meta name="twitter:description" content="動機由於 foundation-rails 6.4.1 版本有個 Issue 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。">
     
 
     
@@ -241,6 +241,7 @@ ga('send', 'pageview');
         
             
             <h1 id="動機"><a href="#動機" class="headerlink" title="動機"></a>動機</h1><p>由於 <code>foundation-rails</code> 6.4.1 版本有個 <a href="https://github.com/zurb/foundation-rails/issues/231" target="_blank" rel="external">Issue</a> 目前還沒合併。加上 Rails 已經支援了 webpack 2.x。這篇文章純粹紀錄另外一種做法。</p>
+<a id="more"></a>
 <h1 id="準備"><a href="#準備" class="headerlink" title="準備"></a>準備</h1><p>開始使用之前需要確保 <code>ruby</code>，<code>node</code>，<code>yarn</code> 已經安裝完成。</p>
 <h1 id="安裝流程"><a href="#安裝流程" class="headerlink" title="安裝流程"></a>安裝流程</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 建立專案</span></div><div class="line">$ rails new &lt;project_name&gt; --webpack</div><div class="line"></div><div class="line"><span class="comment"># 安裝 Foundation 相關套件</span></div><div class="line">$ yarn add jquery foundation-sites motion-ui</div><div class="line"></div><div class="line"><span class="comment"># 安裝 script-loader （匯出至全域）</span></div><div class="line">$ yarn add script-loader</div></pre></td></tr></table></figure>
 <h2 id="設定-script-loader"><a href="#設定-script-loader" class="headerlink" title="設定 script-loader"></a>設定 script-loader</h2><p>新增 <code>config/webpack/loaders/global.js</code></p>
