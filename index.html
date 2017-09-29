@@ -239,8 +239,7 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <blockquote>
+            <p><blockquote>
 <p>原文：<a href="https://devcenter.heroku.com/articles/upgrading-heroku-postgres-databases#upgrade-with-pg-copy" target="_blank" rel="external">Upgrading Heroku Postgres Databases</a></p>
 </blockquote>
 <p>本文為 Heroku 官方文件的閱讀 + 翻譯筆記，最新的資料請參考官方網站。</p>
@@ -268,21 +267,10 @@ ga('send', 'pageview');
 <td>升級大型資料庫版本。僅可用於 Standard，Premium，Private 或 Enterprise 方案的資料庫。</td>
 </tr>
 </tbody>
-</table>
-<h1 id="適用方式"><a href="#適用方式" class="headerlink" title="適用方式"></a>適用方式</h1><p>升級的方式取決於下面幾種因素：</p>
-<ul>
-<li>如果使用的 Postgres 版本在 9.3 之前並且從未使用 <code>pg:copy</code>，應使用 <code>pg:copy</code> 升級。Postgres 9.3 提供了資料損壞檢核機制，使用 <code>pg:copy</code> 將會避免損壞資料，一旦完成 <code>pg:copy</code> 便可接續使用 <code>pg:upgrade</code> 來升級。</li>
-<li>如果使用的 Postgres 版本大於 9.3 ，可以直接使用 <code>pg:upgrade</code> 升級。</li>
-<li>如果使用的 Postgres 版本大於 9.3 ，但 <a href="https://devcenter.heroku.com/articles/managing-vacuum-on-heroku-postgres#determining-bloat" target="_blank" rel="external">bloat</a> 值過大時，建議使用 <code>pg:copy</code>，<code>pg:copy</code> 會重新建立資料表和索引，並移除 bloat。但如果停機時間是比較重要的考量點則使用 <code>pg:upgrade</code>。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 查詢 bloat</span></div><div class="line">$ heroku plugins:install heroku-pg-extras</div><div class="line">$ heroku pg:bloat DATABASE_URL --app &lt;app_name&gt;</div></pre></td></tr></table></figure>
-<blockquote>
-<p><code>pg:upgrade</code> 針對資料庫為中等數量的關聯與結構的情況，如果您的資料庫包含了上千的資料結構請與 <code>postgres@heroku.com</code> 聯繫。</p>
-</blockquote>
-<h1 id="使用-PG-copy"><a href="#使用-PG-copy" class="headerlink" title="使用 PG copy"></a>使用 PG copy</h1><p>PG copy 採用的是原始 PostgreSQL 備份與還原的功能，而不是直接把備份檔複製到硬碟上。</p>
-<h2 id="使用案例與時間"><a href="#使用案例與時間" class="headerlink" title="使用案例與時間"></a>使用案例與時間</h2><p>PG copy 大約需要每 GB 3 分鐘的時間，雖然資料量是主要因素，但大型的資料庫方案具備更快速的 I/O。</p>
-<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 1. 建立新的資料庫</span></div><div class="line">$ heroku addons:create heroku-postgresql:hobby-basic --app &lt;app_name&gt;</div><div class="line"><span class="comment"># （選用）標準型以上的資料庫需要花費點時間，可使用通知指令</span></div><div class="line">$ heroku pg:<span class="built_in">wait</span></div><div class="line"><span class="comment"># 2. 啟用維護模式</span></div><div class="line">$ heroku maintenance:on --app &lt;app_name&gt;</div><div class="line"><span class="comment"># （選用）確保沒有任何程序存取資料庫</span></div><div class="line">$ heroku ps:scale worker=0</div><div class="line"><span class="comment"># 3. 複製資料（備註：HEROKU_POSTGRESQL_SILVER_URL 參數是根據您所建立的新資料庫給的值）</span></div><div class="line">$ heroku pg:copy DATABASE_URL HEROKU_POSTGRESQL_SILVER_URL --app &lt;app_name&gt;</div><div class="line"><span class="comment"># 4. 切換資料庫</span></div><div class="line">$ heroku pg:promote HEROKU_POSTGRESQL_SILVER_URL --app &lt;app_name&gt;</div><div class="line"><span class="comment"># 5. 關閉維護模式</span></div><div class="line">$ heroku maintenance:off --app &lt;app_name&gt;</div></pre></td></tr></table></figure>
-
+</table></p>
+            <p class="article-more-link">
+                <a href="/2017/09/29/upgrade-heroku-postgres/#more">繼續閱讀</a>
+            </p>
         
         </div>
         <footer class="article-footer">

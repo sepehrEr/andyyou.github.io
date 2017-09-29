@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="原文：Upgrading Heroku Postgres Databases  本文為 Heroku 官方文件的閱讀 + 翻譯筆記，最新的資料請參考官方網站。 這篇文章將會介紹如何升級 Heroku Postgres 資料庫。這裡所要說的是關於變更資料庫的 plan （付費方案的部分），以及升級資料庫版本。關於資料庫的變更只能夠使用 Heroku CLI 指令介面來完成。 升級/變更一個正在運作">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2017-09-29T07:53:36.000Z">
+<meta property="og:updated_time" content="2017-09-29T07:59:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 PG copy 升級 Heroku Postgres 資料庫">
 <meta name="twitter:description" content="原文：Upgrading Heroku Postgres Databases  本文為 Heroku 官方文件的閱讀 + 翻譯筆記，最新的資料請參考官方網站。 這篇文章將會介紹如何升級 Heroku Postgres 資料庫。這裡所要說的是關於變更資料庫的 plan （付費方案的部分），以及升級資料庫版本。關於資料庫的變更只能夠使用 Heroku CLI 指令介面來完成。 升級/變更一個正在運作">
@@ -270,6 +270,7 @@ ga('send', 'pageview');
 </tr>
 </tbody>
 </table>
+<a id="more"></a>
 <h1 id="適用方式"><a href="#適用方式" class="headerlink" title="適用方式"></a>適用方式</h1><p>升級的方式取決於下面幾種因素：</p>
 <ul>
 <li>如果使用的 Postgres 版本在 9.3 之前並且從未使用 <code>pg:copy</code>，應使用 <code>pg:copy</code> 升級。Postgres 9.3 提供了資料損壞檢核機制，使用 <code>pg:copy</code> 將會避免損壞資料，一旦完成 <code>pg:copy</code> 便可接續使用 <code>pg:upgrade</code> 來升級。</li>
