@@ -13,12 +13,26 @@
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="SVG 的元素可以執行縮放、移動、傾斜、旋轉等形變效果就像 HTML 元素可以用 CSS transform 一樣。然而當變形的任務牽扯到座標時，勢必也會影響結果。在這篇文章我們要討論的是 SVG 的 transform 屬性與 CSS 屬性，內容涵蓋如何操作 SVG 變形以及座標系轉換過程您應該知道的事。 這是系列文章的第二篇，我們將開始探討 SVG 座標系與變形之間的關係。在第一篇時我們介紹了">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:image" content="http://www.seefu.org/assets/og_image-ba5ebcc9c5a15fccc9944bf419c79f22a2446d53881c49ecaec26fea6141ce6c.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transforms-canvas.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-translate.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-translate-system.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-translate-dog.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-scale.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-scale-system.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-scale-2.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-skew-system.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-skew-system-2.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-rotate.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-rotate-center.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-rotate-center-system.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-multiple.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-multiple-2.png">
+<meta property="og:image" content="https://sarasoueidan.com/images/svg-transformations-rotate-translate.png">
 <meta property="og:updated_time" content="2017-04-02T09:28:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[譯] 理解 SVG 座標系統與 Transformation - 2 transform 屬性">
 <meta name="twitter:description" content="SVG 的元素可以執行縮放、移動、傾斜、旋轉等形變效果就像 HTML 元素可以用 CSS transform 一樣。然而當變形的任務牽扯到座標時，勢必也會影響結果。在這篇文章我們要討論的是 SVG 的 transform 屬性與 CSS 屬性，內容涵蓋如何操作 SVG 變形以及座標系轉換過程您應該知道的事。 這是系列文章的第二篇，我們將開始探討 SVG 座標系與變形之間的關係。在第一篇時我們介紹了">
-<meta name="twitter:image" content="http://www.seefu.org/assets/og_image-ba5ebcc9c5a15fccc9944bf419c79f22a2446d53881c49ecaec26fea6141ce6c.png">
+<meta name="twitter:image" content="https://sarasoueidan.com/images/svg-transforms-canvas.png">
     
 
     
