@@ -5,20 +5,21 @@
     
     <title>tmux 快速入門筆記 | DEVLOG of andyyou</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="什麼是 tmux？！">
+    <meta name="description" content="什麼是 tmux？">
 <meta name="keywords" content="tmux,ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tmux 快速入門筆記">
 <meta property="og:url" content="//andyyou.github.io/2017/11/27/tmux-notes/index.html">
 <meta property="og:site_name" content="DEVLOG of andyyou">
-<meta property="og:description" content="什麼是 tmux？！">
+<meta property="og:description" content="什麼是 tmux？">
 <meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="http://www.hamvocke.com/assets/img/uploads/tmux.png">
 <meta property="og:image" content="http://www.hamvocke.com/assets/img/uploads/tmux_split.png">
-<meta property="og:updated_time" content="2017-11-27T14:26:27.000Z">
+<meta property="og:updated_time" content="2017-11-27T14:34:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tmux 快速入門筆記">
-<meta name="twitter:description" content="什麼是 tmux？！">
-<meta name="twitter:image" content="http://www.hamvocke.com/assets/img/uploads/tmux_split.png">
+<meta name="twitter:description" content="什麼是 tmux？">
+<meta name="twitter:image" content="http://www.hamvocke.com/assets/img/uploads/tmux.png">
     
 
     
@@ -243,10 +244,10 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h1 id="什麼是-tmux？"><a href="#什麼是-tmux？" class="headerlink" title="什麼是 tmux？"></a>什麼是 tmux？</h1><p>！<a href="http://www.hamvocke.com/assets/img/uploads/tmux.png" target="_blank" rel="external"></a></p>
+            <h1 id="什麼是-tmux？"><a href="#什麼是-tmux？" class="headerlink" title="什麼是 tmux？"></a>什麼是 tmux？</h1><p><img src="http://www.hamvocke.com/assets/img/uploads/tmux.png" alt=""></p>
 <a id="more"></a>
 <p>上面您看到的就是一個 <code>tmux</code> 的畫面。</p>
-<p><code>tmux</code> 的作者解釋：<code>tmux</code> 是一個 Terminal Multiplexer。這個看起來很艱澀的術語背後其實概念很簡單; 就是在一個終端機（一個 Console）<br>下開啟多個視窗，或者分割視窗區塊（在 <code>tmux</code> 中我們會有 視窗 <code>window</code> 和視窗區塊 <code>pane</code> ）。每一個 <code>pane</code> 各自有各自獨立執行一個 <code>Terminal Instance</code> （各自輸入輸出的介面實例）讓我們可以同時執行多個指令，而不需要開啟多個 Terminal 視窗。</p>
+<p><code>tmux</code> 的作者解釋：<code>tmux</code> 是一個 Terminal Multiplexer。這個看起來很艱澀的術語背後其實概念很簡單; 就是在一個終端機（一個 Console）<br>下開啟多個視窗，或者分割視窗區塊（在 <code>tmux</code> 中我們會有 視窗 <code>window</code> 和視窗區塊 <code>pane</code> ）。每一個 <code>pane</code> 各自有各自獨立執行一個 <code>Terminal Instance</code> （各自輸入輸出的介面實例）讓我們可以同時執行多個指令，而不需要開啟多個 Terminal 視窗。如果您是 <code>iTerm</code> 的使用者可以把它們概略對應成 <code>Tab</code> 和 <code>Split</code>。 </p>
 <p><code>tmux</code> 會在同一個 <code>session</code> （連線狀態下的執行環境）保存這些視窗和視窗區塊。我們可以在任何時間離開這個連線。這被稱為 <code>detaching</code>。<br>然後 <code>tmux</code> 會繼續維持這個 <code>session</code> 直到您把 <code>tmux server</code> 砍掉或者重開機的時候。然後重點是我們隨時可以在重新回到（<code>attaching</code>）上次離開 <code>session</code> 的狀態。</p>
 <blockquote>
 <p>原本我們打開一個 terminal 會和機器建立一個 session 當我們關掉視窗時 session 就會關閉，我們剛下的指令就會被中止。使用 tmux 意味著我們是通過 tmux server 來和機器建立 session，我們的操作視窗或視窗區塊則是跟 tmux server 溝通。</p>
