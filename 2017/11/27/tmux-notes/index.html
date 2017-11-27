@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh-TW">
 <meta property="og:image" content="http://www.hamvocke.com/assets/img/uploads/tmux.png">
 <meta property="og:image" content="http://www.hamvocke.com/assets/img/uploads/tmux_split.png">
-<meta property="og:updated_time" content="2017-11-27T14:34:28.000Z">
+<meta property="og:updated_time" content="2017-11-27T14:39:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tmux 快速入門筆記">
 <meta name="twitter:description" content="什麼是 tmux？">
@@ -247,7 +247,7 @@ ga('send', 'pageview');
             <h1 id="什麼是-tmux？"><a href="#什麼是-tmux？" class="headerlink" title="什麼是 tmux？"></a>什麼是 tmux？</h1><p><img src="http://www.hamvocke.com/assets/img/uploads/tmux.png" alt=""></p>
 <a id="more"></a>
 <p>上面您看到的就是一個 <code>tmux</code> 的畫面。</p>
-<p><code>tmux</code> 的作者解釋：<code>tmux</code> 是一個 Terminal Multiplexer。這個看起來很艱澀的術語背後其實概念很簡單; 就是在一個終端機（一個 Console）<br>下開啟多個視窗，或者分割視窗區塊（在 <code>tmux</code> 中我們會有 視窗 <code>window</code> 和視窗區塊 <code>pane</code> ）。每一個 <code>pane</code> 各自有各自獨立執行一個 <code>Terminal Instance</code> （各自輸入輸出的介面實例）讓我們可以同時執行多個指令，而不需要開啟多個 Terminal 視窗。如果您是 <code>iTerm</code> 的使用者可以把它們概略對應成 <code>Tab</code> 和 <code>Split</code>。 </p>
+<p><code>tmux</code> 的作者解釋：<code>tmux</code> 是一個 Terminal Multiplexer。這個看起來很艱澀的術語背後其實概念很簡單; 就是在一個終端機（一個 Console）<br>下開啟多個視窗，或者分割視窗區塊（在 <code>tmux</code> 中我們會有 視窗 <code>window</code> 和視窗區塊 <code>pane</code> ）。每一個 <code>pane</code> 各自有各自獨立執行一個 <code>Terminal Instance</code> （各自輸入輸出的介面實例）讓我們可以同時執行多個指令，而不需要開啟多個 Terminal 視窗。如果您是 <code>iTerm</code> 的使用者可以把它們概略對應成 <code>Tab</code> 和 <code>Split</code>。</p>
 <p><code>tmux</code> 會在同一個 <code>session</code> （連線狀態下的執行環境）保存這些視窗和視窗區塊。我們可以在任何時間離開這個連線。這被稱為 <code>detaching</code>。<br>然後 <code>tmux</code> 會繼續維持這個 <code>session</code> 直到您把 <code>tmux server</code> 砍掉或者重開機的時候。然後重點是我們隨時可以在重新回到（<code>attaching</code>）上次離開 <code>session</code> 的狀態。</p>
 <blockquote>
 <p>原本我們打開一個 terminal 會和機器建立一個 session 當我們關掉視窗時 session 就會關閉，我們剛下的指令就會被中止。使用 tmux 意味著我們是通過 tmux server 來和機器建立 session，我們的操作視窗或視窗區塊則是跟 tmux server 溝通。</p>
@@ -261,14 +261,14 @@ ga('send', 'pageview');
 <h2 id="建立新的-session"><a href="#建立新的-session" class="headerlink" title="建立新的 session"></a>建立新的 session</h2><p>當我們要建立一個 <code>session</code> 時只要輸入 <code>tmux</code> 即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tmux</div></pre></td></tr></table></figure>
 <p>這個指令會建立一個新的 <code>tmux session</code>，你會看到下面多了一條<code>綠色</code>狀態列。狀態列是 <code>tmux</code> 很重要的一個部分。<br>除了顯示當前的視窗（在左邊）它同時也會顯示一些關於系統的資訊像是時間（在右邊）。狀態列還可以依照需求客製，例如：顯示行事曆，電量等等。</p>
-<h2 id="分割視窗區塊（Panes）"><a href="#分割視窗區塊（Panes）" class="headerlink" title="分割視窗區塊（Panes）"></a>分割視窗區塊（Panes）</h2><p>現在我們已經建立了第一個 <code>session</code>，當我們建立 <code>session</code> 的時候 <code>tmux</code> 預設會開啟一個視窗包含一個單一的視窗區塊。<br>當我們要執行 <code>tmux</code> 的指令時，我們需要先輸入一個前置鍵。預設 tmux 使用 <code>C-b</code> 作為前置鍵。<code>C-b</code> 指的是 <code>Ctrl</code> + <code>b</code> 同時按。<br>接著，要分割區塊使用的指令是 <code>C-b %</code> 這個指令會幫我們把當前的畫面切割成垂直左右的兩個面板。</p>
+<h2 id="分割視窗區塊（Panes）"><a href="#分割視窗區塊（Panes）" class="headerlink" title="分割視窗區塊（Panes）"></a>分割視窗區塊（Panes）</h2><p>現在我們已經建立了第一個 <code>session</code>，當我們建立 <code>session</code> 的時候 <code>tmux</code> 預設會開啟一個視窗包含一個單一的視窗區塊。<br>當我們要執行 <code>tmux</code> 的指令時，我們需要先輸入一個前置鍵。預設 tmux 使用 <code>C-b</code> 作為前置鍵。<code>C-b</code> 指的是 <code>Ctrl</code> + <code>b</code> 同時按。<br>接著，要分割區塊使用的指令是 <code>C-b %</code> 這個指令會幫我們把當前的畫面切割成垂直左右的兩個視窗區塊。</p>
 <blockquote>
 <p>備註： <code>C-</code> 指的是 Ctrl + 某個鍵一起按 <code>M-</code> 則是 <code>Alt</code> 或 <code>Option</code> 和某個鍵一起按。</p>
 </blockquote>
 <p><img src="http://www.hamvocke.com/assets/img/uploads/tmux_split.png" alt=""></p>
 <p>如果要水平切割則是 <code>C-b &quot;</code>。</p>
 <h2 id="切換操作的視窗區塊"><a href="#切換操作的視窗區塊" class="headerlink" title="切換操作的視窗區塊"></a>切換操作的視窗區塊</h2><p>現在我們的操作被侷限在剛剛新建立的視窗區塊中。不過我們想回到左邊的那個。這個時候我們只要使用 <code>C-b</code> 搭配方向鍵即可。<br>現在您可以親自操作看看。</p>
-<h2 id="關閉視窗區塊"><a href="#關閉視窗區塊" class="headerlink" title="關閉視窗區塊"></a>關閉視窗區塊</h2><p>關閉面板只需要使用 <code>C-d</code></p>
+<h2 id="關閉視窗區塊"><a href="#關閉視窗區塊" class="headerlink" title="關閉視窗區塊"></a>關閉視窗區塊</h2><p>關閉視窗區塊只需要使用 <code>C-d</code></p>
 <h2 id="建立視窗"><a href="#建立視窗" class="headerlink" title="建立視窗"></a>建立視窗</h2><p><code>tmux</code> 的視窗類似於 Linux 中建立一個虛擬桌面例如：KDE，Gnome 等。</p>
 <p>下面我們直接將常用的操作指令列出：</p>
 <ul>
