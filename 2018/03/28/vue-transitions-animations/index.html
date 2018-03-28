@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="關於 transitions要理解 Vue 轉場與動畫的運作，首先我們需要具備 CSS transitions 和 animations 的基本知識。這邊我們不會完整交代所有的教學，而是重點式的節錄。 讓我們先從 transitions 開始，transitions 中文我們可以稱為轉場，其主要的意思定義 CSS 樣式產生變化時，兩者之間的轉換效果，所謂的轉換效果指的是變化的長度時間，延遲時間，時">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2018-03-28T02:21:37.000Z">
+<meta property="og:updated_time" content="2018-03-28T02:27:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS Transitions, Animations 與 Vue">
 <meta name="twitter:description" content="關於 transitions要理解 Vue 轉場與動畫的運作，首先我們需要具備 CSS transitions 和 animations 的基本知識。這邊我們不會完整交代所有的教學，而是重點式的節錄。 讓我們先從 transitions 開始，transitions 中文我們可以稱為轉場，其主要的意思定義 CSS 樣式產生變化時，兩者之間的轉換效果，所謂的轉換效果指的是變化的長度時間，延遲時間，時">
@@ -243,6 +243,7 @@ ga('send', 'pageview');
             
             <h1 id="關於-transitions"><a href="#關於-transitions" class="headerlink" title="關於 transitions"></a>關於 transitions</h1><p>要理解 Vue 轉場與動畫的運作，首先我們需要具備 CSS transitions 和 animations 的基本知識。<br>這邊我們不會完整交代所有的教學，而是重點式的節錄。</p>
 <p>讓我們先從 transitions 開始，transitions 中文我們可以稱為轉場，其主要的意思定義 CSS 樣式產生變化時，兩者之間的轉換效果，所謂的轉換效果指的是變化的長度時間，延遲時間，時間控制函式（timing-function）。<br>舉例來說：</p>
+<a id="more"></a>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// color 在 hover 時轉換，其中 transition 用來設定效果</span></div><div class="line"><span class="selector-tag">a</span> &#123;</div><div class="line">  <span class="attribute">color</span>: black;</div><div class="line">  <span class="attribute">transition</span>: all <span class="number">1s</span> ease;</div><div class="line"></div><div class="line">  &amp;:hover &#123;</div><div class="line">    <span class="attribute">color</span>: cyan;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>transition 相關的設定有 4 + 1 個</p>
 <ul>
@@ -304,7 +305,7 @@ ga('send', 'pageview');
 <li>使用 JavaScript 在 transition hook 直接操作 DOM </li>
 <li>整合第三方的 JavaScript 動畫函式庫 例如：Velocity.js</li>
 </ul>
-<h2 id="元件"><a href="#元件" class="headerlink" title=" 元件"></a><transition> 元件</transition></h2><p>Vue 提供一個 <code>transition</code> 元件，讓我們可以輕鬆的在元素進入（entering）或離開（leaving）的流程中加入轉場效果。</p>
+<h2 id="lt-transition-gt-元件"><a href="#lt-transition-gt-元件" class="headerlink" title="&lt;transition&gt; 元件"></a><code>&lt;transition&gt;</code> 元件</h2><p>Vue 提供一個 <code>transition</code> 元件，讓我們可以輕鬆的在元素進入（entering）或離開（leaving）的流程中加入轉場效果。</p>
 <p>所謂的 entering 和 leaving 具體指的是</p>
 <ul>
 <li>使用 <code>v-if</code> 渲染的過程，出現（entering）消失（leaving）</li>
