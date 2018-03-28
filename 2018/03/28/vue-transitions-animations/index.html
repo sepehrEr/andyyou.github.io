@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="DEVLOG of andyyou">
 <meta property="og:description" content="關於 transitions要理解 Vue 轉場與動畫的運作，首先我們需要具備 CSS transitions 和 animations 的基本知識。這邊我們不會完整交代所有的教學，而是重點式的節錄。 讓我們先從 transitions 開始，transitions 中文我們可以稱為轉場，其主要的意思定義 CSS 樣式產生變化時，兩者之間的轉換效果，所謂的轉換效果指的是變化的長度時間，延遲時間，時">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2018-03-28T02:27:51.000Z">
+<meta property="og:updated_time" content="2018-03-28T02:38:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS Transitions, Animations 與 Vue">
 <meta name="twitter:description" content="關於 transitions要理解 Vue 轉場與動畫的運作，首先我們需要具備 CSS transitions 和 animations 的基本知識。這邊我們不會完整交代所有的教學，而是重點式的節錄。 讓我們先從 transitions 開始，transitions 中文我們可以稱為轉場，其主要的意思定義 CSS 樣式產生變化時，兩者之間的轉換效果，所謂的轉換效果指的是變化的長度時間，延遲時間，時">
@@ -264,7 +264,7 @@ ga('send', 'pageview');
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">transition: [property] [duration];</div><div class="line">transition: [property] [duration] [delay];</div><div class="line">transition: [property] [duration] [timing-function];</div><div class="line">transition: [property] [duration] [timing-function] [delay];</div><div class="line">transition: [property_1] [duration_1], [property_2] [duration_2];</div><div class="line">transition: all [duration] [timing-function];</div></pre></td></tr></table></figure>
 <p>明白了 transition 的核心用法之後，我們來看看 animation。</p>
-<p>CSS animation 主要由兩個部分組成：</p>
+<h1 id="關於-animation"><a href="#關於-animation" class="headerlink" title="關於 animation"></a>關於 animation</h1><p>CSS animation 主要由兩個部分組成：</p>
 <ul>
 <li>動畫的 CSS 樣式</li>
 <li><code>keyframes</code> 設定起始到結束之間動畫的樣式</li>
@@ -298,7 +298,8 @@ ga('send', 'pageview');
 </blockquote>
 <p>上面這些屬性主要是用來調整 <code>動畫的時間軸</code> ，而動畫效果（樣式）則使用 <code>@keyframes</code> 來定義。</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.slidein</span> &#123;</div><div class="line">  <span class="attribute">animation</span>: <span class="number">3s</span> slidein;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@keyframes slidein &#123;</div><div class="line">  0% &#123;</div><div class="line">    <span class="attribute">transform</span>: scaleX(<span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line">  100% &#123;</div><div class="line">    <span class="attribute">transform</span>: scaleX(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="vue-transition"><a href="#vue-transition" class="headerlink" title="vue transition"></a>vue transition</h1><p>Vue 在 <code>插入</code>，<code>更新</code> ，<code>刪除</code> 元素的時候，提供了多種套用 transition 效果的方式。這些方式包含：</p>
+<p>有了基本的知識之後我們可以開始學習 Vue transition 的部分。</p>
+<h1 id="Vue-Transition"><a href="#Vue-Transition" class="headerlink" title="Vue Transition"></a>Vue Transition</h1><p>Vue 在 <code>插入</code>，<code>更新</code> ，<code>刪除</code> 元素的時候，提供了多種套用 transition 效果的方式。這些方式包含：</p>
 <ul>
 <li>自動加入 class</li>
 <li>整合第三方的 CSS 動畫函式庫</li>
@@ -323,7 +324,7 @@ ga('send', 'pageview');
 <li>如果 transition 有設定 <code>JavaScript hook</code> 則 hook 事件會在對應的時間點觸發</li>
 <li>如何沒有 css 和 JavaScript hook 那麼新增或移除的動作會在下一偵（brower animation frame）立刻執行，這個概念和 Vue 的 <code>nextTick</code> 是不一樣的</li>
 </ul>
-<h2 id="transition-class"><a href="#transition-class" class="headerlink" title="transition class"></a>transition class</h2><p>自動套用的 class 有一套慣例，Vue 共提供 6 種 class 對應過程中不同的階段</p>
+<h2 id="自動加入樣式與慣例"><a href="#自動加入樣式與慣例" class="headerlink" title="自動加入樣式與慣例"></a>自動加入樣式與慣例</h2><p>自動套用的 class 樣式有一套慣例，Vue 共提供 6 種 class 對應過程中不同的階段</p>
 <ul>
 <li><code>v-enter</code> 當元素進入 DOM 時（顯示/新增元素時，entering），代表 entering transition 開始狀態。class 會在元素加入之前先套用，然後在元素插入完畢後的下一偵移除</li>
 <li><code>v-enter-active</code> 當元素進入 DOM 時（顯示/新增元素時，entering），代表在整個 entering transition 正在運作的狀態。class 會在整個 entering transition 中被套用。class 會在元素被插入之前套用，在整個 transition 或 animation 完成後被移除。這個 class 通常用來定義 duration，delay，timing-function </li>
@@ -335,8 +336,10 @@ ga('send', 'pageview');
 <p>這些 class 通常會使用 transition 的 name 來當作前綴，當你使用 <code>&lt;transition&gt;</code> 沒有設定 name 的時候，<code>v-</code> 則是預設值。假如我們使用 <code>&lt;transition name=&quot;my-transition&quot;&gt;&lt;/transition&gt;</code> 則 <code>v-enter</code> 的 class 會是 <code>my-transition-enter</code>。</p>
 <h2 id="vue-css-animations"><a href="#vue-css-animations" class="headerlink" title="vue + css animations"></a>vue + css animations</h2><p>css animation 套用的方式和 transition 一樣，唯一的差別是 <code>v-enter</code> 不會在元素插入之後的下一偵移除，會在 <code>animationend</code> 事件移除</p>
 <ul>
-<li><em>重點：<code>v-enter-active</code> 和 <code>v-leave-active</code> 是用來設定 duration, timing-function 的地方，如果是動畫則在這個地方設定 animation-name 等屬性</em></li>
-<li>除了通過 name 搭配慣例來使用 6 種 class 之外也可以之間透過屬性設定自訂 class<ul>
+<li><p><em>重點：<code>v-enter-active</code> 和 <code>v-leave-active</code> 是用來設定 duration, timing-function 的地方，如果是動畫則在這個地方設定 animation-name 等屬性</em></p>
+</li>
+<li><p>除了通過 name 搭配慣例來使用 6 種 class 之外也可以之間透過屬性設定自訂 class</p>
+<ul>
 <li>enter-class</li>
 <li>enter-active-class</li>
 <li>enter-to-class</li>
