@@ -239,60 +239,10 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h1 id="快速複習-Flux-和-Redux"><a href="#快速複習-Flux-和-Redux" class="headerlink" title="快速複習 Flux 和 Redux"></a>快速複習 Flux 和 Redux</h1><h4 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a>Flux</h4><p><em>Flux</em> 就是一個設計模式，用於管理資料傳遞流程。其核心概念為單一方向性的資料流 。</p>
-<p><em>Flux</em> 由下列 3 個角色組成：</p>
-<ul>
-<li><p>Dispatcher：接收 <em>action</em> 然後發送給 <em>store</em>，每一個有使用 <em>dispatcher</em> 註冊的 <em>store</em> 都會收到 <em>action</em>。一個應用程式只會有一個 <em>dispatcher</em>。<br>例如：</p>
-<ol>
-<li>使用者輸入代辦項目然後點擊 Enter</li>
-<li>React 擷取事件之後發送一個 <code>ADD_TODO</code> <em>action</em> （dispatch an action） 這個 <em>action</em> 包含代辦項目的文字資料</li>
-<li>接著，每一個 <em>store</em> 都會收到這個 <em>action</em></li>
-</ol>
-</li>
-<li><p>Store：負責管理資料。<em>strore</em> 需要向 <em>dispatcher</em> 註冊，才能夠收到 <em>action</em>。儲存在 <em>store</em> 中的資料只能夠依據 <em>action</em> 變更。變更之後必須要發送一個 <code>change</code> 的事件<br>例如：</p>
-<ol>
-<li><em>store</em> 收到 <code>ADD_TODO</code> <em>action</em></li>
-<li><em>store</em> 內部自行將 <em>action</em> 中的資料加入清單中</li>
-<li><em>store</em> 更新完代辦清單之後 <em>emit</em> 一個 <em>change event</em></li>
-</ol>
-</li>
-<li><p>Action：定義應用程式內部行為。使用一個物件描述將產生的變更行為與資料（<em>payload</em>）<br>例如：</p>
-<ol>
-<li><p>使用者點擊刪除，則發生一個 <code>DELETE_TODO</code> <em>action</em></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: 'DELETE_TODO',</span><br><span class="line">  id: '12'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ul>
-<p>使用 3 者搭配 <em>View（React）</em> 來開發 <em>Client-Side</em> 網頁應用程式。</p>
-<p><img src="https://raw.githubusercontent.com/facebook/flux/master/examples/flux-concepts/flux-simple-f8-diagram-with-client-action-1300w.png" alt=""></p>
-<p></p><p data-height="300" data-theme-id="8540" data-slug-hash="oQNzjx" data-default-tab="js" data-user="andyyou" data-pen-title="oQNzjx" class="codepen">See the Pen <a href="https://codepen.io/andyyou/pen/oQNzjx/" target="_blank" rel="noopener">oQNzjx</a> by andyyou (<a href="https://codepen.io/andyyou" target="_blank" rel="noopener">@andyyou</a>) on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</p><p></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
-
-
-<h4 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h4><p><em>Redux</em> 是給 JavaScript 應用程式使用的一種<em>狀態管理容器</em>。</p>
-<p>使用 <code>createStore</code> 建立一個全應用程式唯一的 <code>store</code>，<code>store</code> 須使用 <em>reducer</em> （<em>Pure Function</em>）來變更內部的 <em>state</em>。</p>
-<p>執行狀態變更須發送 <em>action</em> （<code>store.dispatch(action)</code>），一個 <em>action</em> 只是一個單純的物件須包含 <code>type</code> 屬性用來描述變更行為，對應的行為在 <em>reducer</em> 中實現。</p>
-<blockquote>
-<p>搭配 React 使用時要將 store 注入，可使用 react-redux 的 <provider><br>其他子元件要取得 state 或 dispatch 則使用 High-Order Component <code>connect</code></provider></p>
-</blockquote>
-<p><em>Redux</em> 由下列幾個單元組成：</p>
-<ul>
-<li><p>Store：整個應用程式只有一個 <em>Store</em></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">const</span> store = createStore(reducer);</span><br><span class="line"><span class="comment">// 取得狀態</span></span><br><span class="line">store.getState();</span><br><span class="line"><span class="comment">// 訂閱</span></span><br><span class="line"><span class="keyword">let</span> unsubscribe = store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(store.getState());</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 解除</span></span><br><span class="line">unsubscribe();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Action：<em>action</em> 是一個單純的物件，須包含 <code>type</code> 屬性。要變更 <em>state</em> 必須要發送 <em>action</em>。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> action = &#123;</span><br><span class="line">  type: <span class="string">'ADD_TODO'</span>,</span><br><span class="line">  text: <span class="string">'Learn Redux'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 發送 action 的方式</span></span><br><span class="line">store.dispatch(action);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Reducer：發送了 <em>action</em> 之後，須變更 <em>state</em> ，使 <em>state</em> 變更的計算過程稱為 <em>reducer</em>。<em>reducer</em> 為一函式接收 <em>action</em> 和 <em>state</em> 回傳一個新的計算後的 <em>state</em>。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> todos = <span class="function"><span class="keyword">function</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'ADD_TODO'</span>:</span><br><span class="line">      <span class="keyword">return</span> [</span><br><span class="line">        ...state,</span><br><span class="line">        action.text,</span><br><span class="line">      ];</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><p data-height="300" data-theme-id="8540" data-slug-hash="rQNRVY" data-default-tab="js" data-user="andyyou" data-pen-title="rQNRVY" class="codepen">See the Pen <a href="https://codepen.io/andyyou/pen/rQNRVY/" target="_blank" rel="noopener">rQNRVY</a> by andyyou (<a href="https://codepen.io/andyyou" target="_blank" rel="noopener">@andyyou</a>) on <a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a>.</p><p></p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
+            <p></p><h1 id="快速複習-Flux-和-Redux"><a href="#快速複習-Flux-和-Redux" class="headerlink" title="快速複習 Flux 和 Redux"></a>快速複習 Flux 和 Redux</h1><p></p>
+            <p class="article-more-link">
+                <a href="/2018/11/04/recap-review-flux-n-redux/#more">繼續閱讀</a>
+            </p>
         
         </div>
         <footer class="article-footer">
